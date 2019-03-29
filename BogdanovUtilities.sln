@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsWrapper", "LogsWrapper\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsWrapper.WPF.Tests", "LogsWrapper.WPF.Tests\LogsWrapper.WPF.Tests.csproj", "{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMUtilsWrapper", "MVVMUtilsWrapper\MVVMUtilsWrapper.csproj", "{F5B5FEC8-5CA6-467F-B3AD-00899F15E793}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B5FEC8-5CA6-467F-B3AD-00899F15E793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5B5FEC8-5CA6-467F-B3AD-00899F15E793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5B5FEC8-5CA6-467F-B3AD-00899F15E793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5B5FEC8-5CA6-467F-B3AD-00899F15E793}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
