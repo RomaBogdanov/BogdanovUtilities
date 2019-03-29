@@ -12,6 +12,8 @@ namespace MVVMUtilsWrapper
     /// </summary>
     public class RelayCommand : ICommand
     {
+        private object v;
+
         public Predicate<object> CanExecuteDelegate
         { get; set; }
 
@@ -28,6 +30,11 @@ namespace MVVMUtilsWrapper
         {
             this.ExecuteDelegate = action;
             this.CanExecuteDelegate = canExecute;
+        }
+
+        public RelayCommand(object v)
+        {
+            this.v = v;
         }
 
         public event EventHandler CanExecuteChanged
