@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsWrapper", "LogsWrapper\LogsWrapper.csproj", "{32BEDC9D-69F1-4A60-9B40-34A49B1E4902}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsWrapper.WPF.Tests", "LogsWrapper.WPF.Tests\LogsWrapper.WPF.Tests.csproj", "{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{32BEDC9D-69F1-4A60-9B40-34A49B1E4902}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32BEDC9D-69F1-4A60-9B40-34A49B1E4902}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32BEDC9D-69F1-4A60-9B40-34A49B1E4902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
