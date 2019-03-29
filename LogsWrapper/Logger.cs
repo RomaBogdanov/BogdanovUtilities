@@ -3,8 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using log4net;
 using log4net.Config;
+/*
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;*/
 
 /// <summary>
 /// Предназначено для размещения утилитных функционалов работы с логами.
@@ -43,24 +59,24 @@ namespace LogsWrapper
             XmlConfigurator.Configure();
             //log = LogManager.GetLogger("LOGGER");
         }
-
+        
         /// <summary>
-        /// Создаёт предупреждающее пользователя окно, параллельно делает запись в системе логгирования
+        /// Создаёт предупреждающее пользователя окно, параллельно делает 
+        /// запись в системе логгирования.
         /// </summary>
-        /// <param name = "message"></param>
-        /// <param name = "memberName"></param>
-        /*public static MsgBoxResult MsgBox(string message, [System.Runtime.CompilerServices.CallerMemberName] string memberName = "", [System.Runtime.CompilerServices.CallerFilePath] string sourceFile = "", [System.Runtime.CompilerServices.CallerLineNumber] int numLine = 0)
+        /// <param name="message"></param>
+        /// <param name="memberName"></param>
+        /// <param name="sourceFile"></param>
+        /// <param name="numLine"></param>
+        /// <returns></returns>
+        public static MessageBoxResult MsgBox(string message, 
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "", 
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFile = "", 
+            [System.Runtime.CompilerServices.CallerLineNumber] int numLine = 0)
         {
-            return MsgBox(message, MsgBoxStyle.ApplicationModal, memberName, sourceFile, numLine);
             Log.Warn($"{message} {memberName} {sourceFile} строка:{numLine}");
-                Interaction.MsgBox(message);
+            return MessageBox.Show(message);
         }
-
-        public static MsgBoxResult MsgBox(string message, MsgBoxStyle style, [System.Runtime.CompilerServices.CallerMemberName] string memberName = "", [System.Runtime.CompilerServices.CallerFilePath] string sourceFile = "", [System.Runtime.CompilerServices.CallerLineNumber] int numLine = 0)
-        {
-            Log.Warn($"{message} {memberName} {sourceFile} строка:{numLine}");
-            return Interaction.MsgBox(message, style);
-        }*/
 
         /// <summary>
         /// Логгирует со статусом DEBUG, при этом записывает откуда была вызвана 

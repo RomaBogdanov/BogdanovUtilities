@@ -31,6 +31,7 @@ namespace LogsWrapper.WPF.Tests
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Logger.Log.Debug("Нажали кнопку для тестирования");
+            Logger.MsgBox("Нажали кнопку для тестирования");
         }
     }
 }
