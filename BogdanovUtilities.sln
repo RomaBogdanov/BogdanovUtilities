@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMUtilsWrapper", "MVVMUti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMUtilsWrapper.Tests", "MVVMUtilsWrapper.Tests\MVVMUtilsWrapper.Tests.csproj", "{B3F72E89-9479-4AAF-9EC9-4B0B73456BCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfExperiments", "WpfExperiments\WpfExperiments.csproj", "{444965FA-1FFD-4052-B506-693FA938CFE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B3F72E89-9479-4AAF-9EC9-4B0B73456BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3F72E89-9479-4AAF-9EC9-4B0B73456BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3F72E89-9479-4AAF-9EC9-4B0B73456BCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{444965FA-1FFD-4052-B506-693FA938CFE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{444965FA-1FFD-4052-B506-693FA938CFE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{444965FA-1FFD-4052-B506-693FA938CFE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{444965FA-1FFD-4052-B506-693FA938CFE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
