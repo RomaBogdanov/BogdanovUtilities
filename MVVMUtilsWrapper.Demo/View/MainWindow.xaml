@@ -22,6 +22,19 @@
             HorizontalAlignment="Left" Margin="10,35,0,0" 
             VerticalAlignment="Top" Width="280"
             Command="{Binding OpenListBoxCommand}"/>
+        <Button Content="Демонстрация сложной работы ToolTip" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="280">
+            <Button.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <Label>Вот она - сложная работа!!!</Label>
+                        <Image Source="../Resources/GRAPH_Feb12_193811.png"/>
 
+                    </StackPanel>
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
+        <InkCanvas Margin="429,10,10,159">
+            <Image Source="../Resources/GRAPH_Feb12_193811.png" Height="200" Width="200"/>
+        </InkCanvas>
     </Grid>
 </Window>
