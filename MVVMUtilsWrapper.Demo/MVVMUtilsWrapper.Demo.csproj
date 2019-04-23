@@ -56,6 +56,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\DevExpressIconsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DragAndDropView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -74,8 +78,12 @@
     </Compile>
     <Compile Include="Data\People.cs" />
     <Compile Include="Model\ListBoxModel.cs" />
+    <Compile Include="ViewModel\DevExpressIconsViewModel.cs" />
     <Compile Include="ViewModel\ListBoxViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="View\DevExpressIconsView.xaml.cs">
+      <DependentUpon>DevExpressIconsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DragAndDropView.xaml.cs">
       <DependentUpon>DragAndDropView.xaml</DependentUpon>
     </Compile>

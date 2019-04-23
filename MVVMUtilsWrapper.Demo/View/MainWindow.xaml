@@ -36,5 +36,10 @@
         <InkCanvas Margin="429,10,10,159">
             <Image Source="../Resources/GRAPH_Feb12_193811.png" Height="200" Width="200"/>
         </InkCanvas>
+        <Button 
+            Content="Иконки DevExpress" 
+            HorizontalAlignment="Left" Margin="10,85,0,0" 
+            VerticalAlignment="Top" Width="280"
+            Command="{Binding OpenAllDevExpressIcons}"/>
     </Grid>
 </Window>

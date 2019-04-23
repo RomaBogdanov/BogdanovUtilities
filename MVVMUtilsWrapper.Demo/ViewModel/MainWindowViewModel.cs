@@ -14,6 +14,8 @@ namespace MVVMUtilsWrapper.Demo.ViewModel
 
         public ICommand OpenListBoxCommand { get; set; }
 
+        public ICommand OpenAllDevExpressIcons { get; set; }
+
         public MainWindowViewModel()
         {
             OpenDragAndDropCommand = new RelayCommand(obj =>
@@ -27,6 +29,11 @@ namespace MVVMUtilsWrapper.Demo.ViewModel
                 ((ListBoxViewModel)listBoxView.DataContext).Model = new Model.ListBoxModel();
                 listBoxView.Show();
             });
+            OpenAllDevExpressIcons = new RelayCommand(obj =>
+              {
+                  DevExpressIconsView devExpressIconsView = new DevExpressIconsView();
+                  devExpressIconsView.Show();
+              });
         }
     }
 }

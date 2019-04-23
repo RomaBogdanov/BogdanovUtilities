@@ -1,0 +1,25 @@
+﻿<Window x:Class="MVVMUtilsWrapper.Demo.View.DevExpressIconsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVMUtilsWrapper.Demo.View"
+        xmlns:vm="clr-namespace:MVVMUtilsWrapper.Demo.ViewModel"
+        mc:Ignorable="d"
+        Title="DevExpressIconsView" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:DevExpressIconsViewModel />
+    </Window.DataContext>
+    <Grid>
+        <ListBox ItemsSource="{Binding IconPaths}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Image Height="25" Width="25" Source="{Binding Path=FullPath, Mode=TwoWay}"/>
+                        <Label Content="{Binding Path=ShortPath, Mode=TwoWay}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
