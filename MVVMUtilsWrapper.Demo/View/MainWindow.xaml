@@ -15,14 +15,14 @@
         <Button 
             Content="Демонстрация работы с DragAndDrop" 
             HorizontalAlignment="Left" Margin="10,10,0,0" 
-            VerticalAlignment="Top" Width="280"
+            VerticalAlignment="Top" Width="370"
             Command="{Binding OpenDragAndDropCommand}"/>
         <Button 
             Content="Демонстрация работы с ListBox" 
             HorizontalAlignment="Left" Margin="10,35,0,0" 
-            VerticalAlignment="Top" Width="280"
+            VerticalAlignment="Top" Width="370"
             Command="{Binding OpenListBoxCommand}"/>
-        <Button Content="Демонстрация сложной работы ToolTip" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="280">
+        <Button Content="Демонстрация сложной работы ToolTip" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="370">
             <Button.ToolTip>
                 <ToolTip>
                     <StackPanel>
@@ -39,7 +39,11 @@
         <Button 
             Content="Иконки DevExpress" 
             HorizontalAlignment="Left" Margin="10,85,0,0" 
-            VerticalAlignment="Top" Width="280"
+            VerticalAlignment="Top" Width="370"
             Command="{Binding OpenAllDevExpressIcons}"/>
+        <Button 
+            Content="Демонстрация передачи данных пользовательскими контролам" 
+            HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="370"
+            Command="{Binding RelateWithUCCommand}"/>
     </Grid>
 </Window>

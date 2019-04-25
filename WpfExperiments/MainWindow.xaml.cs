@@ -23,6 +23,8 @@ namespace WpfExperiments
         public MainWindow()
         {
             InitializeComponent();
+
+            this.DataContext = new People { Name = "Вася", Surname = "Пупкин" };
         }
 
         private void TextBox_Drop(object sender, DragEventArgs e)

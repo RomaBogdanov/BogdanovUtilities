@@ -12,22 +12,12 @@
 
     <Grid AllowDrop="True">
         <TextBox 
-            HorizontalAlignment="Left" 
-            Height="115" 
-            Margin="10,10,0,0" 
-            TextWrapping="Wrap" 
-            Text="TextBox" 
-            AllowDrop="True"
-            Drop="TextBox_Drop"
-            DragEnter="TextBox_DragEnter"
-            PreviewDragOver="TextBox_PreviewDragOver"
-            VerticalAlignment="Top" Width="400"
-            PreviewDragEnter="TextBox_PreviewDragEnter"
-            PreviewDrop="TextBox_PreviewDrop"
-            AcceptsReturn="True"
-            />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400">
-            <sys:String>LALALA</sys:String>
-        </TextBox>
+            HorizontalAlignment="Left" Height="23" Margin="35,10,0,0" TextWrapping="Wrap" 
+            Text="{Binding Name}" 
+            VerticalAlignment="Top" Width="120"/>
+        <local:PeopleView 
+            DataContext="{Binding}"
+            HorizontalAlignment="Left" Height="68" Margin="35,61,0,0" VerticalAlignment="Top" Width="327"/>
+
     </Grid>
 </Window>

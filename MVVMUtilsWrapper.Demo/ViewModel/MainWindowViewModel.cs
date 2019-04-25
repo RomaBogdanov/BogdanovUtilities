@@ -8,13 +8,15 @@ using MVVMUtilsWrapper.Demo.View;
 
 namespace MVVMUtilsWrapper.Demo.ViewModel
 {
-    public class MainWindowViewModel: NotifyPropertyChanged
+    public class MainWindowViewModel : NotifyPropertyChanged
     {
         public ICommand OpenDragAndDropCommand { get; set; }
 
         public ICommand OpenListBoxCommand { get; set; }
 
         public ICommand OpenAllDevExpressIcons { get; set; }
+
+        public ICommand RelateWithUCCommand { get; set; }
 
         public MainWindowViewModel()
         {
@@ -30,10 +32,15 @@ namespace MVVMUtilsWrapper.Demo.ViewModel
                 listBoxView.Show();
             });
             OpenAllDevExpressIcons = new RelayCommand(obj =>
-              {
-                  DevExpressIconsView devExpressIconsView = new DevExpressIconsView();
-                  devExpressIconsView.Show();
-              });
+            {
+                DevExpressIconsView devExpressIconsView = new DevExpressIconsView();
+                devExpressIconsView.Show();
+            });
+            RelateWithUCCommand = new RelayCommand(obj =>
+            {
+                RelateWithUserControlsView relateWithUserControlsView = new RelateWithUserControlsView();
+                relateWithUserControlsView.Show();
+            });
         }
     }
 }
