@@ -11,15 +11,38 @@
         <vm:DevExpressIconsViewModel />
     </Window.DataContext>
     <Grid>
-        <ListBox ItemsSource="{Binding IconPaths}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox ItemsSource="{Binding IconPaths}" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 >
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!-- Отменяет виртуализацию, т.е. загружает все картинки. Подумать, как обойти. -->
+                    <WrapPanel/>
+
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
                         <Image Height="25" Width="25" Source="{Binding Path=FullPath, Mode=TwoWay}"/>
-                        <Label Content="{Binding Path=ShortPath, Mode=TwoWay}"/>
+                        <TextBlock Text="{Binding Path=ShortPath, Mode=TwoWay}" Height="60" Width="150" TextWrapping="Wrap"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <StackPanel Grid.Column="1">
+            <Label Content="Выбрать относительный путь для изучения:"></Label>
+            <ComboBox Text="{Binding FolderForSearch}">
+                <ComboBoxItem Content="GrayScaleImages"/>
+                <ComboBoxItem Content="Images"/>
+                <ComboBoxItem Content="Office2013"/>
+            </ComboBox>
+            <Label Content="Поиск"></Label>
+            <TextBox Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
     </Grid>
 </Window>
