@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.IO;
-using SintezLibrary;
+//using SintezLibrary;
 
 namespace SintezWpfUiLib.View
 {
@@ -25,7 +25,7 @@ namespace SintezWpfUiLib.View
     {
         public ChatView()
         {
-            Logger.Debug("Начали создавать контрол ChatView");
+            //Logger.Debug("Начали создавать контрол ChatView");
             try
             {
 
@@ -36,9 +36,9 @@ namespace SintezWpfUiLib.View
             }
             catch (Exception err)
             {
-                Logger.Log.Error(err.Message, err);
+              //  Logger.Log.Error(err.Message, err);
             }
-            Logger.Debug("Создали контрол ChatView");
+            //Logger.Debug("Создали контрол ChatView");
         }
 
         private void lbxMessages_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -87,7 +87,7 @@ namespace SintezWpfUiLib.View
 
         private void lbxAccountsWriting_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Down && ((ListBox)sender).SelectedIndex <
+            /*if (e.Key == Key.Down && ((ListBox)sender).SelectedIndex <
                 ((ListBox)sender).Items.Count - 1)
             {
                 ((ListBox)sender).SelectedIndex++;
@@ -132,7 +132,7 @@ namespace SintezWpfUiLib.View
                     tbxEnterMessage.Text += $"\"{txt}({rec.idx}|{rec.connection.connector_id})\"";
                     ClosePopup(sender);
                 }
-            }
+            }*/
         }
 
         /// <summary>

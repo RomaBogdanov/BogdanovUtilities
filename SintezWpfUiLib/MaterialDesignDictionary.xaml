@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:MD="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:local="clr-namespace:SintezWpfUiLib"
-                    xmlns:lb ="clr-namespace:SintezLibrary;assembly=SintezLibrary">
+                    >
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
