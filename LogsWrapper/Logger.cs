@@ -68,9 +68,37 @@ namespace LogsWrapper
         /// </summary>
         /// <param name = "message"></param>
         /// <param name = "memberName"></param>
-        public static void Debug(string message, [System.Runtime.CompilerServices.CallerMemberName] string memberName = "", [System.Runtime.CompilerServices.CallerFilePath] string sourceFile = "")
+        public static void Debug(string message, 
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "", 
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFile = "")
         {
             Log.Debug($"{message} {memberName} {sourceFile}");
+        }
+
+        /// <summary>
+        /// Логгирует со статусом Error, при этом записывает откуда была вызвана 
+        /// процедура в которой идёт логгирование.
+        /// </summary>
+        /// <param name = "message"></param>
+        /// <param name = "memberName"></param>
+        public static void Error(string message,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFile = "")
+        {
+            Log.Error($"{message} {memberName} {sourceFile}");
+        }
+
+        /// <summary>
+        /// Логгирует со статусом Error, при этом записывает откуда была вызвана 
+        /// процедура в которой идёт логгирование.
+        /// </summary>
+        /// <param name = "message"></param>
+        /// <param name = "memberName"></param>
+        public static void Error(Exception exception,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFile = "")
+        {
+            Log.Error($"{exception.Message} {memberName} {sourceFile}", exception);
         }
     }
 }
