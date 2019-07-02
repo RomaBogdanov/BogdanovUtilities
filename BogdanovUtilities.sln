@@ -28,6 +28,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynAnalyzerLib", "Roslyn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsWrapper.Console.Tests", "LogsWrapper.Console.Tests\LogsWrapper.Console.Tests.csproj", "{12B0F27B-A965-4C4E-AE45-7604A9F2E72E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeWrapper", "OfficeWrapper\OfficeWrapper.csproj", "{BBD21F42-621B-486E-806F-472D338BCE0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeWrapper.Tests", "OfficeWrapper.Tests\OfficeWrapper.Tests.csproj", "{9F4D4980-CA20-482D-82B2-CD5E5C2F9B95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +74,14 @@ Global
 		{12B0F27B-A965-4C4E-AE45-7604A9F2E72E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12B0F27B-A965-4C4E-AE45-7604A9F2E72E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12B0F27B-A965-4C4E-AE45-7604A9F2E72E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD21F42-621B-486E-806F-472D338BCE0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD21F42-621B-486E-806F-472D338BCE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD21F42-621B-486E-806F-472D338BCE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD21F42-621B-486E-806F-472D338BCE0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F4D4980-CA20-482D-82B2-CD5E5C2F9B95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F4D4980-CA20-482D-82B2-CD5E5C2F9B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F4D4980-CA20-482D-82B2-CD5E5C2F9B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F4D4980-CA20-482D-82B2-CD5E5C2F9B95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
