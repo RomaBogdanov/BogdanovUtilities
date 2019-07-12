@@ -46,7 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logger.cs" />
+    <Compile Include="LogsCreatorAfterCompile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchingType.cs" />
     <Compile Include="TypesAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>

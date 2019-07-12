@@ -14,6 +14,8 @@ namespace LogsWrapper.Consoles.Tests
             TypesAnalyzer typesAnalyzer = new TypesAnalyzer();
             typesAnalyzer.TransitionBeetweenTypes(typeof(Type));
             
+            
+
             //Console.WriteLine(typesAnalyzer.ShowClassesHierarchy());
             bool exit = false;
             while (!exit)
