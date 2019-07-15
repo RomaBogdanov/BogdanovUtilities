@@ -44,5 +44,11 @@ https://smarly.net/metaprogramming-in-net/languages-and-tools/managing-the--net-
 16. Проработать вопросы метапрограммирования:
 16.1. Проработать Mono.Cecil необходимую для внесения изменений в код. 
 https://smarly.net/metaprogramming-in-net/techniques-for-generating-code/generating-code-with-il-rewriting
+17. Проработать Entity Framework:
+17.1. Проработать вопрос подключения к нескольким базам данных из одного приложения;
+17.2. Проработать вопрос ведения одной объектной модели по нескольким базам данных.
+
 
 ПРОДОЛЖИТЬ ИЗУЧЕНИЕ WPF С DEPENDENCYOBJECT ГЛАВА 5.
+2.4. Проработка логгирования через атрибуты.
+Наверно лучше использовать метапрограммирование. Параллельно решив пункт 16.1.
