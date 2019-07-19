@@ -49,11 +49,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OfficeWrapper\OfficeWrapper.csproj">
-      <Project>{bbd21f42-621b-486e-806f-472d338bce0a}</Project>
-      <Name>OfficeWrapper</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

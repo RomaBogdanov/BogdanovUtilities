@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoslynAnalyzerLib
+namespace BogdanovUtilitisLib.LogsWrapper
 {
     /// <summary>
     /// Описание изучаемого типа
@@ -57,12 +57,6 @@ namespace RoslynAnalyzerLib
         /// </summary>
         public List<SearchingType> Childs { get; set; }
             = new List<SearchingType>();
-    }
 
-    public class RelateSearchingTypeString
-    {
-        public SearchingType SearchingType { get; set; }
-
-        public string RelatedString { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MVVMUtilsWrapper
+namespace BogdanovUtilitisLib.MVVMUtilsWrapper
 {
     /// <summary>
     /// Базовый класс для классов ViewModel с общим функционалом

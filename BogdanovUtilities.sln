@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsWrapper", "LogsWrapper\LogsWrapper.csproj", "{32BEDC9D-69F1-4A60-9B40-34A49B1E4902}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsWrapper.WPF.Tests", "LogsWrapper.WPF.Tests\LogsWrapper.WPF.Tests.csproj", "{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMUtilsWrapper", "MVVMUtilsWrapper\MVVMUtilsWrapper.csproj", "{F5B5FEC8-5CA6-467F-B3AD-00899F15E793}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMUtilsWrapper.Tests", "MVVMUtilsWrapper.Tests\MVVMUtilsWrapper.Tests.csproj", "{B3F72E89-9479-4AAF-9EC9-4B0B73456BCA}"
 EndProject
@@ -24,13 +22,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Решения", "Реше�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SintezWpfUiLib", "SintezWpfUiLib\SintezWpfUiLib.csproj", "{06F65FAC-8B7E-441D-8B9B-5C4568C998D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynAnalyzerLib", "RoslynAnalyzerLib\RoslynAnalyzerLib.csproj", "{B23C3026-BD40-42FE-A987-225EA395887A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsWrapper.Console.Tests", "LogsWrapper.Console.Tests\LogsWrapper.Console.Tests.csproj", "{12B0F27B-A965-4C4E-AE45-7604A9F2E72E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeWrapper", "OfficeWrapper\OfficeWrapper.csproj", "{BBD21F42-621B-486E-806F-472D338BCE0A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeWrapper.Tests", "OfficeWrapper.Tests\OfficeWrapper.Tests.csproj", "{9F4D4980-CA20-482D-82B2-CD5E5C2F9B95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BogdanovUtilsLib_1", "BogdanovUtilsLib\BogdanovUtilsLib_1.csproj", "{E4CA4B76-541A-46BC-B2E4-A992F0CD93D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BogdanovUtilsLib.MSILHandle.Tests", "BogdanovUtilsLib.MSILHandle.Tests\BogdanovUtilsLib.MSILHandle.Tests.csproj", "{A98BB1F8-407B-4DF3-B815-DA44F496216A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BogdanovUtilitisLib", "BogdanovUtilitisLib\BogdanovUtilitisLib.csproj", "{9690D6E0-D0C6-40FF-895B-BF93F11D4AC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,10 +46,6 @@ Global
 		{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B01FDA4E-8A13-4BC0-AF8A-80EF0C78F3E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F5B5FEC8-5CA6-467F-B3AD-00899F15E793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5B5FEC8-5CA6-467F-B3AD-00899F15E793}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5B5FEC8-5CA6-467F-B3AD-00899F15E793}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5B5FEC8-5CA6-467F-B3AD-00899F15E793}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B3F72E89-9479-4AAF-9EC9-4B0B73456BCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3F72E89-9479-4AAF-9EC9-4B0B73456BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3F72E89-9479-4AAF-9EC9-4B0B73456BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -66,22 +62,26 @@ Global
 		{06F65FAC-8B7E-441D-8B9B-5C4568C998D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06F65FAC-8B7E-441D-8B9B-5C4568C998D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06F65FAC-8B7E-441D-8B9B-5C4568C998D3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B23C3026-BD40-42FE-A987-225EA395887A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B23C3026-BD40-42FE-A987-225EA395887A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B23C3026-BD40-42FE-A987-225EA395887A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B23C3026-BD40-42FE-A987-225EA395887A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{12B0F27B-A965-4C4E-AE45-7604A9F2E72E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{12B0F27B-A965-4C4E-AE45-7604A9F2E72E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12B0F27B-A965-4C4E-AE45-7604A9F2E72E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12B0F27B-A965-4C4E-AE45-7604A9F2E72E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BBD21F42-621B-486E-806F-472D338BCE0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BBD21F42-621B-486E-806F-472D338BCE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BBD21F42-621B-486E-806F-472D338BCE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BBD21F42-621B-486E-806F-472D338BCE0A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F4D4980-CA20-482D-82B2-CD5E5C2F9B95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F4D4980-CA20-482D-82B2-CD5E5C2F9B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F4D4980-CA20-482D-82B2-CD5E5C2F9B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F4D4980-CA20-482D-82B2-CD5E5C2F9B95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4CA4B76-541A-46BC-B2E4-A992F0CD93D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4CA4B76-541A-46BC-B2E4-A992F0CD93D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4CA4B76-541A-46BC-B2E4-A992F0CD93D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4CA4B76-541A-46BC-B2E4-A992F0CD93D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A98BB1F8-407B-4DF3-B815-DA44F496216A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A98BB1F8-407B-4DF3-B815-DA44F496216A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A98BB1F8-407B-4DF3-B815-DA44F496216A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A98BB1F8-407B-4DF3-B815-DA44F496216A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9690D6E0-D0C6-40FF-895B-BF93F11D4AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9690D6E0-D0C6-40FF-895B-BF93F11D4AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9690D6E0-D0C6-40FF-895B-BF93F11D4AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9690D6E0-D0C6-40FF-895B-BF93F11D4AC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

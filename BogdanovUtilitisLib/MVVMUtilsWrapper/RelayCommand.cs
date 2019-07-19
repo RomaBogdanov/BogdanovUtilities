@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace MVVMUtilsWrapper
+namespace BogdanovUtilitisLib.MVVMUtilsWrapper
 {
     /// <summary>
     /// Класс для создания привязки к команде в MVVM
     /// </summary>
-    public class RelayCommand : ICommand
+    class RelayCommand
     {
         private object v;
 
@@ -52,5 +52,6 @@ namespace MVVMUtilsWrapper
         {
             this.ExecuteDelegate?.Invoke(parameter);
         }
+
     }
 }

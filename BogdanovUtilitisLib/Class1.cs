@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoslynAnalyzerLib
+namespace BogdanovUtilitisLib
 {
+    public class Class1
+    {
+    }
 }

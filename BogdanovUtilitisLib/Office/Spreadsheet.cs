@@ -7,12 +7,12 @@ using System.Data;
 using GemBox;
 using GemBox.Spreadsheet;
 
-namespace OfficeWrapper
+namespace BogdanovUtilitisLib.Office
 {
     /// <summary>
     /// Обёртка для excell файлов.
     /// </summary>
-    public class Spreadsheet
+    class Spreadsheet
     {
         public Spreadsheet()
         {

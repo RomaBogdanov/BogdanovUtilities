@@ -141,11 +141,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MVVMUtilsWrapper\MVVMUtilsWrapper.csproj">
-      <Project>{f5b5fec8-5ca6-467f-b3ad-00899f15e793}</Project>
-      <Name>MVVMUtilsWrapper</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
