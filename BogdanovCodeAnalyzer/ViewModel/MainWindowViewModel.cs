@@ -52,13 +52,9 @@ namespace BogdanovCodeAnalyzer.ViewModel
         /// </summary>
         private void StartStopServer()
         {
-            //Logger.MsgBox("Сервер запущен");
             if (host == null || host.State != CommunicationState.Opened)
             {
                 host = new ServiceHost(typeof(ServiceBaseContract));
-                /*NetTcpBinding netTcpBinding = new NetTcpBinding();
-                netTcpBinding.*/
-
                 host.Open();
                 TaskToOpenOrCloseServer = "Закрыть сервер";
             }
@@ -87,7 +83,6 @@ namespace BogdanovCodeAnalyzer.ViewModel
     {
         public bool Log(string message, string tag, string method, string file)
         {
-            //Logger.MsgBox($"Сообщение: {message}");
             AggregatorMessages.ReceiveMessage(new Message
             {
                 LogMessage = message,
