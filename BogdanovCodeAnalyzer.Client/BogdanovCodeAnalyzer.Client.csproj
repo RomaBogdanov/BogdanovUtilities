@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1F00F538-BD06-4B52-9097-328A0333C3DE}</ProjectGuid>
+    <ProjectGuid>{A0E7FAA5-E1E0-45F4-B1CC-B194C8DFDC4D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MVVMUtilsWrapper.Demo</RootNamespace>
-    <AssemblyName>MVVMUtilsWrapper.Demo</AssemblyName>
+    <RootNamespace>BogdanovCodeAnalyzer.Client</RootNamespace>
+    <AssemblyName>BogdanovCodeAnalyzer.Client</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,7 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,26 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\RelateWithUserControlsViewModel.cs" />
-    <Compile Include="View\PeopleCardView.xaml.cs">
-      <DependentUpon>PeopleCardView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\RelateWithUserControlsView.xaml.cs">
-      <DependentUpon>RelateWithUserControlsView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="View\DevExpressIconsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\DragAndDropView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ListBoxView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\MainWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -84,32 +65,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\People.cs" />
-    <Compile Include="Model\ListBoxModel.cs" />
-    <Compile Include="ViewModel\DevExpressIconsViewModel.cs" />
-    <Compile Include="ViewModel\ListBoxViewModel.cs" />
-    <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="View\DevExpressIconsView.xaml.cs">
-      <DependentUpon>DevExpressIconsView.xaml</DependentUpon>
+    <Compile Include="Connected Services\ServiceReferenceCodeAnalyzer\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="View\DragAndDropView.xaml.cs">
-      <DependentUpon>DragAndDropView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ListBoxView.xaml.cs">
-      <DependentUpon>ListBoxView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MainWindow.xaml.cs">
+    <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\PeopleCardView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\RelateWithUserControlsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -129,6 +93,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\ServiceReferenceCodeAnalyzer\ServiceBaseContact.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceCodeAnalyzer\ServiceBaseContact1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceCodeAnalyzer\ServiceBaseContract.wsdl" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -138,15 +109,31 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\GRAPH_Feb12_193811.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\BogdanovCodeAnalyzer.Contracts\BogdanovCodeAnalyzer.Contracts.csproj">
+      <Project>{dee32f81-3eeb-437a-8639-372d7b21cab7}</Project>
+      <Name>BogdanovCodeAnalyzer.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BogdanovUtilitisLib\BogdanovUtilitisLib.csproj">
-      <Project>{9690d6e0-d0c6-40ff-895b-bf93f11d4ac1}</Project>
-      <Name>BogdanovUtilitisLib</Name>
-    </ProjectReference>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServiceReferenceCodeAnalyzer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceReferenceCodeAnalyzer\ServiceBaseContact.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceReferenceCodeAnalyzer\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceReferenceCodeAnalyzer\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceReferenceCodeAnalyzer\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

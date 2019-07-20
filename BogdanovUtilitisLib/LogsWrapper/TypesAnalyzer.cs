@@ -25,6 +25,8 @@ namespace BogdanovUtilitisLib.LogsWrapper
         Dictionary<string, SearchingType> searchTypes =
                    new Dictionary<string, SearchingType>();
 
+        #region Public
+
         public TypesAnalyzer()
         {
             //TransitionBeetweenTypes();
@@ -278,6 +280,10 @@ namespace BogdanovUtilitisLib.LogsWrapper
             return AccessabilityFromTypeToType(prototype, image, firstEntry, null, "");
         }
 
+        #endregion
+
+        #region Private
+
         private string AccessabilityFromTypeToType(string prototype, string image,
             bool firstEntry, Dictionary<SearchingType, string> posiblePaths,
             string predicat)
@@ -451,6 +457,7 @@ namespace BogdanovUtilitisLib.LogsWrapper
             return output;
         }
 
+        #endregion
     }
 
     /// <summary>

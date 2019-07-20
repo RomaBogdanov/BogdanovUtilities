@@ -10,7 +10,7 @@ namespace BogdanovUtilitisLib.MVVMUtilsWrapper
     /// <summary>
     /// Класс для создания привязки к команде в MVVM
     /// </summary>
-    class RelayCommand
+    public class RelayCommand : ICommand
     {
         private object v;
 

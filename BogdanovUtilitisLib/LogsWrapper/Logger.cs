@@ -111,6 +111,8 @@ namespace BogdanovUtilitisLib.LogsWrapper
     {
         private static ILog log;
 
+        #region Public
+
         /// <summary>
         /// Обращение к обёрнутому логгеру log4net
         /// </summary>
@@ -192,5 +194,7 @@ namespace BogdanovUtilitisLib.LogsWrapper
         {
             Log.Error($"{exception.Message} {memberName} {sourceFile}", exception);
         }
+
+        #endregion
     }
 }
