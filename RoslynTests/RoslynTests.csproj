@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9690D6E0-D0C6-40FF-895B-BF93F11D4AC1}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BogdanovUtilitisLib</RootNamespace>
-    <AssemblyName>BogdanovUtilitisLib</AssemblyName>
+    <ProjectGuid>{AD19F94A-0FD0-431D-AF26-E66CE7E7BD9D}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>RoslynTests</RootNamespace>
+    <AssemblyName>RoslynTests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,12 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GemBox.Spreadsheet, Version=45.0.35.1010, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
-      <HintPath>..\packages\GemBox.Spreadsheet.45.0.0.1010\lib\net35\GemBox.Spreadsheet.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeAnalysis.Common.3.1.0\lib\netstandard2.0\Microsoft.CodeAnalysis.dll</HintPath>
     </Reference>
@@ -46,17 +42,9 @@
     <Reference Include="Microsoft.CodeAnalysis.CSharp.Workspaces, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.Workspaces.3.1.0\lib\netstandard2.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.VisualBasic, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.VisualBasic.3.1.0\lib\netstandard2.0\Microsoft.CodeAnalysis.VisualBasic.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.VisualBasic.Workspaces, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.VisualBasic.Workspaces.3.1.0\lib\netstandard2.0\Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeAnalysis.Workspaces, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeAnalysis.Workspaces.Common.3.1.0\lib\netstandard2.0\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -107,23 +95,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="LogsWrapper\Logger.cs" />
-    <Compile Include="LogsWrapper\SearchingType.cs" />
-    <Compile Include="LogsWrapper\TypesAnalyzer.cs" />
-    <Compile Include="MSILHandle\MSILHandler.cs" />
-    <Compile Include="MVVMUtilsWrapper\NotifyPropertyChanged.cs" />
-    <Compile Include="MVVMUtilsWrapper\RelayCommand.cs" />
-    <Compile Include="Office\Spreadsheet.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Roslyn\CodeGenerator.cs" />
+    <Compile Include="SyntaxFactorySamples.cs" />
+    <Compile Include="SyntaxTreeAnalyzeSamples.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.2\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.2\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BogdanovUtilitisLib\BogdanovUtilitisLib.csproj">
+      <Project>{9690d6e0-d0c6-40ff-895b-bf93f11d4ac1}</Project>
+      <Name>BogdanovUtilitisLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

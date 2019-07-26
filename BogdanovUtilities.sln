@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BogdanovCodeAnalyzer.Contra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BogdanovCodeAnalyzer.Client", "BogdanovCodeAnalyzer.Client\BogdanovCodeAnalyzer.Client.csproj", "{A0E7FAA5-E1E0-45F4-B1CC-B194C8DFDC4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynTests", "RoslynTests\RoslynTests.csproj", "{AD19F94A-0FD0-431D-AF26-E66CE7E7BD9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{A0E7FAA5-E1E0-45F4-B1CC-B194C8DFDC4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0E7FAA5-E1E0-45F4-B1CC-B194C8DFDC4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0E7FAA5-E1E0-45F4-B1CC-B194C8DFDC4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD19F94A-0FD0-431D-AF26-E66CE7E7BD9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD19F94A-0FD0-431D-AF26-E66CE7E7BD9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD19F94A-0FD0-431D-AF26-E66CE7E7BD9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD19F94A-0FD0-431D-AF26-E66CE7E7BD9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
