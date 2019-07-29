@@ -46,6 +46,12 @@ namespace RoslynTests
                             methOutput).GetText());
                         break;
                     case ("2"):
+                        var a = codeGenerator.AddParameterToMethod(codeGenerator.CreateMethod("TST"), "a", "string");
+                        a = codeGenerator.AddParameterToMethod(a, "b", "int");
+                        a = codeGenerator.AddParameterToMethod(a, "sb", "StringBuilder");
+                        Console.WriteLine(a.GetText());
+                        //Console.WriteLine(codeGenerator.AddParameterToMethod(codeGenerator.CreateMethod("TST"), "a", "string").GetText());
+                        //Console.WriteLine(codeGenerator.CreateMethod2("TST"));
                         break;
                     case ("11"):
                         samples.CreatingMethodExpression();
