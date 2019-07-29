@@ -23,9 +23,10 @@ namespace BogdanovUtilitisLib.Roslyn
     /// </summary>
     /// <remarks>
     /// Реализовать:
-    /// 1. Создание метода;
-    /// 1.1. Создание метода с параметрами входа;
+    /// v------1. Создание метода;
+    /// v------1.1. Создание метода с параметрами входа;
     /// 1.2. Создание метода с атрибутами;
+    /// 1.3. Сделать return в методе, если возвращается не void;
     /// 2. Создание конструктора;
     /// 3. Создание выражения (примеры: M = P();, var A = B;, C = D;);
     /// 4. Вызов метода(пример: Meth1(););
@@ -79,6 +80,49 @@ namespace BogdanovUtilitisLib.Roslyn
             return method;
         }
 
+        /// <summary>
+        /// Процедура присваивания левой части правой
+        /// </summary>
+        /// <param name="leftPart">Левая часть выражения присваивания</param>
+        /// <param name="expression">Выражение присваивания</param>
+        /// <param name="rightPart">Правая часть выражения присваивания</param>
+        /// <returns></returns>
+        public ExpressionStatementSyntax CreatingAssignmentExpression(
+            string leftPart, ExpressionTypes expression, string rightPart)
+        {
+            var expr = SyntaxFactory.ExpressionStatement(
+                SyntaxFactory.AssignmentExpression(
+                SyntaxKind.SimpleAssignmentExpression,
+                SyntaxFactory.IdentifierName(leftPart),
+                SyntaxFactory.Token(ExpressionType.Expression(expression)),
+                SyntaxFactory.IdentifierName(rightPart))).WithSemicolonToken(
+                SyntaxFactory.Token(SyntaxKind.SemicolonToken))
+                .NormalizeWhitespace();
+            return expr;
+        }
+
+        /// <summary>
+        /// Процедура вызова процедуры с параметрами
+        /// </summary>
+        /// <param name="procedure">Наименование процедуры</param>
+        /// <param name="parameters">Параметры присваиваемые процедуре</param>
+        /// <returns></returns>
+        public ExpressionStatementSyntax CreatingCallProcedureExpression(string procedure, List<string> parameters)
+        {
+            string st = "";
+            if (!(parameters == null || parameters.Count == 0))
+            {
+                st = string.Join(", ", parameters);
+            }
+            ArgumentListSyntax args = SyntaxFactory.ParseArgumentList($"({st})");
+            var expr = SyntaxFactory.ExpressionStatement(
+                SyntaxFactory.InvocationExpression(
+                SyntaxFactory.IdentifierName(procedure), args)).WithSemicolonToken(
+                SyntaxFactory.Token(SyntaxKind.SemicolonToken))
+                .NormalizeWhitespace();
+            return expr;
+        }
+
         public MethodDeclarationSyntax CreateMethod2(string methodName,
     AccessStatuses accessStatus = AccessStatuses.Public,
     string outputType = "void")
@@ -130,6 +174,16 @@ namespace BogdanovUtilitisLib.Roslyn
     }
 
     /// <summary>
+    /// Тип выражения
+    /// </summary>
+    public enum ExpressionTypes
+    {
+        Equal,
+        PlusEqual,
+        MinusEqual
+    }
+
+    /// <summary>
     /// Статус доступа
     /// </summary>
     static class AccessStatus
@@ -151,6 +205,30 @@ namespace BogdanovUtilitisLib.Roslyn
                     break;
                 default:
                     throw new Exception("Данный статус не соответсвует статусам доступа");
+            }
+            return syntaxKind;
+        }
+    }
+
+    static class ExpressionType
+    {
+        public static SyntaxKind Expression(ExpressionTypes expressionType)
+        {
+            SyntaxKind syntaxKind;
+            switch (expressionType)
+            {
+                case ExpressionTypes.Equal:
+                    syntaxKind = SyntaxKind.EqualsToken;
+                    break;
+                case ExpressionTypes.PlusEqual:
+                    syntaxKind = SyntaxKind.PlusEqualsToken;
+                    break;
+                case ExpressionTypes.MinusEqual:
+                    syntaxKind = SyntaxKind.MinusEqualsToken;
+                    break;
+                default:
+                    throw new Exception("Данный тип присваивания " +
+                        "не соответствует обрабатываемым типам присваивания");
             }
             return syntaxKind;
         }
