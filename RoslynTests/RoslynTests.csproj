@@ -99,6 +99,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyntaxFactorySamples.cs" />
     <Compile Include="SyntaxTreeAnalyzeSamples.cs" />
+    <Compile Include="TestFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

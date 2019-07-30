@@ -28,8 +28,8 @@ namespace BogdanovUtilitisLib.Roslyn
     /// 1.2. Создание метода с атрибутами;
     /// 1.3. Сделать return в методе, если возвращается не void;
     /// 2. Создание конструктора;
-    /// 3. Создание выражения (примеры: M = P();, var A = B;, C = D;);
-    /// 4. Вызов метода(пример: Meth1(););
+    /// v------3. Создание выражения (примеры: M = P();, var A = B;, C = D;);
+    /// v------4. Вызов метода(пример: Meth1(););
     /// 5. Вставка выражения или вызова метода в любое место конструктора или метода;
     /// 6. Создание try...catch...
     /// 7. Создание полей в классе;
@@ -123,6 +123,80 @@ namespace BogdanovUtilitisLib.Roslyn
             return expr;
         }
 
+        /// <summary>
+        /// Добавление выражения в тело метода
+        /// </summary>
+        /// <param name="method">Метод</param>
+        /// <param name="expression">Добавляемое выражение</param>
+        /// <returns></returns>
+        public MethodDeclarationSyntax AddExpressionToMethodsBody(MethodDeclarationSyntax method,
+            ExpressionStatementSyntax expression)
+        {
+            method = method.AddBodyStatements(expression).NormalizeWhitespace();
+            return method;
+        }
+
+        /// <summary>
+        /// Добавление выражения в начало тела метода
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public MethodDeclarationSyntax AddExpressionToStartMethodsBody(MethodDeclarationSyntax method,
+            ExpressionStatementSyntax expression)
+        {
+            if (method.Body.ChildNodes().Count() == 0)
+            {
+                return method.AddBodyStatements(expression).NormalizeWhitespace();
+            }
+            BlockSyntax newBlock = method.Body.InsertNodesBefore(method.Body
+                .ChildNodes().ElementAt(0),
+                new List<SyntaxNode> { expression }).NormalizeWhitespace();
+            method = method.ReplaceNode(method.Body, newBlock);
+            return method;
+        }
+
+        /// <summary>
+        /// Добавление выражения в конец метода или перед return
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public MethodDeclarationSyntax AddExpressionToFinishOrBeforeReturnMethodsBody(MethodDeclarationSyntax method,
+            ExpressionStatementSyntax expression)
+        {
+            IEnumerable<SyntaxNode> retStatements = method.Body.ChildNodes().Where(p =>
+                p.Kind() == SyntaxKind.ReturnStatement);
+            BlockSyntax newBlock = method.Body;
+            if (retStatements.Count() == 0)
+            {
+                return AddExpressionToMethodsBody(method, expression);
+            }
+            else
+            {
+                foreach (var item in retStatements)
+                {
+                    newBlock = newBlock.InsertNodesBefore(item, new List<SyntaxNode> { expression });
+                    //Console.WriteLine(item.GetText());
+                }
+            }
+            method = method.ReplaceNode(method.Body, newBlock.NormalizeWhitespace());
+            return method;
+            //throw new Exception("Не реализовано");
+        }
+
+        /// <summary>
+        /// Добавление выражения внутрь catch конструкции try..catch..
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public MethodDeclarationSyntax AddExpressionToCatchConstructionMethodsBody(MethodDeclarationSyntax method,
+            ExpressionStatementSyntax expression)
+        {
+            throw new Exception("Не реализовано");
+        }
+
         public MethodDeclarationSyntax CreateMethod2(string methodName,
     AccessStatuses accessStatus = AccessStatuses.Public,
     string outputType = "void")
@@ -161,6 +235,9 @@ namespace BogdanovUtilitisLib.Roslyn
             //SyntaxFactory.Token(default(syntaxl))
             return expr.NormalizeWhitespace();
         }
+
+        private void Test1()
+        { }
     }
 
     /// <summary>

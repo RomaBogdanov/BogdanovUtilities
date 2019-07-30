@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace RoslynTests
 {
     class Program
     {
         static void Main(string[] args)
         {
-            BogdanovUtilitisLib.Roslyn.CodeGenerator codeGenerator = new BogdanovUtilitisLib.Roslyn.CodeGenerator();
+            BogdanovUtilitisLib.Roslyn.CodeGenerator codeGenerator =
+                new BogdanovUtilitisLib.Roslyn.CodeGenerator();
+            BogdanovUtilitisLib.Roslyn.CodeAnalyzer codeAnalyzer =
+                new BogdanovUtilitisLib.Roslyn.CodeAnalyzer(
+                    @"C:\BogdanovR\MyReps\BogdanovUtilities\RoslynTests\TestFile.cs");
+            //@"C:\BogdanovR\MyReps\BogdanovUtilities\BogdanovUtilitisLib\Roslyn\CodeAnalyzer.cs");
+            //@"C:\BogdanovR\MyReps\BogdanovUtilities\BogdanovUtilitisLib\Roslyn\CodeGenerator.cs");
 
             SyntaxFactorySamples samples = new SyntaxFactorySamples();
             SyntaxTreeAnalyzeSamples stas = new SyntaxTreeAnalyzeSamples();
@@ -18,20 +28,17 @@ namespace RoslynTests
                 Console.WriteLine("1 - посмотреть пример создания метода");
                 Console.WriteLine("2 - посмотреть пример создания выражения присваивания");
                 Console.WriteLine("3 - посмотреть пример создания кода вызова процедуры");
-                Console.WriteLine("11 - посмотреть пример создания выражения " +
-                "вызова метода");
-                Console.WriteLine("12 - посмотреть пример создания выражения " +
-                    "присваивания");
-                Console.WriteLine("13 - посмотреть пример объединения выражений " +
-                    "в один блок");
-                Console.WriteLine("14 - посмотреть пример создания метода");
-                Console.WriteLine("15 - посмотреть пример создания метода и " +
-                    "добавления постфактум элементов в его тело");
-                Console.WriteLine("17 - посмотреть пример вставки объединения " +
-                    "выражений в метод(конструктор)");
-                Console.WriteLine("21 - посмотреть пример нахождения конструктора");
+                Console.WriteLine("4 - посмотреть пример создания кода внутри метода");
+
+                Console.WriteLine("11 - анализ кода на наличие конструкторов");
+                Console.WriteLine("12 - анализ кода на наличие методов");
+                Console.WriteLine("13 - добавляем в конец метода код");
+                Console.WriteLine("14 - добавляем в начало метода код");
+                Console.WriteLine("15 - добавляем код перед return, если он есть, если нет, в конец метода");
+                Console.WriteLine("21 - сделать тестовую генерацию файла с методами обложенными логами");
+                /*Console.WriteLine("21 - посмотреть пример нахождения конструктора");
                 Console.WriteLine("22 - посмотреть пример вставки объединения " +
-                    "выражений в метод(конструктор)");
+                    "выражений в метод(конструктор)");*/
                 string input = Console.ReadLine();
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -111,23 +118,69 @@ namespace RoslynTests
                         }
                         Console.WriteLine(codeGenerator.CreatingCallProcedureExpression(mth, pars).GetText());
                         break;
+                    case ("4"):
+                        var m = codeGenerator.CreateMethod("Meth");
+                        m = codeGenerator.AddParameterToMethod(m, "a", "string");
+                        m = codeGenerator.AddExpressionToMethodsBody(m,
+                            codeGenerator.CreatingAssignmentExpression("A",
+                            BogdanovUtilitisLib.Roslyn.ExpressionTypes.PlusEqual, "B"));
+                        m = codeGenerator.AddExpressionToMethodsBody(m,
+                            codeGenerator.CreatingCallProcedureExpression("A",
+                            new List<string> { "a1", "a2" }));
+                        Console.WriteLine(m.GetText());
+                        break;
                     case ("11"):
-                        samples.CreatingMethodExpression();
+                        List<Microsoft.CodeAnalysis.SyntaxNode> constructs = codeAnalyzer.SearchConstructors();
+                        foreach (var item in constructs)
+                        {
+                            Console.WriteLine(item.GetText());
+                            Console.WriteLine();
+                        }
                         break;
                     case ("12"):
-                        samples.CreatingAssignmentExpression();
+                        List<Microsoft.CodeAnalysis.SyntaxNode> methods = codeAnalyzer.SearchMethods();
+                        foreach (var item in methods)
+                        {
+                            Console.WriteLine(item.GetText());
+                            Console.WriteLine();
+                        }
                         break;
                     case ("13"):
-                        samples.UnionExpressions();
+                        List<SyntaxNode> methods2 = codeAnalyzer.SearchMethods();
+                        SyntaxNode root = codeAnalyzer.SyntaxTree.GetRoot();
+                        root = root.ReplaceNodes(methods2, (x, y) =>
+                        {
+                            y = codeGenerator.AddExpressionToMethodsBody(x as MethodDeclarationSyntax,
+                                codeGenerator.CreatingCallProcedureExpression("Logger.Debug", null));
+                            return x.ReplaceNode(x, y);
+                        }).NormalizeWhitespace();
+                        Console.WriteLine(root.GetText());
                         break;
                     case ("14"):
-                        samples.CreateMethod();
+                        List<SyntaxNode> methods3 = codeAnalyzer.SearchMethods();
+                        SyntaxNode root2 = codeAnalyzer.SyntaxTree.GetRoot();
+                        IEnumerable<SyntaxNode> nodes = root2.DescendantNodes().Where(
+                            p => p.Kind() == SyntaxKind.MethodDeclaration);
+                        foreach (var item in nodes)
+                        {
+                            var t = codeGenerator.AddExpressionToStartMethodsBody(item as MethodDeclarationSyntax,
+                                codeGenerator.CreatingCallProcedureExpression("Logger.Debug", null));
+                            Console.WriteLine(t.GetText());
+                        }
                         break;
                     case ("15"):
-                        samples.CreateMethodAndAddBody();
+                        IEnumerable<SyntaxNode> nodes2 = codeAnalyzer.SyntaxTree.GetRoot()
+                            .DescendantNodes().Where(
+                            p => p.Kind() == SyntaxKind.MethodDeclaration);
+                        foreach (var item in nodes2)
+                        {
+                            var t = codeGenerator.AddExpressionToFinishOrBeforeReturnMethodsBody(item as MethodDeclarationSyntax,
+                                codeGenerator.CreatingCallProcedureExpression("Logger.Debug", null));
+                            Console.WriteLine(t.GetText());
+                        }
                         break;
                     case ("21"):
-                        stas.SearchConstructor();
+                        GenerateFileWithLogs(codeAnalyzer, codeGenerator);
                         break;
                     case ("22"):
                         stas.AddingExpressionsToConstructor();
@@ -135,10 +188,33 @@ namespace RoslynTests
                     default:
                         break;
                 }
-                Finish:
+            Finish:
                 Console.ResetColor();
                 Console.WriteLine();
             }
+        }
+
+        static void GenerateFileWithLogs(BogdanovUtilitisLib.Roslyn.CodeAnalyzer analyzer, 
+            BogdanovUtilitisLib.Roslyn.CodeGenerator generator)
+        {
+            var root = analyzer.SyntaxTree.GetRoot();
+            var methods = analyzer.SearchMethods();
+            var expression1 = generator.CreatingCallProcedureExpression(
+                "Logger.Debug", new List<string> { "\"Начало метода\"" });
+            var expression2 = generator.CreatingCallProcedureExpression(
+                "Logger.Debug", new List<string> { "\"Окончание метода\"" });
+
+            Func<SyntaxNode, SyntaxNode, SyntaxNode> func = (x, y) =>
+             {
+                 y = generator.AddExpressionToStartMethodsBody(
+                    x as MethodDeclarationSyntax, expression1);
+                 y = generator.AddExpressionToFinishOrBeforeReturnMethodsBody(
+                     y as MethodDeclarationSyntax, expression2);
+                 return y;
+             };
+            root = root.ReplaceNodes(methods, func).NormalizeWhitespace();
+            Console.WriteLine(root.GetText());
+            System.IO.File.WriteAllText("Test.cs", root.GetText().ToString(), Encoding.UTF8);
         }
     }
 }

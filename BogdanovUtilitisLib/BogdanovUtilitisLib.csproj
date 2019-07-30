@@ -116,6 +116,7 @@
     <Compile Include="MVVMUtilsWrapper\RelayCommand.cs" />
     <Compile Include="Office\Spreadsheet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Roslyn\CodeAnalyzer.cs" />
     <Compile Include="Roslyn\CodeGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
