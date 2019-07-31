@@ -28,6 +28,10 @@ namespace BogdanovUtilitisLib.Roslyn
     /// 4. Вычленение внутри класса свойств;
     /// 5. Вычленение внутри класса полей;
     /// v-------6. Вычленение внутри файла конструкторов;
+    /// 7. Получить список подключенных пространств имён;
+    /// 7.1. Добавление пространства имён;
+    /// 7.2. Удаление пространства имён;
+    /// 7.3. Редактирование пространства имён.
     /// </remarks>
     public class CodeAnalyzer
     {
@@ -68,6 +72,41 @@ namespace BogdanovUtilitisLib.Roslyn
             IEnumerable<SyntaxNode> nodes = root.DescendantNodes().Where(
                 p => p.Kind() == SyntaxKind.MethodDeclaration);
 
+            return nodes.ToList();
+        }
+
+        /// <summary>
+        /// Получает список пространств имён, на которые ссылается файл
+        /// </summary>
+        /// <remarks>
+        /// Например:
+        /// <code>
+        /// using System;
+        /// using ...
+        /// ...</code>
+        /// </remarks>
+        /// <returns></returns>
+        public List<SyntaxNode> SearchLinkedNamespaces()
+        {
+            SyntaxNode root = syntaxTree.GetRoot();
+            var nodes = root.DescendantNodes().Where(p => p.Kind() == SyntaxKind.UsingDirective);
+            return nodes.ToList();
+        }
+
+        /// <summary>
+        /// Получает список пространств имён, на которые ссылается узел
+        /// </summary>
+        /// <remarks>
+        /// Например:
+        /// <code>
+        /// using System;
+        /// using ...
+        /// ...</code>
+        /// </remarks>
+        /// <returns></returns>
+        public List<SyntaxNode> SearchLinkedNamespaces(SyntaxNode node)
+        {
+            var nodes = node.DescendantNodes().Where(p => p.Kind() == SyntaxKind.UsingDirective);
             return nodes.ToList();
         }
     }

@@ -34,6 +34,7 @@ namespace BogdanovUtilitisLib.Roslyn
     /// 6. Создание try...catch...
     /// 7. Создание полей в классе;
     /// 8. Создание класса;
+    /// 9. Создание пространства имён, на которое ссылается файл.
     /// </remarks>
     public class CodeGenerator
     {
@@ -145,6 +146,10 @@ namespace BogdanovUtilitisLib.Roslyn
         public MethodDeclarationSyntax AddExpressionToStartMethodsBody(MethodDeclarationSyntax method,
             ExpressionStatementSyntax expression)
         {
+            if (method.Body == null)
+            {
+                return method;
+            }
             if (method.Body.ChildNodes().Count() == 0)
             {
                 return method.AddBodyStatements(expression).NormalizeWhitespace();
@@ -165,6 +170,10 @@ namespace BogdanovUtilitisLib.Roslyn
         public MethodDeclarationSyntax AddExpressionToFinishOrBeforeReturnMethodsBody(MethodDeclarationSyntax method,
             ExpressionStatementSyntax expression)
         {
+            if (method.Body == null)
+            {
+                return method;
+            }
             IEnumerable<SyntaxNode> retStatements = method.Body.ChildNodes().Where(p =>
                 p.Kind() == SyntaxKind.ReturnStatement);
             BlockSyntax newBlock = method.Body;
@@ -197,6 +206,16 @@ namespace BogdanovUtilitisLib.Roslyn
             throw new Exception("Не реализовано");
         }
 
+        /// <summary>
+        /// Создаёт ссылку на пространства имён.
+        /// </summary>
+        /// <returns></returns>
+        public UsingDirectiveSyntax CreatingUsingDirective(string name)
+        {
+            return SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(name))
+                .NormalizeWhitespace();
+        }
+        
         public MethodDeclarationSyntax CreateMethod2(string methodName,
     AccessStatuses accessStatus = AccessStatuses.Public,
     string outputType = "void")

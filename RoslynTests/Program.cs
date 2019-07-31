@@ -29,12 +29,14 @@ namespace RoslynTests
                 Console.WriteLine("2 - посмотреть пример создания выражения присваивания");
                 Console.WriteLine("3 - посмотреть пример создания кода вызова процедуры");
                 Console.WriteLine("4 - посмотреть пример создания кода внутри метода");
+                Console.WriteLine("5 - посмотреть пример создания ссылки на пространство имён");
 
                 Console.WriteLine("11 - анализ кода на наличие конструкторов");
                 Console.WriteLine("12 - анализ кода на наличие методов");
                 Console.WriteLine("13 - добавляем в конец метода код");
                 Console.WriteLine("14 - добавляем в начало метода код");
                 Console.WriteLine("15 - добавляем код перед return, если он есть, если нет, в конец метода");
+                Console.WriteLine("16 - анализ кода на наличие пространств имён");
                 Console.WriteLine("21 - сделать тестовую генерацию файла с методами обложенными логами");
                 /*Console.WriteLine("21 - посмотреть пример нахождения конструктора");
                 Console.WriteLine("22 - посмотреть пример вставки объединения " +
@@ -129,6 +131,11 @@ namespace RoslynTests
                             new List<string> { "a1", "a2" }));
                         Console.WriteLine(m.GetText());
                         break;
+                    case ("5"):
+                        Console.Write("Введите пространство имён:");
+                        var m1 = codeGenerator.CreatingUsingDirective($"{Console.ReadLine()}");
+                        Console.WriteLine(m1.GetText());
+                        break;
                     case ("11"):
                         List<Microsoft.CodeAnalysis.SyntaxNode> constructs = codeAnalyzer.SearchConstructors();
                         foreach (var item in constructs)
@@ -179,6 +186,13 @@ namespace RoslynTests
                             Console.WriteLine(t.GetText());
                         }
                         break;
+                    case ("16"):
+                        var a = codeAnalyzer.SearchLinkedNamespaces();
+                        foreach (var item in a)
+                        {
+                            Console.WriteLine(item.GetText());
+                        }
+                        break;
                     case ("21"):
                         GenerateFileWithLogs(codeAnalyzer, codeGenerator);
                         break;
@@ -194,10 +208,11 @@ namespace RoslynTests
             }
         }
 
-        static void GenerateFileWithLogs(BogdanovUtilitisLib.Roslyn.CodeAnalyzer analyzer, 
+        static void GenerateFileWithLogs(BogdanovUtilitisLib.Roslyn.CodeAnalyzer analyzer,
             BogdanovUtilitisLib.Roslyn.CodeGenerator generator)
         {
             var root = analyzer.SyntaxTree.GetRoot();
+            // вставляем в методы логи
             var methods = analyzer.SearchMethods();
             var expression1 = generator.CreatingCallProcedureExpression(
                 "Logger.Debug", new List<string> { "\"Начало метода\"" });
@@ -212,7 +227,15 @@ namespace RoslynTests
                      y as MethodDeclarationSyntax, expression2);
                  return y;
              };
+
             root = root.ReplaceNodes(methods, func).NormalizeWhitespace();
+            // вставляем пространство имён
+            var usdir = generator.CreatingUsingDirective($"Logging");
+            var usdirs = analyzer.SearchLinkedNamespaces(root);
+
+            root = root.InsertNodesAfter(usdirs[usdirs.Count - 1],
+                new List<SyntaxNode> { usdir }).NormalizeWhitespace();
+
             Console.WriteLine(root.GetText());
             System.IO.File.WriteAllText("Test.cs", root.GetText().ToString(), Encoding.UTF8);
         }
