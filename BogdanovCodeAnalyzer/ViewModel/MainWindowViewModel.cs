@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.ServiceModel;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using BogdanovUtilitisLib.MVVMUtilsWrapper;
 using BogdanovUtilitisLib.LogsWrapper;
 using r = BogdanovUtilitisLib.Roslyn;
@@ -21,8 +22,9 @@ namespace BogdanovCodeAnalyzer.ViewModel
     /// </summary>
     /// <remarks>
     /// Реализовать следующий функционал по логам:
-    /// 1. Помечать файлы, которые не надо покрывать логами;
-    /// 2. Помечать методы, которые не надо покрывать логами;
+    /// 1.1. Помечать файлы, которые не надо покрывать логами;
+    /// 1.2. Помечать методы, которые не надо покрывать логами;
+    /// 1.3. Помечать классы, которые не надо покрывать логами;
     /// 3. Обработка файла логгирования:
     /// 3.1. Получение частотности входа в метод;
     /// 3.2. Получение частотности использования класса;
@@ -50,6 +52,10 @@ namespace BogdanovCodeAnalyzer.ViewModel
         private string pathToAnalyzeFiles;
         private string textInTextBlock;
         private string textAddedNamespase;
+        private string logFilesPath = @"C:\BogdanovR\Experiments\Sintez\SintezOSPClient\bin\Debug\Logs\Log.log";
+        private bool isFrequenceRepeatStrings;
+        private bool isFrequenceRepeatFiles;
+        private ObservableCollection<Log> logs;
 
         /// <summary>
         /// Сообщения, получаемые от клиентов.
@@ -60,6 +66,19 @@ namespace BogdanovCodeAnalyzer.ViewModel
             set
             {
                 messages = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Информация по логам.
+        /// </summary>
+        public ObservableCollection<Log> Logs
+        {
+            get => logs;
+            set
+            {
+                logs = value;
                 OnPropertyChanged();
             }
         }
@@ -77,6 +96,9 @@ namespace BogdanovCodeAnalyzer.ViewModel
             }
         }
 
+        /// <summary>
+        /// Путь к файлам, которые будут покрываться логами.
+        /// </summary>
         public string PathToAnalyzeFiles
         {
             get => pathToAnalyzeFiles;
@@ -87,6 +109,9 @@ namespace BogdanovCodeAnalyzer.ViewModel
             }
         }
 
+        /// <summary>
+        /// Текст выводимый в текстовый блок.
+        /// </summary>
         public string TextInTextBlock
         {
             get => textInTextBlock;
@@ -97,12 +122,48 @@ namespace BogdanovCodeAnalyzer.ViewModel
             }
         }
 
+        /// <summary>
+        /// Наименование добавляемого пространства имён.
+        /// </summary>
         public string TextAddedNamespase
         {
             get => textAddedNamespase;
             set
             {
                 textAddedNamespase = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Путь к анализируемому лог-файлу.
+        /// </summary>
+        public string LogFilesPath
+        {
+            get => logFilesPath;
+            set
+            {
+                logFilesPath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsFrequenceRepeatStrings
+        {
+            get => isFrequenceRepeatStrings;
+            set
+            {
+                isFrequenceRepeatStrings = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsFrequenceRepeatFiles
+        {
+            get => isFrequenceRepeatFiles;
+            set
+            {
+                isFrequenceRepeatFiles = value;
                 OnPropertyChanged();
             }
         }
@@ -117,11 +178,17 @@ namespace BogdanovCodeAnalyzer.ViewModel
         /// </summary>
         public ICommand CreateLogsInCodeCommand { get; set; }
 
+        /// <summary>
+        /// Команда исследования логов
+        /// </summary>
+        public ICommand SearchFrequencyLogsCommand { get; set; }
+
         public MainWindowViewModel()
         {
             AggregatorMessages.OnMessageFromClient += AggregatorMessages_OnMessageFromClient;
             StartStopServerCommand = new RelayCommand(obj => StartStopServer());
             CreateLogsInCodeCommand = new RelayCommand(obj => CreateLogsInCode());
+            SearchFrequencyLogsCommand = new RelayCommand(obj => SearchFrequencyLogs());
         }
 
         /// <summary>
@@ -195,6 +262,72 @@ namespace BogdanovCodeAnalyzer.ViewModel
         }
 
         /// <summary>
+        /// Анализ лога.
+        /// </summary>
+        private void SearchFrequencyLogs()
+        {
+            if (IsFrequenceRepeatStrings)
+            {
+                if (Logs != null)
+                {
+                    Logs.Clear();
+                }
+                else
+                {
+                    Logs = new ObservableCollection<Log>();
+                }
+                var logs = System.IO.File.ReadLines(LogFilesPath, Encoding.Default);
+                //var aa = System.IO.File.ReadAllText(LogFilesPath, Encoding.Default);
+                string str = "";
+                Dictionary<string, long> dict = new Dictionary<string, long>();
+                foreach (var item in logs)
+                {
+                    str = item.Substring(25);
+                    if (dict.Keys.Contains(str))
+                    {
+                        dict[str]++;
+                    }
+                    else
+                    {
+                        dict.Add(str, 1);
+                    }
+                }
+                var a = from l in dict.OrderByDescending(p => p.Value)
+                        select new Log { MsgLog = l.Key, Count = l.Value };
+                Logs = new ObservableCollection<Log>(a);
+            }
+            if (IsFrequenceRepeatFiles)
+            {
+                if (Logs != null)
+                {
+                    Logs.Clear();
+                }
+                else
+                {
+                    Logs = new ObservableCollection<Log>();
+                }
+                var logs = System.IO.File.ReadLines(LogFilesPath, Encoding.Default);
+                string str = "";
+                Dictionary<string, long> dict = new Dictionary<string, long>();
+                foreach (var item in logs)
+                {
+                    str = Regex.Match(item, @"C:\\.*").Value;
+                    if (dict.Keys.Contains(str))
+                    {
+                        dict[str]++;
+                    }
+                    else
+                    {
+                        dict.Add(str, 1);
+                    }
+                }
+                var a = from l in dict.OrderByDescending(p => p.Value)
+                        select new Log { MsgLog = l.Key, Count = l.Value };
+                Logs = new ObservableCollection<Log>(a);
+            }
+        }
+
+        /// <summary>
         /// Добавление сообщения.
         /// </summary>
         /// <param name="message"></param>
@@ -233,6 +366,15 @@ namespace BogdanovCodeAnalyzer.ViewModel
         public string Tag { get; set; }
         public string Method { get; set; }
         public string File { get; set; }
+    }
+
+    /// <summary>
+    /// Информация по логу.
+    /// </summary>
+    class Log
+    {
+        public string MsgLog { get; set; }
+        public long Count { get; set; }
     }
 
     static class AggregatorMessages
