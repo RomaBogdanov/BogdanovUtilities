@@ -26,5 +26,10 @@ namespace BogdanovCodeAnalyzer
             Logger.InitLogger();
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

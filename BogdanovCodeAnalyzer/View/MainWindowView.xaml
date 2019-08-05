@@ -11,7 +11,7 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <TabControl  Margin="5" >
+        <TabControl  Margin="5">
             <TabItem Header="Сервер">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -92,7 +92,7 @@
                                 <RadioButton 
                                     IsChecked="{Binding IsFrequenceRepeatFiles, Mode=TwoWay}"
                                     Content="Частотность обращения к методам файла" HorizontalAlignment="Left" Margin="10,30,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-                                
+
 
                             </Grid>
                             <ListBox Grid.Row="1" ItemsSource="{Binding Logs}">
@@ -108,6 +108,38 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
+            </TabItem>
+
+            <TabItem Header="Работа с БД T-SQL">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="44*"/>
+                        <RowDefinition Height="237*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="57*"/>
+                        <ColumnDefinition Width="137*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Строка подключения к БД"/>
+                    <TextBox Height="23" TextWrapping="Wrap" Text="{Binding ConnectionToDBStr, Mode=TwoWay}" Grid.Column="1"/>
+                    <TextBox Height="23" TextWrapping="Wrap" Text="{Binding ValueToSearchInDbTabs, Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
+                    <Label Content="Значение, которое ищется в БД" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Width="201" Grid.Row="1"/>
+                    <Button Content="Button" Command="{Binding SearchValuesInFieldsDbCommand, Mode=TwoWay}" Grid.Row="2"/>
+                    <DataGrid ItemsSource="{Binding DV, Mode=TwoWay}" Grid.Column="1" Grid.Row="3" Margin="5">
+
+                    </DataGrid>
+                    <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Connections}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <CheckBox Grid.Row="3" Content="{Binding ConnectionString, Mode=TwoWay}" IsChecked="{Binding IsChecked}"></CheckBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </TabItem>
         </TabControl>
 
