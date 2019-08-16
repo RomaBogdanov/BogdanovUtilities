@@ -13,6 +13,15 @@ namespace RoslynTests
 
         public void Meth1()
         {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
 
         }
 
@@ -23,10 +32,28 @@ namespace RoslynTests
             {
                 c += a;
             }
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public string Meth1(string a)
         {
+            try
+            {
+
+            }
+            catch
+            {
+
+                throw;
+            }
             string b = $"Test: {a}";
             return b;
         }

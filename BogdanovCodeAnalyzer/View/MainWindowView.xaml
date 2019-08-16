@@ -63,6 +63,11 @@
                    Text="{Binding TextInTextBlock, Mode=TwoWay}" Grid.Row="3"/>
                         </Grid>
                     </TabItem>
+                    <TabItem Header="Покрытие лога">
+                        <View:CoverCodeView>
+                            
+                        </View:CoverCodeView>
+                    </TabItem>
                     <TabItem Header="Анализ лога">
                         <Grid>
                             <Grid.ColumnDefinitions>

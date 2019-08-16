@@ -197,13 +197,57 @@ namespace BogdanovUtilitisLib.Roslyn
         /// <summary>
         /// Добавление выражения внутрь catch конструкции try..catch..
         /// </summary>
-        /// <param name="method"></param>
-        /// <param name="expression"></param>
+        /// <param name="catchClause"></param>
+        /// <param name="expressionStatementSyntax">Выражение в начале кода.</param>
+        /// <param name="paramName"></param>
+        /// <param name="paramType"></param>
         /// <returns></returns>
-        public MethodDeclarationSyntax AddExpressionToCatchConstructionMethodsBody(MethodDeclarationSyntax method,
-            ExpressionStatementSyntax expression)
+        public CatchClauseSyntax AddExpressionToCatchConstructionMethodsBody(CatchClauseSyntax catchClause, 
+            string calledProc, string paramName = "", string paramType = "")
         {
-            throw new Exception("Не реализовано");
+            CodeAnalyzer codeAnalyzer = new CodeAnalyzer();
+            ExpressionStatementSyntax exp = null;
+            if (catchClause.Declaration == null || catchClause.Declaration.Identifier.ValueText == null)
+            {
+                catchClause = AddParameterToCatch(catchClause, paramName, paramType);
+                exp = CreatingCallProcedureExpression(calledProc,
+                    new List<string> { $"{paramName}.Message" });
+            }
+            else
+            {
+                exp = CreatingCallProcedureExpression(calledProc,
+                    new List<string> { $"{catchClause.Declaration.Identifier.ValueText}.Message" });
+            }
+
+            List<StatementSyntax> lst = new List<StatementSyntax>();
+            lst.Add(exp);
+            lst.AddRange(catchClause.Block.Statements);
+            catchClause = catchClause.WithBlock(SyntaxFactory.Block(lst)).NormalizeWhitespace();
+            return catchClause;
+        }
+
+        /// <summary>
+        /// Добавление параметра в catch
+        /// </summary>
+        public CatchClauseSyntax AddParameterToCatch(CatchClauseSyntax catchClauseSyntax,
+            string paramName = "", string paramType = "")
+        {
+            CatchDeclarationSyntax catchDeclarationSyntax = SyntaxFactory
+                .CatchDeclaration(SyntaxFactory.ParseTypeName($"{paramType} {paramName}"));
+            return catchClauseSyntax.WithDeclaration(catchDeclarationSyntax);
+            /*if (catchClauseSyntax.Declaration == null)
+            {
+                SyntaxToken catchKeyword = SyntaxFactory.ParseToken("catch");
+                CatchDeclarationSyntax catchDeclarationSyntax = SyntaxFactory.CatchDeclaration(SyntaxFactory.ParseTypeName("Exception err"));
+                CatchFilterClauseSyntax catchFilterClauseSyntax = SyntaxFactory.CatchFilterClause(SyntaxFactory.ParseExpression("asf"));
+                BlockSyntax blockSyntax = SyntaxFactory.Block();
+                var a = catchClauseSyntax.Update(catchKeyword, catchDeclarationSyntax, null, blockSyntax).NormalizeWhitespace();
+                var c = catchClauseSyntax.WithDeclaration(catchDeclarationSyntax);
+                Console.WriteLine(c);
+                var b = catchClauseSyntax.AddBlockStatements(this.CreatingAssignmentExpression("a", ExpressionTypes.PlusEqual, "b")).NormalizeWhitespace();
+                Console.WriteLine(b.GetText());
+            }
+            return null;*/
         }
 
         /// <summary>
@@ -215,7 +259,7 @@ namespace BogdanovUtilitisLib.Roslyn
             return SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(name))
                 .NormalizeWhitespace();
         }
-        
+
         public MethodDeclarationSyntax CreateMethod2(string methodName,
     AccessStatuses accessStatus = AccessStatuses.Public,
     string outputType = "void")

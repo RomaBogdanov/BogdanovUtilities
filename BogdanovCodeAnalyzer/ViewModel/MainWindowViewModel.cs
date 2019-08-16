@@ -43,24 +43,15 @@ namespace BogdanovCodeAnalyzer.ViewModel
     /// 9.1. Научиться находить неизменяемую часть состояний объектов;
     /// 9.2. Научиться находить изменяемую часть состояний объектов;
     /// 10. Научиться удалять обкладку логами без отката системы.
-    /// 
-    /// Реализация функционала по взаимодействию с БД T-SQL:
-    /// 1. Уметь находить все таблицы с колонками в базе данных содержащие поле с данными;
-    /// 1.1. Тоже самое, но с массивом полей данных;
-    /// 2. Уметь находить все таблицы с колонками в массиве баз данных содержащие поле с данными;
-    /// 2.1. Тоже самое, но с массивом полей данных;
-    /// 3. Исключать таблицы из рассмотрения;
-    /// 4. Научиться логгировать изменения в БД;
-    /// 5. Научиться делать и восстанавливать бэкапы.
     /// </remarks>
     class MainWindowViewModel : NotifyPropertyChanged
     {
         ServiceHost host;
         private string taskToOpenOrCloseServer = "Запустить сервер";
         private ObservableCollection<Message> messages = new ObservableCollection<Message>();
-        private string pathToAnalyzeFiles;
+        private string pathToAnalyzeFiles = @"C:\BogdanovR\Experiments\Sintez\";
         private string textInTextBlock;
-        private string textAddedNamespase;
+        private string textAddedNamespase = "SintezLibrary";
         private string logFilesPath = @"C:\BogdanovR\Experiments\Sintez\SintezOSPClient\bin\Debug\Logs\Log.log";
         private bool isFrequenceRepeatStrings;
         private bool isFrequenceRepeatFiles;
@@ -244,6 +235,8 @@ namespace BogdanovCodeAnalyzer.ViewModel
                 //TextInTextBlock += item + Environment.NewLine;
                 codeAnalyzer = new r.CodeAnalyzer(item);
                 var root = codeAnalyzer.SyntaxTree.GetRoot();
+
+                // вставляем логи в начало и конец методов
                 var methods = codeAnalyzer.SearchMethods();
                 var expression1 = codeGenerator.CreatingCallProcedureExpression(
                     "Logger.Debug", new List<string> { "\"Начало метода\"" });
@@ -258,7 +251,19 @@ namespace BogdanovCodeAnalyzer.ViewModel
                         y as MethodDeclarationSyntax, expression2);
                     return y;
                 };
-                root = root.ReplaceNodes(methods, func).NormalizeWhitespace();
+                root = root.ReplaceNodes(methods, func);
+
+                // вставляем логи в catch
+                var catchs = codeAnalyzer.SearchCatches(root);
+                Func<SyntaxNode, SyntaxNode, SyntaxNode> func1 = (x, y) =>
+                {
+                    y = codeGenerator.AddExpressionToCatchConstructionMethodsBody(
+                        x as CatchClauseSyntax, "Logger.Error", "err", "Exception");
+                    return y;
+                };
+
+                root = root.ReplaceNodes(catchs, func1);
+
 
                 // вставляем пространство имён
                 string nameNamespace = TextAddedNamespase;
@@ -269,9 +274,9 @@ namespace BogdanovCodeAnalyzer.ViewModel
                     .GetText().ToString() == nameNamespace)) == null && usdirs.Count > 0)
                 {
                     root = root.InsertNodesAfter(usdirs[usdirs.Count - 1],
-                        new List<SyntaxNode> { usdir }).NormalizeWhitespace();
+                        new List<SyntaxNode> { usdir });
                 }
-                System.IO.File.WriteAllText(item, root.GetText().ToString(), Encoding.UTF8);
+                System.IO.File.WriteAllText(item, root.NormalizeWhitespace().GetText().ToString(), Encoding.UTF8);
             }
             TextInTextBlock = "Добавление логов закончено";
         }

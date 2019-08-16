@@ -11,6 +11,23 @@ using BogdanovUtilitisLib.MVVMUtilsWrapper;
 
 namespace BogdanovCodeAnalyzer.ViewModel
 {
+    /// <summary>
+    /// Обработка логики контрола для анализа БД.
+    /// </summary>
+    /// <remarks>
+    /// Реализация функционала по взаимодействию с БД T-SQL:
+    /// v------1. Уметь находить все таблицы с колонками в базе данных содержащие поле с данными;
+    /// 1.1. Тоже самое, но с массивом полей данных;
+    /// v------2. Уметь находить все таблицы с колонками в массиве баз данных содержащие поле с данными;
+    /// 2.1. Тоже самое, но с массивом полей данных;
+    /// 3. Исключать таблицы из рассмотрения;
+    /// 4. Научиться логгировать изменения в БД;
+    /// 5. Научиться делать и восстанавливать бэкапы.
+    /// 6. Вынести список строк подключения в конфигурационный файл:
+    /// 6.1. Уметь добавлять строку подключения;
+    /// 6.2. Уметь удалять строку подключения;
+    /// 6.3. Уметь редактировать строку подключения;
+    /// </remarks>
     class AnalyzeSqlDbViewModel : NotifyPropertyChanged
     {
 
@@ -124,7 +141,7 @@ namespace BogdanovCodeAnalyzer.ViewModel
                     }
                     if (DT == null)
                     {
-                        DT = dt.Clone();// new System.Data.DataTable();
+                        DT = dt.Clone();
                         DT.Columns.Add("Повторений", typeof(int));
 
                     }
@@ -150,7 +167,6 @@ namespace BogdanovCodeAnalyzer.ViewModel
                             {
 
                                 DT.Rows.Add(item.ItemArray.ElementAt(0), item.ItemArray.ElementAt(1), item.ItemArray.ElementAt(2), item.ItemArray.ElementAt(3), c);
-                                //DT.Rows.Add(item.ItemArray, c);
                             }
                         }
                     }
@@ -178,8 +194,6 @@ namespace BogdanovCodeAnalyzer.ViewModel
                     }
                 }
             }
-            //DT = dt;
-            //DT.Columns.Remove("DATA_TYPE");
             DV = DT.DefaultView;
         }
     }

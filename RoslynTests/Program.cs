@@ -37,7 +37,14 @@ namespace RoslynTests
                 Console.WriteLine("14 - добавляем в начало метода код");
                 Console.WriteLine("15 - добавляем код перед return, если он есть, если нет, в конец метода");
                 Console.WriteLine("16 - анализ кода на наличие пространств имён");
+                Console.WriteLine("17 - анализ кода на наличие конструкций try...catch...");
+                Console.WriteLine("18 - анализ кода на наличие конструкций catch...");
+
+
                 Console.WriteLine("21 - сделать тестовую генерацию файла с методами обложенными логами");
+                Console.WriteLine("22 - добавить в catch параметры");
+                Console.WriteLine("23 - сделать тестовую генерацию файла с catch обложенными логами");
+
                 /*Console.WriteLine("21 - посмотреть пример нахождения конструктора");
                 Console.WriteLine("22 - посмотреть пример вставки объединения " +
                     "выражений в метод(конструктор)");*/
@@ -193,11 +200,43 @@ namespace RoslynTests
                             Console.WriteLine(item.GetText());
                         }
                         break;
+                    case ("17"):
+                        var tcs = codeAnalyzer.SearchTryCatches(codeAnalyzer.SyntaxTree.GetRoot());
+                        foreach (var item in tcs)
+                        {
+                            Console.WriteLine(item.GetText());
+                        }
+                        break;
+                    case ("18"):
+                        var cs = codeAnalyzer.SearchCatches(codeAnalyzer.SyntaxTree.GetRoot());
+                        foreach (var item in cs)
+                        {
+                            Console.WriteLine(item.GetText());
+                        }
+                        break;
                     case ("21"):
                         GenerateFileWithLogs(codeAnalyzer, codeGenerator);
                         break;
                     case ("22"):
-                        stas.AddingExpressionsToConstructor();
+                        var cs1 = codeAnalyzer.SearchCatches(codeAnalyzer.SyntaxTree.GetRoot());
+                        foreach (var item in cs1)
+                        {
+                            codeGenerator.AddParameterToCatch(item as CatchClauseSyntax);
+                        }
+                        break;
+                    case ("23"):
+                        GenerateFileWithLogsInCatchs(codeAnalyzer, codeGenerator);
+                        /*var cs2 = codeAnalyzer.SearchCatches(codeAnalyzer.SyntaxTree.GetRoot());
+                        ExpressionStatementSyntax exp = codeGenerator
+                            .CreatingCallProcedureExpression("Logger.Error", 
+                            new List<string> { "err.Message" });
+                        foreach (var item in cs2)
+                        {
+                            var t = codeGenerator.AddExpressionToCatchConstructionMethodsBody(
+                                item as CatchClauseSyntax, exp, "err", "Exception");
+                            Console.WriteLine(t);
+                            //codeGenerator.AddParameterToCatch(item as CatchClauseSyntax);
+                        }*/
                         break;
                     default:
                         break;
@@ -229,6 +268,49 @@ namespace RoslynTests
              };
 
             root = root.ReplaceNodes(methods, func).NormalizeWhitespace();
+            // вставляем пространство имён
+            var usdir = generator.CreatingUsingDirective($"Logging");
+            var usdirs = analyzer.SearchLinkedNamespaces(root);
+
+            root = root.InsertNodesAfter(usdirs[usdirs.Count - 1],
+                new List<SyntaxNode> { usdir }).NormalizeWhitespace();
+
+            Console.WriteLine(root.GetText());
+            System.IO.File.WriteAllText("Test.cs", root.GetText().ToString(), Encoding.UTF8);
+        }
+
+        static void GenerateFileWithLogsInCatchs(BogdanovUtilitisLib.Roslyn.CodeAnalyzer analyzer,
+            BogdanovUtilitisLib.Roslyn.CodeGenerator generator)
+        {
+            var root = analyzer.SyntaxTree.GetRoot();
+            // вставляем в методы логи
+            var catchs = analyzer.SearchCatches(root);
+            /*ExpressionStatementSyntax exp = generator
+                .CreatingCallProcedureExpression("Logger.Error",
+                new List<string> { "err.Message" });*/
+
+            /*var cs2 = codeAnalyzer.SearchCatches(codeAnalyzer.SyntaxTree.GetRoot());
+            ExpressionStatementSyntax exp = codeGenerator
+                .CreatingCallProcedureExpression("Logger.Error",
+                new List<string> { "err.Message" });
+            foreach (var item in cs2)
+            {
+                var t = codeGenerator.AddExpressionToCatchConstructionMethodsBody(
+                    item as CatchClauseSyntax, exp, "err", "Exception");
+                Console.WriteLine(t);
+                //codeGenerator.AddParameterToCatch(item as CatchClauseSyntax);
+            }*/
+
+            Func<SyntaxNode, SyntaxNode, SyntaxNode> func = (x, y) =>
+            {
+                y = generator.AddExpressionToCatchConstructionMethodsBody(
+                    x as CatchClauseSyntax, "Logger.Error", "err", "Exception");
+                /*y = generator.AddExpressionToStartMethodsBody(
+                   x as MethodDeclarationSyntax, expression1);*/
+                return y;
+            };
+
+            root = root.ReplaceNodes(catchs, func).NormalizeWhitespace();
             // вставляем пространство имён
             var usdir = generator.CreatingUsingDirective($"Logging");
             var usdirs = analyzer.SearchLinkedNamespaces(root);

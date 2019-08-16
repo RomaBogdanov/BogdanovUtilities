@@ -57,6 +57,13 @@ namespace BogdanovUtilitisLib.Roslyn
             syntaxTree = CSharpSyntaxTree.ParseText(st);
         }
 
+        public CodeAnalyzer()
+        { }
+
+        /// <summary>
+        /// Производит поиск конструкторов
+        /// </summary>
+        /// <returns></returns>
         public List<SyntaxNode> SearchConstructors()
         {
             SyntaxNode root = syntaxTree.GetRoot();
@@ -66,6 +73,10 @@ namespace BogdanovUtilitisLib.Roslyn
             return nodes.ToList();
         }
 
+        /// <summary>
+        /// Производит поиск методов
+        /// </summary>
+        /// <returns></returns>
         public List<SyntaxNode> SearchMethods()
         {
             SyntaxNode root = syntaxTree.GetRoot();
@@ -107,6 +118,29 @@ namespace BogdanovUtilitisLib.Roslyn
         public List<SyntaxNode> SearchLinkedNamespaces(SyntaxNode node)
         {
             var nodes = node.DescendantNodes().Where(p => p.Kind() == SyntaxKind.UsingDirective);
+            return nodes.ToList();
+        }
+
+        /// <summary>
+        /// Поиск всех конструкций try...catch...
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public List<SyntaxNode> SearchTryCatches(SyntaxNode node)
+        {
+            var nodes = node.DescendantNodes().Where(p => p.Kind() == SyntaxKind.TryStatement);
+            return nodes.ToList();
+        }
+
+        /// <summary>
+        /// Поиск всех конструкций catch...
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public List<SyntaxNode> SearchCatches(SyntaxNode node)
+        {
+            var nodes = node.DescendantNodes().Where(p => p.Kind() == SyntaxKind.CatchClause);
+
             return nodes.ToList();
         }
     }
