@@ -23,7 +23,7 @@
             <TextBlock Text="Получить список файлов для переработки" Height="55" TextWrapping="Wrap" Width="118"></TextBlock>
         </Button>
         <Button Command="{Binding UpdateCodeCommand}" IsEnabled="{Binding IsEnableUpdataCommand, Mode=TwoWay}" Content="Переработать код" Background="IndianRed" HorizontalAlignment="Left" Margin="169,149,0,0" VerticalAlignment="Top" Width="140" Height="65"/>
-        <ListBox ItemsSource="{Binding NotIgnoredPaths}" SelectedItem="{Binding SelectedNotIgnoredFile, Mode=TwoWay}" HorizontalAlignment="Left" Height="221" Margin="24,219,0,0" VerticalAlignment="Top" Width="400">
+        <ListBox ItemsSource="{Binding NotIgnoredPaths1}" SelectedItem="{Binding SelectedNotIgnoredFile, Mode=TwoWay}" HorizontalAlignment="Left" Height="221" Margin="24,219,0,0" VerticalAlignment="Top" Width="400">
 
         </ListBox>
         <ListBox ItemsSource="{Binding IgnoredPaths}" SelectedItem="{Binding SelectedIgnoredFile, Mode=TwoWay}" HorizontalAlignment="Left" Height="221" Margin="560,219,0,0" VerticalAlignment="Top" Width="400"/>
@@ -31,7 +31,7 @@
         <Button Command="{Binding NotIgnoreFileCommand}" Content="Обработать файл" HorizontalAlignment="Left" Margin="429,308,0,0" VerticalAlignment="Top" Width="126"/>
         <TextBlock HorizontalAlignment="Left" Margin="604,38,0,0" TextWrapping="Wrap" Text="{Binding InformText, Mode=TwoWay}" VerticalAlignment="Top" Height="176" Width="356"/>
         <Label Content="Фильтрация обновляемых файлов:" HorizontalAlignment="Left" Margin="314,149,0,0" VerticalAlignment="Top" Width="222"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="314,180,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="285"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="314,180,0,0" TextWrapping="Wrap" Text="{Binding Filter,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="285"/>
 
     </Grid>
 </UserControl>

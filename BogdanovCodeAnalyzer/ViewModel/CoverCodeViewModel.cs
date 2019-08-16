@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.ServiceModel;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using r = BogdanovUtilitisLib.Roslyn;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -33,6 +35,8 @@ namespace BogdanovCodeAnalyzer.ViewModel
         private bool isEnableUpdataCommand = true;
         private string selectedNotIgnoredFile;
         private string selectedIgnoredFile;
+        private ICollectionView notIgnoredPaths1;
+        private string filter = "";
 
         /// <summary>
         /// Путь по которому ищутся файлы.
@@ -162,6 +166,30 @@ namespace BogdanovCodeAnalyzer.ViewModel
             }
         }
 
+        public ICollectionView NotIgnoredPaths1
+        {
+            get => notIgnoredPaths1;
+            set
+            {
+                notIgnoredPaths1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Filter
+        {
+            get => filter;
+            set
+            {
+                filter = value;
+                OnPropertyChanged();
+                NotIgnoredPaths1.Filter = CustomerFilter;
+            }
+        }
+        private bool CustomerFilter(object item)
+        {
+            return (item as string).Contains(Filter);
+        }
         /// <summary>
         /// Команда для открытия настроек
         /// </summary>
@@ -196,7 +224,11 @@ namespace BogdanovCodeAnalyzer.ViewModel
             IgnoreFileCommand = new RelayCommand(obj => IgnoreFile());
             NotIgnoreFileCommand = new RelayCommand(obj => NotIgnoreFile());
 
+            //ICollectionView collectionView = CollectionViewSource.GetDefaultView()
             OpenSettings();
+
+            NotIgnoredPaths1 = CollectionViewSource.GetDefaultView(NotIgnoredPaths);
+            NotIgnoredPaths1.Filter = CustomerFilter;
         }
 
         private void OpenSettings()
@@ -225,6 +257,8 @@ namespace BogdanovCodeAnalyzer.ViewModel
                 System.IO.SearchOption.AllDirectories)
                 .Where(p => !p.ToUpper().Contains("DESIGNER.CS"))
                 .Except(IgnoredPaths));
+            NotIgnoredPaths1 = CollectionViewSource.GetDefaultView(NotIgnoredPaths);
+            NotIgnoredPaths1.Filter = CustomerFilter;
         }
 
         /// <summary>
