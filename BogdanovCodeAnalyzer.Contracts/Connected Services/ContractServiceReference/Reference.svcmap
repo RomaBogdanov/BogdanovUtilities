@@ -19,13 +19,12 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:7256/ServiceBaseContact" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8016/logs" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ServiceBaseContact.disco" MetadataType="Disco" ID="40e12fd7-1b83-4a69-8f38-cefa1dac72b8" SourceId="1" SourceUrl="http://localhost:7256/ServiceBaseContact?disco" />
-    <MetadataFile FileName="ServiceBaseContact.xsd" MetadataType="Schema" ID="da59a6fc-7adc-47b1-8372-99d4bbf8c8d4" SourceId="1" SourceUrl="http://localhost:7256/ServiceBaseContact?xsd=xsd0" />
-    <MetadataFile FileName="ServiceBaseContact1.xsd" MetadataType="Schema" ID="f25c9b3a-9942-4720-a9ce-8ad9e9209e8e" SourceId="1" SourceUrl="http://localhost:7256/ServiceBaseContact?xsd=xsd1" />
-    <MetadataFile FileName="ServiceBaseContract.wsdl" MetadataType="Wsdl" ID="9e30b63c-1483-4bcb-a967-2c7490724349" SourceId="1" SourceUrl="http://localhost:7256/ServiceBaseContact?wsdl" />
+    <MetadataFile FileName="logs.xsd" MetadataType="Schema" ID="5c1e7599-f9b9-4ffa-8ebf-8694d052c600" SourceId="1" SourceUrl="http://localhost:8016/logs?xsd=xsd0" />
+    <MetadataFile FileName="logs1.xsd" MetadataType="Schema" ID="c43cf775-edb8-4339-961e-7e13846eb282" SourceId="1" SourceUrl="http://localhost:8016/logs?xsd=xsd1" />
+    <MetadataFile FileName="ServiceBaseContract1.wsdl" MetadataType="Wsdl" ID="6f390084-a38e-42cd-ae7d-ec9cc8baf10c" SourceId="1" SourceUrl="http://localhost:8016/logs" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

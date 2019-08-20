@@ -12,8 +12,20 @@ namespace BogdanovCodeAnalyzer.Contracts.ContractServiceReference {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ContractServiceReference.IServiceBaseContract")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ContractServiceReference.IServiceBaseContract", CallbackContract=typeof(BogdanovCodeAnalyzer.Contracts.ContractServiceReference.IServiceBaseContractCallback))]
     public interface IServiceBaseContract {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceBaseContract/Connect", ReplyAction="http://tempuri.org/IServiceBaseContract/ConnectResponse")]
+        bool Connect();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceBaseContract/Connect", ReplyAction="http://tempuri.org/IServiceBaseContract/ConnectResponse")]
+        System.Threading.Tasks.Task<bool> ConnectAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceBaseContract/Disconnect", ReplyAction="http://tempuri.org/IServiceBaseContract/DisconnectResponse")]
+        bool Disconnect();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceBaseContract/Disconnect", ReplyAction="http://tempuri.org/IServiceBaseContract/DisconnectResponse")]
+        System.Threading.Tasks.Task<bool> DisconnectAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceBaseContract/Log", ReplyAction="http://tempuri.org/IServiceBaseContract/LogResponse")]
         bool Log(string message, string tag, string method, string file);
@@ -23,30 +35,57 @@ namespace BogdanovCodeAnalyzer.Contracts.ContractServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IServiceBaseContractCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceBaseContract/StartLogs", ReplyAction="http://tempuri.org/IServiceBaseContract/StartLogsResponse")]
+        void StartLogs();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceBaseContract/StopLogs", ReplyAction="http://tempuri.org/IServiceBaseContract/StopLogsResponse")]
+        void StopLogs();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IServiceBaseContractChannel : BogdanovCodeAnalyzer.Contracts.ContractServiceReference.IServiceBaseContract, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServiceBaseContractClient : System.ServiceModel.ClientBase<BogdanovCodeAnalyzer.Contracts.ContractServiceReference.IServiceBaseContract>, BogdanovCodeAnalyzer.Contracts.ContractServiceReference.IServiceBaseContract {
+    public partial class ServiceBaseContractClient : System.ServiceModel.DuplexClientBase<BogdanovCodeAnalyzer.Contracts.ContractServiceReference.IServiceBaseContract>, BogdanovCodeAnalyzer.Contracts.ContractServiceReference.IServiceBaseContract {
         
-        public ServiceBaseContractClient() {
+        public ServiceBaseContractClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public ServiceBaseContractClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public ServiceBaseContractClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public ServiceBaseContractClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public ServiceBaseContractClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public ServiceBaseContractClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public ServiceBaseContractClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public ServiceBaseContractClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public ServiceBaseContractClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public bool Connect() {
+            return base.Channel.Connect();
+        }
+        
+        public System.Threading.Tasks.Task<bool> ConnectAsync() {
+            return base.Channel.ConnectAsync();
+        }
+        
+        public bool Disconnect() {
+            return base.Channel.Disconnect();
+        }
+        
+        public System.Threading.Tasks.Task<bool> DisconnectAsync() {
+            return base.Channel.DisconnectAsync();
         }
         
         public bool Log(string message, string tag, string method, string file) {

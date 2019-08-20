@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ServiceBaseContract" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetNamedPipeBinding_IServiceBaseContract_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8016/logs?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8016/logs?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IServiceBaseContract_Connect_InputMessage">
+    <wsdl:part name="parameters" element="tns:Connect" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBaseContract_Connect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBaseContract_Disconnect_InputMessage">
+    <wsdl:part name="parameters" element="tns:Disconnect" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBaseContract_Disconnect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DisconnectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBaseContract_Log_InputMessage">
+    <wsdl:part name="parameters" element="tns:Log" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBaseContract_Log_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBaseContract_StartLogs_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:StartLogs" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBaseContract_StartLogs_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:StartLogsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBaseContract_StopLogs_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:StopLogs" />
+  </wsdl:message>
+  <wsdl:message name="IServiceBaseContract_StopLogs_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:StopLogsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IServiceBaseContract">
+    <wsdl:operation name="Connect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceBaseContract/Connect" message="tns:IServiceBaseContract_Connect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceBaseContract/ConnectResponse" message="tns:IServiceBaseContract_Connect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Disconnect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceBaseContract/Disconnect" message="tns:IServiceBaseContract_Disconnect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceBaseContract/DisconnectResponse" message="tns:IServiceBaseContract_Disconnect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Log">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceBaseContract/Log" message="tns:IServiceBaseContract_Log_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceBaseContract/LogResponse" message="tns:IServiceBaseContract_Log_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartLogs">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceBaseContract/StartLogs" message="tns:IServiceBaseContract_StartLogs_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceBaseContract/StartLogsResponse" message="tns:IServiceBaseContract_StartLogs_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StopLogs">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceBaseContract/StopLogs" message="tns:IServiceBaseContract_StopLogs_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceBaseContract/StopLogsResponse" message="tns:IServiceBaseContract_StopLogs_InputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetNamedPipeBinding_IServiceBaseContract" type="tns:IServiceBaseContract">
+    <wsp:PolicyReference URI="#NetNamedPipeBinding_IServiceBaseContract_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/named-pipe" />
+    <wsdl:operation name="Connect">
+      <soap12:operation soapAction="http://tempuri.org/IServiceBaseContract/Connect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Disconnect">
+      <soap12:operation soapAction="http://tempuri.org/IServiceBaseContract/Disconnect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Log">
+      <soap12:operation soapAction="http://tempuri.org/IServiceBaseContract/Log" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartLogs">
+      <soap12:operation soapAction="http://tempuri.org/IServiceBaseContract/StartLogs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopLogs">
+      <soap12:operation soapAction="http://tempuri.org/IServiceBaseContract/StopLogs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServiceBaseContract">
+    <wsdl:port name="NetNamedPipeBinding_IServiceBaseContract" binding="tns:NetNamedPipeBinding_IServiceBaseContract">
+      <soap12:address location="net.pipe://localhost/logs/ServiceBaseContract" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.pipe://localhost/logs/ServiceBaseContract</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

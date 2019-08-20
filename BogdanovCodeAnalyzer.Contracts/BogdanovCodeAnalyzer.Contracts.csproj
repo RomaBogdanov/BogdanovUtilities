@@ -55,22 +55,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\ContractServiceReference\ServiceBaseContact.xsd">
+    <None Include="Connected Services\ContractServiceReference\logs.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ContractServiceReference\ServiceBaseContact1.xsd">
+    <None Include="Connected Services\ContractServiceReference\logs1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ContractServiceReference\ServiceBaseContract.wsdl" />
+    <None Include="Connected Services\ContractServiceReference\ServiceBaseContract1.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ContractServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ContractServiceReference\ServiceBaseContact.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ContractServiceReference\configuration91.svcinfo" />

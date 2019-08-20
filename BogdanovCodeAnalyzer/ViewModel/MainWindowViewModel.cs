@@ -46,9 +46,7 @@ namespace BogdanovCodeAnalyzer.ViewModel
     /// </remarks>
     class MainWindowViewModel : NotifyPropertyChanged
     {
-        ServiceHost host;
-        private string taskToOpenOrCloseServer = "Запустить сервер";
-        private ObservableCollection<Message> messages = new ObservableCollection<Message>();
+
         private string pathToAnalyzeFiles = @"C:\BogdanovR\Experiments\Sintez\";
         private string textInTextBlock;
         private string textAddedNamespase = "SintezLibrary";
@@ -56,22 +54,6 @@ namespace BogdanovCodeAnalyzer.ViewModel
         private bool isFrequenceRepeatStrings;
         private bool isFrequenceRepeatFiles;
         private ObservableCollection<Log> logs;
-
-        private bool startRecLogs = false;
-        private string logsRec= "Начать запись логов";
-
-        /// <summary>
-        /// Сообщения, получаемые от клиентов.
-        /// </summary>
-        public ObservableCollection<Message> Messages
-        {
-            get => messages;
-            set
-            {
-                messages = value;
-                OnPropertyChanged();
-            }
-        }
 
         /// <summary>
         /// Информация по логам.
@@ -82,32 +64,6 @@ namespace BogdanovCodeAnalyzer.ViewModel
             set
             {
                 logs = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// Показывает статус задачи открытия или закрытия сервера.
-        /// </summary>
-        public string TaskToOpenOrCloseServer
-        {
-            get => taskToOpenOrCloseServer;
-            set
-            {
-                taskToOpenOrCloseServer = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// Сообщение о записи логов
-        /// </summary>
-        public string LogsRec
-        {
-            get => logsRec;
-            set
-            {
-                logsRec = value;
                 OnPropertyChanged();
             }
         }
@@ -190,20 +146,6 @@ namespace BogdanovCodeAnalyzer.ViewModel
             }
         }
 
-        /// <summary>
-        /// Команда на запуск сервера.
-        /// </summary>
-        public ICommand StartStopServerCommand { get; set; }
-
-        /// <summary>
-        /// Команда запуска остановки записи логов.
-        /// </summary>
-        public ICommand StartStopRecLogsCommand { get; set; }
-
-        /// <summary>
-        /// Команда для покрытия кода логами.
-        /// </summary>
-        //public ICommand CreateLogsInCodeCommand { get; set; }
 
         /// <summary>
         /// Команда исследования логов
@@ -212,103 +154,8 @@ namespace BogdanovCodeAnalyzer.ViewModel
 
         public MainWindowViewModel()
         {
-            AggregatorMessages.OnMessageFromClient += AggregatorMessages_OnMessageFromClient;
-            StartStopServerCommand = new RelayCommand(obj => StartStopServer());
-            //CreateLogsInCodeCommand = new RelayCommand(obj => CreateLogsInCode());
             SearchFrequencyLogsCommand = new RelayCommand(obj => SearchFrequencyLogs());
-            StartStopRecLogsCommand = new RelayCommand(obj => StartStopRecLogs());
         }
-
-        private void StartStopRecLogs()
-        {
-            startRecLogs = !startRecLogs;
-            if (startRecLogs) { LogsRec = "Остановить запись логов"; }
-            else { LogsRec = "Начать запись логов"; }
-        }
-
-        /// <summary>
-        /// Процедура запуска сервера.
-        /// </summary>
-        private void StartStopServer()
-        {
-            if (host == null || host.State != CommunicationState.Opened)
-            {
-                host = new ServiceHost(typeof(ServiceBaseContract));
-                host.Open();
-                TaskToOpenOrCloseServer = "Закрыть сервер";
-            }
-            else
-            {
-                host.Close();
-                TaskToOpenOrCloseServer = "Запустить сервер";
-            }
-        }
-
-        /// <summary>
-        /// Покрытие кода логами.
-        /// </summary>
-        /// <remarks>
-        /// Обязательно смотри описание к классу.
-        /// </remarks>
-        /*private void CreateLogsInCode()
-        {
-            r.CodeGenerator codeGenerator = new r.CodeGenerator();
-            r.CodeAnalyzer codeAnalyzer;
-
-            IEnumerable<string> paths = System.IO.Directory.EnumerateFiles(PathToAnalyzeFiles, "*.cs",
-                System.IO.SearchOption.AllDirectories);
-            paths.Where(p => !p.ToUpper().Contains("DESIGNER.CS"));
-            TextInTextBlock = "";
-            foreach (var item in paths.Where(p => !p.ToUpper().Contains("DESIGNER.CS")))
-            {
-                //TextInTextBlock += item + Environment.NewLine;
-                codeAnalyzer = new r.CodeAnalyzer(item);
-                var root = codeAnalyzer.SyntaxTree.GetRoot();
-
-                // вставляем логи в начало и конец методов
-                var methods = codeAnalyzer.SearchMethods();
-                var expression1 = codeGenerator.CreatingCallProcedureExpression(
-                    "Logger.Debug", new List<string> { "\"Начало метода\"" });
-                var expression2 = codeGenerator.CreatingCallProcedureExpression(
-                    "Logger.Debug", new List<string> { "\"Окончание метода\"" });
-
-                Func<SyntaxNode, SyntaxNode, SyntaxNode> func = (x, y) =>
-                {
-                    y = codeGenerator.AddExpressionToStartMethodsBody(
-                       x as MethodDeclarationSyntax, expression1);
-                    y = codeGenerator.AddExpressionToFinishOrBeforeReturnMethodsBody(
-                        y as MethodDeclarationSyntax, expression2);
-                    return y;
-                };
-                root = root.ReplaceNodes(methods, func);
-
-                // вставляем логи в catch
-                var catchs = codeAnalyzer.SearchCatches(root);
-                Func<SyntaxNode, SyntaxNode, SyntaxNode> func1 = (x, y) =>
-                {
-                    y = codeGenerator.AddExpressionToCatchConstructionMethodsBody(
-                        x as CatchClauseSyntax, "Logger.Error", "err", "Exception");
-                    return y;
-                };
-
-                root = root.ReplaceNodes(catchs, func1);
-
-
-                // вставляем пространство имён
-                string nameNamespace = TextAddedNamespase;
-                UsingDirectiveSyntax usdir = codeGenerator.CreatingUsingDirective(nameNamespace);
-                List<SyntaxNode> usdirs = codeAnalyzer.SearchLinkedNamespaces(root);
-
-                if (usdirs.FirstOrDefault(p => ((p as UsingDirectiveSyntax).Name
-                    .GetText().ToString() == nameNamespace)) == null && usdirs.Count > 0)
-                {
-                    root = root.InsertNodesAfter(usdirs[usdirs.Count - 1],
-                        new List<SyntaxNode> { usdir });
-                }
-                System.IO.File.WriteAllText(item, root.NormalizeWhitespace().GetText().ToString(), Encoding.UTF8);
-            }
-            TextInTextBlock = "Добавление логов закончено";
-        }*/
 
         /// <summary>
         /// Анализ лога.
@@ -376,37 +223,6 @@ namespace BogdanovCodeAnalyzer.ViewModel
             }
         }
 
-        /// <summary>
-        /// Добавление сообщения.
-        /// </summary>
-        /// <param name="message"></param>
-        private void AggregatorMessages_OnMessageFromClient(Message message)
-        {
-            if (startRecLogs)
-            {
-                Messages.Add(message);
-            }
-        }
-
-    }
-
-    /// <summary>
-    /// Контракт для взаимодействия с внешними приложениями.
-    /// </summary>
-    class ServiceBaseContract : BogdanovCodeAnalyzer.Contracts.IServiceBaseContract
-    {
-        public bool Log(string message, string tag, string method, string file)
-        {
-            AggregatorMessages.ReceiveMessage(new Message
-            {
-                LogMessage = message,
-                Tag = tag,
-                Method = method,
-                File = file
-            });
-
-            return true;
-        }
     }
 
     /// <summary>

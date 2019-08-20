@@ -21,18 +21,36 @@ namespace BogdanovCodeAnalyzer.Client
     /// </summary>
     public partial class MainWindow : Window
     {
-        ServiceBaseContractClient serviceBaseContractClient;
+        IServiceBaseContract serviceBaseContract;
         public MainWindow()
         {
             InitializeComponent();
-            serviceBaseContractClient = new ServiceBaseContractClient();
+            //serviceBaseContractClient = new ServiceBaseContractClient();
+            serviceBaseContract = new ServiceBaseContractClient(
+                new System.ServiceModel.InstanceContext(new Callback()));
+            //BogdanovCodeAnalyzer.Client.ServiceReferenceCodeAnalyzer.IServiceBaseContract serviceBase = new BogdanovCodeAnalyzer.Client.ServiceReferenceCodeAnalyzer.ServiceBaseContractClient();
+            serviceBaseContract.Log("Тестовое сообщенище", "ТЭГ", "ТОТ МЕТОД", "ФАЙЛ");
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
-            
-            serviceBaseContractClient.Log("Тест", "DEBUG", "", "");
+
+
+            serviceBaseContract.Log("Тест", "DEBUG", "", "");
+        }
+    }
+
+    class Callback : BogdanovCodeAnalyzer.Contracts.ContractServiceReference.IServiceBaseContractCallback
+    {
+        public void StartLogs()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopLogs()
+        {
+            throw new NotImplementedException();
         }
     }
 }

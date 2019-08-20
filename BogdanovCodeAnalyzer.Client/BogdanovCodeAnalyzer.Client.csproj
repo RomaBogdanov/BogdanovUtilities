@@ -93,7 +93,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\ServiceReferenceCodeAnalyzer\logs.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceCodeAnalyzer\logs1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ServiceReferenceCodeAnalyzer\Program.wsdl" />
+    <None Include="Connected Services\ServiceReferenceCodeAnalyzer\ServiceBaseContract1.wsdl" />
     <None Include="Connected Services\ServiceReferenceCodeAnalyzer\wcfsamples.xsd">
       <SubType>Designer</SubType>
     </None>
