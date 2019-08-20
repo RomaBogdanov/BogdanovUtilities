@@ -85,6 +85,16 @@ namespace BogdanovCodeAnalyzer.ViewModel
         /// </summary>
         public ICommand SearchValuesInFieldsDbCommand { get; set; }
 
+        /// <summary>
+        /// Команда для поиска таблиц и столбцов в БД для поиска таблиц.
+        /// </summary>
+        public ICommand SearchValuesInTablesDbCommand { get; set; }
+
+        /// <summary>
+        /// Команда для поиска таблиц и столбцов в БД для поиска колонок.
+        /// </summary>
+        public ICommand SearchValuesInColumnsDbCommand { get; set; }
+
         public AnalyzeSqlDbViewModel()
         {
             Connections = new ObservableCollection<ConnectionDB>();
@@ -110,6 +120,92 @@ namespace BogdanovCodeAnalyzer.ViewModel
 
 
             SearchValuesInFieldsDbCommand = new RelayCommand(obj => SearchValuesInFieldsDb());
+            SearchValuesInTablesDbCommand = new RelayCommand(obj => SearchValuesInTablesDb());
+            SearchValuesInColumnsDbCommand = new RelayCommand(obj => SearchValuesInColumnsDb());
+        }
+
+        private void SearchValuesInColumnsDb()
+        {
+            DT = null;
+            foreach (var conStr in Connections)
+            {
+                if (!conStr.IsChecked)
+                {
+                    continue;
+                }
+
+                System.Data.DataTable dt = new System.Data.DataTable();
+                string sqlQuery = $"select distinct TABLE_CATALOG, TABLE_NAME, COLUMN_NAME, DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where COLUMN_NAME like '%{ValueToSearchInDbTabs}%'";
+
+                System.Data.SqlClient.SqlConnection cn =
+                    new System.Data.SqlClient.SqlConnection(conStr.ConnectionString);
+
+                using (System.Data.SqlClient.SqlDataAdapter da =
+                    new System.Data.SqlClient.SqlDataAdapter(sqlQuery, cn))
+                {
+                    da.Fill(dt);
+                    if (string.IsNullOrEmpty(ValueToSearchInDbTabs) && DT == null)
+                    {
+                        DT = dt;
+                        return;
+                    }
+                    if (DT == null)
+                    {
+                        DT = dt.Clone();
+
+                    }
+                    else
+                    {
+                        foreach (System.Data.DataRow item in dt.Rows)
+                        {
+                            DT.Rows.Add(item.ItemArray);
+                        }
+                    }
+                }
+            }
+            DV = DT.DefaultView;
+        }
+
+        private void SearchValuesInTablesDb()
+        {
+            DT = null;
+            foreach (var conStr in Connections)
+            {
+                if (!conStr.IsChecked)
+                {
+                    continue;
+                }
+
+                System.Data.DataTable dt = new System.Data.DataTable();
+                string sqlQuery = $"select distinct TABLE_CATALOG, TABLE_NAME from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME like '%{ValueToSearchInDbTabs}%'";
+
+                System.Data.SqlClient.SqlConnection cn =
+                    new System.Data.SqlClient.SqlConnection(conStr.ConnectionString);
+
+                using (System.Data.SqlClient.SqlDataAdapter da =
+                    new System.Data.SqlClient.SqlDataAdapter(sqlQuery, cn))
+                {
+                    da.Fill(dt);
+                    if (string.IsNullOrEmpty(ValueToSearchInDbTabs) && DT == null)
+                    {
+                        DT = dt;
+                        return;
+                    }
+                    if (DT == null)
+                    {
+                        DT = dt.Clone();
+
+                    }
+                    else
+                    {
+                        foreach (System.Data.DataRow item in dt.Rows)
+                        {
+                            DT.Rows.Add(item.ItemArray);
+                        }
+                    }
+                }
+            }
+            DV = DT.DefaultView;
         }
 
         private void SearchValuesInFieldsDb()

@@ -37,6 +37,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                     <Button Content="{Binding TaskToOpenOrCloseServer, Mode=TwoWay}" Command="{Binding StartStopServerCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="202"/>
+                    <Button Content="{Binding LogsRec, Mode=TwoWay}" Command="{Binding StartStopRecLogsCommand}" Margin="240, 0,0,0" Width="202"/>
                     <Label Content="Сообщения от клиента:" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>

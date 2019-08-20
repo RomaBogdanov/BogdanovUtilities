@@ -57,6 +57,9 @@ namespace BogdanovCodeAnalyzer.ViewModel
         private bool isFrequenceRepeatFiles;
         private ObservableCollection<Log> logs;
 
+        private bool startRecLogs = false;
+        private string logsRec= "Начать запись логов";
+
         /// <summary>
         /// Сообщения, получаемые от клиентов.
         /// </summary>
@@ -92,6 +95,19 @@ namespace BogdanovCodeAnalyzer.ViewModel
             set
             {
                 taskToOpenOrCloseServer = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Сообщение о записи логов
+        /// </summary>
+        public string LogsRec
+        {
+            get => logsRec;
+            set
+            {
+                logsRec = value;
                 OnPropertyChanged();
             }
         }
@@ -180,9 +196,14 @@ namespace BogdanovCodeAnalyzer.ViewModel
         public ICommand StartStopServerCommand { get; set; }
 
         /// <summary>
+        /// Команда запуска остановки записи логов.
+        /// </summary>
+        public ICommand StartStopRecLogsCommand { get; set; }
+
+        /// <summary>
         /// Команда для покрытия кода логами.
         /// </summary>
-        public ICommand CreateLogsInCodeCommand { get; set; }
+        //public ICommand CreateLogsInCodeCommand { get; set; }
 
         /// <summary>
         /// Команда исследования логов
@@ -193,8 +214,16 @@ namespace BogdanovCodeAnalyzer.ViewModel
         {
             AggregatorMessages.OnMessageFromClient += AggregatorMessages_OnMessageFromClient;
             StartStopServerCommand = new RelayCommand(obj => StartStopServer());
-            CreateLogsInCodeCommand = new RelayCommand(obj => CreateLogsInCode());
+            //CreateLogsInCodeCommand = new RelayCommand(obj => CreateLogsInCode());
             SearchFrequencyLogsCommand = new RelayCommand(obj => SearchFrequencyLogs());
+            StartStopRecLogsCommand = new RelayCommand(obj => StartStopRecLogs());
+        }
+
+        private void StartStopRecLogs()
+        {
+            startRecLogs = !startRecLogs;
+            if (startRecLogs) { LogsRec = "Остановить запись логов"; }
+            else { LogsRec = "Начать запись логов"; }
         }
 
         /// <summary>
@@ -221,7 +250,7 @@ namespace BogdanovCodeAnalyzer.ViewModel
         /// <remarks>
         /// Обязательно смотри описание к классу.
         /// </remarks>
-        private void CreateLogsInCode()
+        /*private void CreateLogsInCode()
         {
             r.CodeGenerator codeGenerator = new r.CodeGenerator();
             r.CodeAnalyzer codeAnalyzer;
@@ -279,7 +308,7 @@ namespace BogdanovCodeAnalyzer.ViewModel
                 System.IO.File.WriteAllText(item, root.NormalizeWhitespace().GetText().ToString(), Encoding.UTF8);
             }
             TextInTextBlock = "Добавление логов закончено";
-        }
+        }*/
 
         /// <summary>
         /// Анализ лога.
@@ -353,7 +382,10 @@ namespace BogdanovCodeAnalyzer.ViewModel
         /// <param name="message"></param>
         private void AggregatorMessages_OnMessageFromClient(Message message)
         {
-            Messages.Add(message);
+            if (startRecLogs)
+            {
+                Messages.Add(message);
+            }
         }
 
     }

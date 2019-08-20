@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BogdanovCodeAnalyzer.Contracts.ContractServiceReference;
 
 namespace BogdanovCodeAnalyzer.Client
 {
@@ -20,14 +21,17 @@ namespace BogdanovCodeAnalyzer.Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        ServiceBaseContractClient serviceBaseContractClient;
         public MainWindow()
         {
             InitializeComponent();
+            serviceBaseContractClient = new ServiceBaseContractClient();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ServiceReferenceCodeAnalyzer.ServiceBaseContractClient serviceBaseContractClient = new ServiceReferenceCodeAnalyzer.ServiceBaseContractClient();
+            
+            
             serviceBaseContractClient.Log("Тест", "DEBUG", "", "");
         }
     }
