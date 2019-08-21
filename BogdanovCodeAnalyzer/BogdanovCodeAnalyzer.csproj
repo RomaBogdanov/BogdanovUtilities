@@ -120,10 +120,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\AnalyzeLogsViewModel.cs" />
     <Compile Include="ViewModel\RemotingProgramsLogsViewModel.cs" />
+    <Compile Include="View\AnalyzeLogsView.xaml.cs">
+      <DependentUpon>AnalyzeLogsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RemotingProgramsLogsView.xaml.cs">
       <DependentUpon>RemotingProgramsLogsView.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AnalyzeLogsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CoverCodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -25,56 +25,20 @@
                 <TabControl>
                     <TabItem Header="Покрытие лога">
                         <View:CoverCodeView>
-                            
+                            <View:CoverCodeView.DataContext>
+                                <vm:CoverCodeViewModel/>
+                            </View:CoverCodeView.DataContext>
                         </View:CoverCodeView>
                     </TabItem>
                     <TabItem Header="Анализ лога">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1000"/>
-                                <ColumnDefinition Width="29*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="200"/>
-                                <RowDefinition Height="274*"/>
-                            </Grid.RowDefinitions>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="27*"/>
-                                    <RowDefinition Height="73*"/>
-                                </Grid.RowDefinitions>
-                                <Label Content="Путь к файлу лога:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                                <TextBox 
-                                    Text="{Binding LogFilesPath, Mode=TwoWay}" 
-                                    HorizontalAlignment="Left" Height="23" Margin="126,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400"/>
-                                <Button 
-                                    Command="{Binding SearchFrequencyLogsCommand}" 
-                                    Content="Провести анализ файла" 
-                                    HorizontalAlignment="Left" Margin="531,13,0,0" VerticalAlignment="Top" Width="159" Height="23"/>
-                                <RadioButton 
-                                    IsChecked="{Binding IsFrequenceRepeatStrings, Mode=TwoWay}"
-                                    Content="Частотность совпадения строк" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-                                <RadioButton 
-                                    IsChecked="{Binding IsFrequenceRepeatFiles, Mode=TwoWay}"
-                                    Content="Частотность обращения к методам файла" HorizontalAlignment="Left" Margin="10,30,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-
-
-                            </Grid>
-                            <ListBox Grid.Row="1" ItemsSource="{Binding Logs}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBox Text="{Binding MsgLog}"/>
-                                            <TextBox Text="{Binding Count}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Grid>
+                        <View:AnalyzeLogsView>
+                            <View:AnalyzeLogsView.DataContext>
+                                <vm:AnalyzeLogsViewModel/>
+                            </View:AnalyzeLogsView.DataContext>
+                        </View:AnalyzeLogsView>
                     </TabItem>
                 </TabControl>
             </TabItem>
-
             <TabItem Header="Работа с БД T-SQL">
                 <View:AnalyzeSqlDbView>
                     <View:AnalyzeSqlDbView.DataContext>

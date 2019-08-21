@@ -7,9 +7,7 @@
              xmlns:vm="clr-namespace:BogdanovCodeAnalyzer.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" Width="1200">
-    <UserControl.DataContext>
-        <vm:CoverCodeViewModel/>
-    </UserControl.DataContext>
+
     <Grid>
         <Button Command="{Binding OpenSettingsCommand}" Content="Открыть настройки" HorizontalAlignment="Left" Margin="24,10,0,0" VerticalAlignment="Top" Width="160"/>
         <Button Command="{Binding SaveSettingsCommand}" Content="Сохранить настройки" HorizontalAlignment="Left" Margin="189,10,0,0" VerticalAlignment="Top" Width="160"/>
