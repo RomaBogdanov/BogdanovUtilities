@@ -8,6 +8,7 @@ using System.ServiceModel;
 using System.Collections.ObjectModel;
 using System.ServiceModel.Description;
 using BogdanovUtilitisLib.MVVMUtilsWrapper;
+using BogdanovUtilitisLib.LogsWrapper;
 
 namespace BogdanovCodeAnalyzer.ViewModel
 {
@@ -75,8 +76,6 @@ namespace BogdanovCodeAnalyzer.ViewModel
             AggregatorMessages.OnMessageFromClient += AggregatorMessages_OnMessageFromClient;
             StartStopServerCommand = new RelayCommand(obj => StartStopServer());
             StartStopRecLogsCommand = new RelayCommand(obj => StartStopRecLogs());
-
-            
         }
 
         /// <summary>
@@ -84,9 +83,23 @@ namespace BogdanovCodeAnalyzer.ViewModel
         /// </summary>
         private void StartStopRecLogs()
         {
+            if (ServiceBaseContract.CallbackContract == null)
+            {
+                LogsRec = "Начать запись логов";
+                return;
+            }
+
             startRecLogs = !startRecLogs;
-            if (startRecLogs) { LogsRec = "Остановить запись логов"; }
-            else { LogsRec = "Начать запись логов"; }
+            if (startRecLogs)
+            {
+                LogsRec = "Остановить запись логов";
+                ServiceBaseContract.CallbackContract.StartLogs();
+            }
+            else
+            {
+                LogsRec = "Начать запись логов";
+                ServiceBaseContract.CallbackContract.StopLogs();
+            }
         }
 
         /// <summary>
@@ -139,7 +152,8 @@ namespace BogdanovCodeAnalyzer.ViewModel
         {
             /*if (startRecLogs)
             {*/
-                Messages.Add(message);
+            Messages.Add(message);
+            Logger.Debug(message.LogMessage, message.Method, message.File);
             //}
         }
 
@@ -151,14 +165,19 @@ namespace BogdanovCodeAnalyzer.ViewModel
     /// </summary>
     class ServiceBaseContract : BogdanovCodeAnalyzer.Contracts.IServiceBaseContract
     {
+        public static BogdanovCodeAnalyzer.Contracts.IServiceBaseCallbackContract CallbackContract { get; set; }
+
         public bool Connect()
         {
-            throw new NotImplementedException();
+            CallbackContract = OperationContext.Current.GetCallbackChannel
+                <BogdanovCodeAnalyzer.Contracts.IServiceBaseCallbackContract>();
+            return true;
         }
 
         public bool Disconnect()
         {
-            throw new NotImplementedException();
+            CallbackContract = null;
+            return true;
         }
 
         public bool Log(string message, string tag, string method, string file)
@@ -172,6 +191,23 @@ namespace BogdanovCodeAnalyzer.ViewModel
             });
 
             return true;
+        }
+
+    }
+
+    /// <summary>
+    /// Сообщение от клиента.
+    /// </summary>
+    class Message
+    {
+        public string LogMessage { get; set; }
+        public string Tag { get; set; }
+        public string Method { get; set; }
+        public string File { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Tag} | {Method} | {LogMessage} | {File}";
         }
     }
 

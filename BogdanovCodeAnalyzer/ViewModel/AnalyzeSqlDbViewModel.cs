@@ -117,7 +117,16 @@ namespace BogdanovCodeAnalyzer.ViewModel
                 IsChecked = true,
                 ConnectionString = "Data Source=localhost;Initial Catalog=Sklad;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
             });
-
+            Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=localhost;Initial Catalog=dopsell;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
+            });
+            Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=localhost;Initial Catalog=sintez;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
+            });
 
             SearchValuesInFieldsDbCommand = new RelayCommand(obj => SearchValuesInFieldsDb());
             SearchValuesInTablesDbCommand = new RelayCommand(obj => SearchValuesInTablesDb());
@@ -244,9 +253,9 @@ namespace BogdanovCodeAnalyzer.ViewModel
                     long resLong;
                     if (long.TryParse(ValueToSearchInDbTabs, out resLong))
                     {
-                        System.Data.DataTable dt2 = new System.Data.DataTable();
                         foreach (System.Data.DataRow item in dt.Rows)
                         {
+                            System.Data.DataTable dt2 = new System.Data.DataTable();
                             if (strTypes.Contains(item[3].ToString()))
                             {
                                 continue;
@@ -264,13 +273,14 @@ namespace BogdanovCodeAnalyzer.ViewModel
 
                                 DT.Rows.Add(item.ItemArray.ElementAt(0), item.ItemArray.ElementAt(1), item.ItemArray.ElementAt(2), item.ItemArray.ElementAt(3), c);
                             }
+
                         }
                     }
                     else
                     {
-                        System.Data.DataTable dt2 = new System.Data.DataTable();
                         foreach (System.Data.DataRow item in dt.Rows)
                         {
+                            System.Data.DataTable dt2 = new System.Data.DataTable();
                             if (strTypes.Contains(item[3].ToString()) && item[3].ToString() != "varbinary" && item[3].ToString() != "ntext" && item[3].ToString() != "varchar")
                             {
                                 sqlQuery = $"select {item.ItemArray.ElementAt(2)} " +

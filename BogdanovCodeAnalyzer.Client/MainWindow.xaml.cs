@@ -22,35 +22,65 @@ namespace BogdanovCodeAnalyzer.Client
     public partial class MainWindow : Window
     {
         IServiceBaseContract serviceBaseContract;
+        Callback callback;
+
+        bool isPermitToLogs = false;
+
         public MainWindow()
         {
             InitializeComponent();
             //serviceBaseContractClient = new ServiceBaseContractClient();
+            callback = new Callback();
+            callback.OnStartLogs += Callback_OnStartLogs;
+            callback.OnStopLogs += Callback_OnStopLogs;
             serviceBaseContract = new ServiceBaseContractClient(
-                new System.ServiceModel.InstanceContext(new Callback()));
+                new System.ServiceModel.InstanceContext(callback));
             //BogdanovCodeAnalyzer.Client.ServiceReferenceCodeAnalyzer.IServiceBaseContract serviceBase = new BogdanovCodeAnalyzer.Client.ServiceReferenceCodeAnalyzer.ServiceBaseContractClient();
-            serviceBaseContract.Log("Тестовое сообщенище", "ТЭГ", "ТОТ МЕТОД", "ФАЙЛ");
-            
+            if (isPermitToLogs)
+            {
+                serviceBaseContract.Log("Тестовое сообщенище", "ТЭГ", "ТОТ МЕТОД", "ФАЙЛ");
+            }
+
+        }
+
+        private void Callback_OnStopLogs()
+        {
+            isPermitToLogs = false;
+        }
+
+        private void Callback_OnStartLogs()
+        {
+            isPermitToLogs = true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+            if (isPermitToLogs)
+            {
+                serviceBaseContract.Log("Тест", "DEBUG", "", "");
+            }
+        }
 
-            serviceBaseContract.Log("Тест", "DEBUG", "", "");
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            serviceBaseContract.Connect();
         }
     }
 
     class Callback : BogdanovCodeAnalyzer.Contracts.ContractServiceReference.IServiceBaseContractCallback
     {
+        public event Action OnStartLogs;
+        public event Action OnStopLogs;
+
         public void StartLogs()
         {
-            throw new NotImplementedException();
+            OnStartLogs?.Invoke();
         }
 
         public void StopLogs()
         {
-            throw new NotImplementedException();
+            OnStopLogs?.Invoke();
         }
     }
 }

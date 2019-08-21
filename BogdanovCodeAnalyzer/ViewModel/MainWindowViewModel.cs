@@ -50,7 +50,8 @@ namespace BogdanovCodeAnalyzer.ViewModel
         private string pathToAnalyzeFiles = @"C:\BogdanovR\Experiments\Sintez\";
         private string textInTextBlock;
         private string textAddedNamespase = "SintezLibrary";
-        private string logFilesPath = @"C:\BogdanovR\Experiments\Sintez\SintezOSPClient\bin\Debug\Logs\Log.log";
+        //private string logFilesPath = @"C:\BogdanovR\Experiments\Sintez\SintezOSPClient\bin\Debug\Logs\Log.log";
+        private string logFilesPath = @"C:\BogdanovR\MyReps\BogdanovUtilities\BogdanovCodeAnalyzer\bin\Debug\Logs\Log.log";
         private bool isFrequenceRepeatStrings;
         private bool isFrequenceRepeatFiles;
         private ObservableCollection<Log> logs;
@@ -223,17 +224,6 @@ namespace BogdanovCodeAnalyzer.ViewModel
             }
         }
 
-    }
-
-    /// <summary>
-    /// Сообщение от клиента.
-    /// </summary>
-    class Message
-    {
-        public string LogMessage { get; set; }
-        public string Tag { get; set; }
-        public string Method { get; set; }
-        public string File { get; set; }
     }
 
     /// <summary>

@@ -31,7 +31,7 @@
                     <TabItem Header="Анализ лога">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="700"/>
+                                <ColumnDefinition Width="1000"/>
                                 <ColumnDefinition Width="29*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
