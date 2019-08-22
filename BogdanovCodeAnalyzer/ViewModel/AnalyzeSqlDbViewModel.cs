@@ -281,7 +281,9 @@ namespace BogdanovCodeAnalyzer.ViewModel
                         foreach (System.Data.DataRow item in dt.Rows)
                         {
                             System.Data.DataTable dt2 = new System.Data.DataTable();
-                            if (strTypes.Contains(item[3].ToString()) && item[3].ToString() != "varbinary" && item[3].ToString() != "ntext" && item[3].ToString() != "varchar")
+                            if (strTypes.Contains(item[3].ToString()) && item[3].ToString() != "varbinary" 
+                                && item[3].ToString() != "ntext" && item[3].ToString() != "varchar" 
+                                && item[3].ToString() != "smalldatetime" && item[3].ToString() != "timestamp")
                             {
                                 sqlQuery = $"select {item.ItemArray.ElementAt(2)} " +
                                     $"from {item.ItemArray.ElementAt(1)} " +

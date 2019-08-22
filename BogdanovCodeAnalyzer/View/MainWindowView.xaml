@@ -46,6 +46,13 @@
                     </View:AnalyzeSqlDbView.DataContext>
                 </View:AnalyzeSqlDbView>
             </TabItem>
+            <TabItem Header="Анализ кода">
+                <View:AnalyzeCodeView>
+                    <View:AnalyzeCodeView.DataContext>
+                        <vm:AnalyzeCodeViewModel/>
+                    </View:AnalyzeCodeView.DataContext>
+                </View:AnalyzeCodeView>
+            </TabItem>
         </TabControl>
 
     </Grid>

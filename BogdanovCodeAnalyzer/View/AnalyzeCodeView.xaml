@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="BogdanovCodeAnalyzer.View.AnalyzeCodeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BogdanovCodeAnalyzer.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="163*"/>
+        </Grid.RowDefinitions>
+
+
+        <ListBox ItemsSource="{Binding STRS, Mode=TwoWay}" Grid.Row="1">
+
+        </ListBox>
+        <Button Content="Конвертировать код в MSIL" HorizontalAlignment="Left" Margin="538,46,0,0" VerticalAlignment="Top" Width="245" Height="23"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="126,14,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="407"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="126,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="407"/>
+        <Button Content="Проанализировать MSIL файл" HorizontalAlignment="Left" Margin="538,77,0,0" VerticalAlignment="Top" Width="245" Height="23"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="126,77,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="407"/>
+        <Label Content="Путь к .dll или .exe" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top"/>
+        <Label Content="Путь к файлу MSIL" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top"/>
+        <Label Content="Путь к ILDasm" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.553,-4.803"/>
+        <Button Content="Сохранить типы" HorizontalAlignment="Left" Margin="538,108,0,0" VerticalAlignment="Top" Width="120" Height="23"/>
+        <Button Content="Загрузить типы" HorizontalAlignment="Left" Margin="663,108,0,0" VerticalAlignment="Top" Width="120" Height="23"/>
+        <Label Content="Файл с сохранёнными типами" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="191,108,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="342"/>
+        <Button Content="Вывести иерархию классов" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top" Width="200"/>
+        <Button Content="Вывести родительские классы" HorizontalAlignment="Left" Margin="10,198,0,0" VerticalAlignment="Top" Width="200"/>
+        <Button Content="Вывести дочерние классы" HorizontalAlignment="Left" Margin="10,223,0,0" VerticalAlignment="Top" Width="200"/>
+        <Button Content="Вывести ветку класса" HorizontalAlignment="Left" Margin="10,248,0,0" VerticalAlignment="Top" Width="200"/>
+    </Grid>
+</UserControl>
