@@ -98,7 +98,7 @@ namespace BogdanovCodeAnalyzer.ViewModel
         public AnalyzeSqlDbViewModel()
         {
             Connections = new ObservableCollection<ConnectionDB>();
-            Connections.Add(new ConnectionDB
+            /*Connections.Add(new ConnectionDB
             {
                 IsChecked = true,
                 ConnectionString = "Data Source=localhost;Initial Catalog=gorizont;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
@@ -126,6 +126,11 @@ namespace BogdanovCodeAnalyzer.ViewModel
             {
                 IsChecked = true,
                 ConnectionString = "Data Source=localhost;Initial Catalog=sintez;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
+            });*/
+            Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=KVTDECLSQL2;Initial Catalog=Notification;User=dbadmin;Password=nhbnjgjkz"
             });
 
             SearchValuesInFieldsDbCommand = new RelayCommand(obj => SearchValuesInFieldsDb());
@@ -219,7 +224,7 @@ namespace BogdanovCodeAnalyzer.ViewModel
 
         private void SearchValuesInFieldsDb()
         {
-            List<string> strTypes = new List<string> { "char", "nchar", "nvarchar", "varchar", "timestamp", "ntext", "varbinary", "smalldatetime" };
+            List<string> strTypes = new List<string> { "char", "nchar", "nvarchar", "varchar", "timestamp", "ntext", "varbinary", "smalldatetime", "time", "uniqueidentifier" };
             DT = null;
             foreach (var conStr in Connections)
             {
@@ -266,7 +271,15 @@ namespace BogdanovCodeAnalyzer.ViewModel
 
 
                             da.SelectCommand = new System.Data.SqlClient.SqlCommand(sqlQuery, cn);
-                            da.Fill(dt2);
+                            try
+                            {
+                                da.Fill(dt2);
+                            }
+                            catch (Exception)
+                            {
+                                // TODO: Сделать здесь потом вывод сообщения об ошибке
+                                continue;
+                            }
                             int c = dt2.Rows.Count;
                             if (c > 0)
                             {
