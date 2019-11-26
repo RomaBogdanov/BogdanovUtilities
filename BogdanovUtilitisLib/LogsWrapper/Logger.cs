@@ -197,4 +197,110 @@ namespace BogdanovUtilitisLib.LogsWrapper
 
         #endregion
     }
+
+    /// <summary>
+    /// Класс обработчик временного лога, который будет записан только в случае ошибки
+    /// </summary>
+    /// <remarks>
+    /// Для запуска лога необходимо:
+    /// Стартовать его где-то
+    /// Остановить его если фрагмент кода прошёл без ошибок
+    /// Добавить его в сообщение об ошибке.
+    /// Пример:
+    /// <code>
+    /// public void AnalyzeLog(bool isException)
+    ///    {
+    ///        try
+    ///        {
+    ///            LogsWrapper.TmpLogError.Start("A");
+    ///            if (isException)
+    ///            {
+    ///                LogsWrapper.TmpLogError.Add("A", "Лог перед исключением");
+    ///                throw new Exception();
+    ///                LogsWrapper.TmpLogError.Add("A", "Лог после исключения");
+    ///            }
+    ///            else 
+    ///            { 
+    ///            }
+    ///            LogsWrapper.TmpLogError.Stop("A");
+    ///        }
+    ///        catch (Exception err)
+    ///        {
+    ///            LogsWrapper.Logger.Error(LogsWrapper.TmpLogError.FinishTrace("A")
+    ///                .ToString() + err.Message);
+    ///        }
+    ///    }
+    /// </code>
+    /// </remarks>
+    public static class TmpLogError
+    {
+
+        public static Dictionary<string, StringBuilder> TmpLogs =
+            new Dictionary<string, StringBuilder>();
+
+        /// <summary>
+        /// Запуск временного лога.
+        /// </summary>
+        /// <param name="descript">Уникальное описание временного лога.</param>
+        public static void Start(string descript = "")
+        {
+            if (TmpLogs.ContainsKey(descript))
+            {
+                TmpLogs[descript].Clear();
+            }
+            else
+            {
+                TmpLogs.Add(descript, new StringBuilder());
+            }
+        }
+
+        /// <summary>
+        /// Успешная остановка временного лога.
+        /// </summary>
+        /// <param name="descript">Уникальное описание временного лога.</param>
+        public static void Stop(string descript = "")
+        {
+            if (TmpLogs.ContainsKey(descript))
+            {
+                TmpLogs[descript].Clear();
+            }
+        }
+
+        /// <summary>
+        /// Добавляет новое сообщение во временный лог.
+        /// </summary>
+        /// <param name="descript">Описание временного лога</param>
+        /// <param name="msg">сообщение передаваемое в лог</param>
+        public static void Add(string descript, string msg,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFile = "")
+        {
+            if (TmpLogs.ContainsKey(descript) && TmpLogs[descript] != null)
+            {
+                TmpLogs[descript].AppendLine($"{msg} метод:{memberName} " +
+                    $"файл:{sourceFile}");
+            }
+        }
+
+        /// <summary>
+        /// Выводит сообщение собранное для исключения и удаляет его.
+        /// </summary>
+        /// <param name="descript">Ключ ошибки</param>
+        /// <returns></returns>
+        public static string FinishTrace(string descript)
+        {
+            if (TmpLogs.ContainsKey(descript) && TmpLogs[descript] != null)
+            {
+                string res = $"Трассировка перед выбросом ошибки {descript}:" + Environment.NewLine;
+                res += TmpLogs[descript].ToString();
+                res += $"Окончание трассировки перед выбросом ошибки {descript}" + Environment.NewLine;
+                TmpLogs[descript].Clear();
+                return res;
+            }
+            return $"Трассировка исключения {descript} выстроена некорректно " +
+                $"(либо её не создали, либо была удалена до выброса исключения)" + 
+                Environment.NewLine;
+        }
+
+    }
 }

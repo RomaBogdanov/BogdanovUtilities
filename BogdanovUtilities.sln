@@ -56,7 +56,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF MVVM", "WPF MVVM", "{4D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetCore", "AspNetCore", "{9FEA7EF4-43CD-447F-BA04-745F9DFFBBBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignExamples", "DesignExamples\DesignExamples.csproj", "{6D904D43-074D-4632-B539-62C55425E47E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesignExamples", "DesignExamples\DesignExamples.csproj", "{6D904D43-074D-4632-B539-62C55425E47E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BogdanovUtilitisLib.Logger.Tests", "BogdanovUtilitisLib.Logger.Tests\BogdanovUtilitisLib.Logger.Tests.csproj", "{F706E8FE-3ABB-4032-98FF-B648A2886E6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -136,6 +138,10 @@ Global
 		{6D904D43-074D-4632-B539-62C55425E47E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D904D43-074D-4632-B539-62C55425E47E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D904D43-074D-4632-B539-62C55425E47E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F706E8FE-3ABB-4032-98FF-B648A2886E6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F706E8FE-3ABB-4032-98FF-B648A2886E6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F706E8FE-3ABB-4032-98FF-B648A2886E6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F706E8FE-3ABB-4032-98FF-B648A2886E6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +157,7 @@ Global
 		{6F8A902B-AAD3-4916-A417-7FB7A7E1B923} = {61F4FF41-0FA6-4B8E-81FC-128719510F08}
 		{11DFD2F0-5D99-456D-B3FA-6ADAD9FB7EAE} = {61F4FF41-0FA6-4B8E-81FC-128719510F08}
 		{6D904D43-074D-4632-B539-62C55425E47E} = {9FEA7EF4-43CD-447F-BA04-745F9DFFBBBD}
+		{F706E8FE-3ABB-4032-98FF-B648A2886E6D} = {2154B48F-7CA7-4DB2-8980-0FEFBAD6AC99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF91119C-30EE-4ADD-96B1-943C96BB1742}

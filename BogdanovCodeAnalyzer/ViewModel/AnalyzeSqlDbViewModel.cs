@@ -132,6 +132,11 @@ namespace BogdanovCodeAnalyzer.ViewModel
                 IsChecked = true,
                 ConnectionString = "Data Source=KVTDECLSQL2;Initial Catalog=Notification;User=dbadmin;Password=nhbnjgjkz"
             });
+            Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=KVTDECLSQL2;Initial Catalog=VBSiteClientsSettings;User=dbadmin;Password=nhbnjgjkz"
+            });
 
             SearchValuesInFieldsDbCommand = new RelayCommand(obj => SearchValuesInFieldsDb());
             SearchValuesInTablesDbCommand = new RelayCommand(obj => SearchValuesInTablesDb());
