@@ -74,6 +74,11 @@ namespace BogdanovCodeAnalyzer.ViewModel
         public string ConnectionString { get; set; }
     }
 
+    public class Except
+    {
+        public string Message { get; set; }
+    }
+
     /// <summary>
     /// Статический класс для приёма сообщений от клиентов.
     /// </summary>

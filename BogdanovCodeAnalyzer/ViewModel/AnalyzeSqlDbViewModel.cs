@@ -35,7 +35,9 @@ namespace BogdanovCodeAnalyzer.ViewModel
         private string valueToSearchInDbTabs;
         private System.Data.DataTable dT;
         private System.Data.DataView dV;
-
+        private bool searchIsEnabled = true;
+        private bool searchAsString;
+        private ObservableCollection<Except> exceptions;
 
         public ObservableCollection<ConnectionDB> Connections
         {
@@ -43,6 +45,16 @@ namespace BogdanovCodeAnalyzer.ViewModel
             set
             {
                 connections = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Except> Exceptions
+        {
+            get => exceptions;
+            set
+            {
+                exceptions = value;
                 OnPropertyChanged();
             }
         }
@@ -63,6 +75,29 @@ namespace BogdanovCodeAnalyzer.ViewModel
             set
             {
                 dV = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Статус активности кнопок поиска
+        /// </summary>
+        public bool SearchIsEnabled
+        {
+            get => searchIsEnabled;
+            set
+            {
+                searchIsEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool SearchAsString
+        {
+            get => searchAsString;
+            set
+            {
+                searchAsString = value;
                 OnPropertyChanged();
             }
         }
@@ -97,47 +132,11 @@ namespace BogdanovCodeAnalyzer.ViewModel
 
         public AnalyzeSqlDbViewModel()
         {
-            Connections = new ObservableCollection<ConnectionDB>();
-            /*Connections.Add(new ConnectionDB
-            {
-                IsChecked = true,
-                ConnectionString = "Data Source=localhost;Initial Catalog=gorizont;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
-            });
-            Connections.Add(new ConnectionDB
-            {
-                IsChecked = true,
-                ConnectionString = "Data Source=localhost;Initial Catalog=lab1;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
-            }); Connections.Add(new ConnectionDB
-            {
-                IsChecked = true,
-                ConnectionString = "Data Source=localhost;Initial Catalog=seller;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
-            });
-            Connections.Add(new ConnectionDB
-            {
-                IsChecked = true,
-                ConnectionString = "Data Source=localhost;Initial Catalog=Sklad;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
-            });
-            Connections.Add(new ConnectionDB
-            {
-                IsChecked = true,
-                ConnectionString = "Data Source=localhost;Initial Catalog=dopsell;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
-            });
-            Connections.Add(new ConnectionDB
-            {
-                IsChecked = true,
-                ConnectionString = "Data Source=localhost;Initial Catalog=sintez;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
-            });*/
-            Connections.Add(new ConnectionDB
-            {
-                IsChecked = true,
-                ConnectionString = "Data Source=KVTDECLSQL2;Initial Catalog=Notification;User=dbadmin;Password=nhbnjgjkz"
-            });
-            Connections.Add(new ConnectionDB
-            {
-                IsChecked = true,
-                ConnectionString = "Data Source=KVTDECLSQL2;Initial Catalog=VBSiteClientsSettings;User=dbadmin;Password=nhbnjgjkz"
-            });
 
+            Connections = new ObservableCollection<ConnectionDB>();
+            Exceptions = new ObservableCollection<Except>();
+
+            RegisterConnects();
             SearchValuesInFieldsDbCommand = new RelayCommand(obj => SearchValuesInFieldsDb());
             SearchValuesInTablesDbCommand = new RelayCommand(obj => SearchValuesInTablesDb());
             SearchValuesInColumnsDbCommand = new RelayCommand(obj => SearchValuesInColumnsDb());
@@ -229,98 +228,164 @@ namespace BogdanovCodeAnalyzer.ViewModel
 
         private void SearchValuesInFieldsDb()
         {
-            List<string> strTypes = new List<string> { "char", "nchar", "nvarchar", "varchar", "timestamp", "ntext", "varbinary", "smalldatetime", "time", "uniqueidentifier" };
-            DT = null;
-            foreach (var conStr in Connections)
+            Task.Run(() =>
             {
-                if (!conStr.IsChecked)
+                SearchIsEnabled = false;
+                List<string> strTypes = new List<string> { "char", "nchar", "nvarchar", "varchar", "timestamp", "ntext", "varbinary", "smalldatetime", "time", "uniqueidentifier" };
+                DT = null;
+                foreach (var conStr in Connections)
                 {
-                    continue;
-                }
-
-                System.Data.DataTable dt = new System.Data.DataTable();
-                string sqlQuery = "select TABLE_CATALOG, TABLE_NAME, " +
-                    "COLUMN_NAME, DATA_TYPE from INFORMATION_SCHEMA.COLUMNS";
-
-                System.Data.SqlClient.SqlConnection cn =
-                    new System.Data.SqlClient.SqlConnection(conStr.ConnectionString);
-
-                using (System.Data.SqlClient.SqlDataAdapter da =
-                    new System.Data.SqlClient.SqlDataAdapter(sqlQuery, cn))
-                {
-                    da.Fill(dt);
-                    if (string.IsNullOrEmpty(ValueToSearchInDbTabs) && DT == null)
+                    if (!conStr.IsChecked)
                     {
-                        DT = dt;
-                        return;
+                        continue;
                     }
-                    if (DT == null)
-                    {
-                        DT = dt.Clone();
-                        DT.Columns.Add("Повторений", typeof(int));
 
-                    }
-                    long resLong;
-                    if (long.TryParse(ValueToSearchInDbTabs, out resLong))
+                    System.Data.DataTable dt = new System.Data.DataTable();
+                    string sqlQuery = "select TABLE_CATALOG, TABLE_NAME, " +
+                        "COLUMN_NAME, DATA_TYPE from INFORMATION_SCHEMA.COLUMNS";
+
+                    System.Data.SqlClient.SqlConnection cn =
+                        new System.Data.SqlClient.SqlConnection(conStr.ConnectionString);
+
+                    using (System.Data.SqlClient.SqlDataAdapter da =
+                        new System.Data.SqlClient.SqlDataAdapter(sqlQuery, cn))
                     {
-                        foreach (System.Data.DataRow item in dt.Rows)
+                        da.Fill(dt);
+                        if (string.IsNullOrEmpty(ValueToSearchInDbTabs) && DT == null)
                         {
-                            System.Data.DataTable dt2 = new System.Data.DataTable();
-                            if (strTypes.Contains(item[3].ToString()))
-                            {
-                                continue;
-                            }
-                            sqlQuery = $"select {item.ItemArray.ElementAt(2)} " +
-                                $"from {item.ItemArray.ElementAt(1)} " +
-                                $"where {item.ItemArray.ElementAt(2)} = {ValueToSearchInDbTabs}";
-
-
-                            da.SelectCommand = new System.Data.SqlClient.SqlCommand(sqlQuery, cn);
-                            try
-                            {
-                                da.Fill(dt2);
-                            }
-                            catch (Exception)
-                            {
-                                // TODO: Сделать здесь потом вывод сообщения об ошибке
-                                continue;
-                            }
-                            int c = dt2.Rows.Count;
-                            if (c > 0)
-                            {
-
-                                DT.Rows.Add(item.ItemArray.ElementAt(0), item.ItemArray.ElementAt(1), item.ItemArray.ElementAt(2), item.ItemArray.ElementAt(3), c);
-                            }
+                            DT = dt;
+                            return;
+                        }
+                        if (DT == null)
+                        {
+                            DT = dt.Clone();
+                            DT.Columns.Add("Повторений", typeof(int));
 
                         }
-                    }
-                    else
-                    {
-                        foreach (System.Data.DataRow item in dt.Rows)
+                        long resLong;
+                        if (long.TryParse(ValueToSearchInDbTabs, out resLong) && !SearchAsString)
                         {
-                            System.Data.DataTable dt2 = new System.Data.DataTable();
-                            if (strTypes.Contains(item[3].ToString()) && item[3].ToString() != "varbinary" 
-                                && item[3].ToString() != "ntext" && item[3].ToString() != "varchar" 
-                                && item[3].ToString() != "smalldatetime" && item[3].ToString() != "timestamp")
+                            foreach (System.Data.DataRow item in dt.Rows)
                             {
+                                System.Data.DataTable dt2 = new System.Data.DataTable();
+                                if (strTypes.Contains(item[3].ToString()))
+                                {
+                                    continue;
+                                }
                                 sqlQuery = $"select {item.ItemArray.ElementAt(2)} " +
                                     $"from {item.ItemArray.ElementAt(1)} " +
-                                    $"where {item.ItemArray.ElementAt(2)} = '{ValueToSearchInDbTabs}'";
+                                    $"where {item.ItemArray.ElementAt(2)} = {ValueToSearchInDbTabs}";
 
 
                                 da.SelectCommand = new System.Data.SqlClient.SqlCommand(sqlQuery, cn);
-                                da.Fill(dt2);
+                                try
+                                {
+                                    da.Fill(dt2);
+                                }
+                                catch (Exception err)
+                                {
+                                    App.Current.Dispatcher.Invoke(() => 
+                                    Exceptions.Add(new Except { Message = err.Message }));
+                                    // TODO: Сделать здесь потом вывод сообщения об ошибке
+                                    continue;
+                                }
                                 int c = dt2.Rows.Count;
                                 if (c > 0)
                                 {
-                                    DT.Rows.Add(item.ItemArray.ElementAt(0), item.ItemArray.ElementAt(1), item.ItemArray.ElementAt(2), item.ItemArray.ElementAt(3), c);
+
+                                    DT.Rows.Add(item.ItemArray.ElementAt(0),
+                                        item.ItemArray.ElementAt(1),
+                                        item.ItemArray.ElementAt(2),
+                                        item.ItemArray.ElementAt(3), c);
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            foreach (System.Data.DataRow item in dt.Rows)
+                            {
+                                System.Data.DataTable dt2 = new System.Data.DataTable();
+                                if (strTypes.Contains(item[3].ToString()) && item[3].ToString() != "varbinary"
+                                    && item[3].ToString() != "ntext" && item[3].ToString() != "varchar"
+                                    && item[3].ToString() != "smalldatetime" && item[3].ToString() != "timestamp")
+                                {
+                                    sqlQuery = $"select {item.ItemArray.ElementAt(2)} " +
+                                        $"from {item.ItemArray.ElementAt(1)} " +
+                                        $"where {item.ItemArray.ElementAt(2)} = '{ValueToSearchInDbTabs}'";
+
+
+                                    da.SelectCommand = new System.Data.SqlClient.SqlCommand(sqlQuery, cn);
+                                    try
+                                    {
+                                        da.Fill(dt2);
+                                    }
+                                    catch (Exception err)
+                                    {
+                                        App.Current.Dispatcher.Invoke(() => 
+                                        Exceptions.Add(new Except { Message = err.Message }));
+                                        continue;
+                                    }
+                                    int c = dt2.Rows.Count;
+                                    if (c > 0)
+                                    {
+                                        DT.Rows.Add(item.ItemArray.ElementAt(0),
+                                            item.ItemArray.ElementAt(1),
+                                            item.ItemArray.ElementAt(2),
+                                            item.ItemArray.ElementAt(3), c);
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            DV = DT.DefaultView;
+                DV = DT.DefaultView;
+                SearchIsEnabled = true;
+            });
+        }
+
+        void RegisterConnects()
+        {
+            /*Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=localhost;Initial Catalog=gorizont;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
+            });
+            Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=localhost;Initial Catalog=lab1;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
+            }); Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=localhost;Initial Catalog=seller;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
+            });
+            Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=localhost;Initial Catalog=Sklad;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
+            });
+            Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=localhost;Initial Catalog=dopsell;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
+            });
+            Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=localhost;Initial Catalog=sintez;Persist Security Info=True;User ID=profcert;Password=12345;MultipleActiveResultSets=True"
+            });*/
+            Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=KVTDECLSQL2;Initial Catalog=Notification;User=dbadmin;Password=nhbnjgjkz"
+            });
+            Connections.Add(new ConnectionDB
+            {
+                IsChecked = true,
+                ConnectionString = "Data Source=KVTDECLSQL2;Initial Catalog=VBSiteClientsSettings;User=dbadmin;Password=nhbnjgjkz"
+            });
+
         }
     }
 }
