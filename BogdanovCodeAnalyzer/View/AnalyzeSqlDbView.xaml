@@ -42,10 +42,12 @@
 
         <Grid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="269*"/>
-                <ColumnDefinition Width="531*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
+            <!--
             <ListBox Grid.Column="0" ItemsSource="{Binding Exceptions}" Margin="5" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -54,9 +56,24 @@
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-            </ListBox>
-            <DataGrid ItemsSource="{Binding DV, Mode=TwoWay}" Grid.Column="1" Margin="5" />
+            </ListBox>-->
+            <DataGrid ItemsSource="{Binding Exceptions}" SelectedItem="{Binding CurrentException, Mode=TwoWay}" Margin="5"></DataGrid>
+            <DataGrid ItemsSource="{Binding ExceptColumns}" Grid.Column="1" Margin="5"></DataGrid>
+            <DataGrid ItemsSource="{Binding DV, Mode=TwoWay}" Grid.Column="2" Margin="5" />
         </Grid>
+        <Button x:Name="button" 
+                Content="Перенести в необрабатываемые колонки" 
+                Command="{Binding ToExceptColsCommand, Mode=TwoWay}" 
+                Grid.Column="1" 
+                HorizontalAlignment="Left" 
+                Margin="198,5,0,0" 
+                Grid.Row="4" 
+                VerticalAlignment="Top" 
+                Width="250"/>
+        <Button x:Name="button1" Content="Сохранить" Command="{Binding SaveExceptColsCommand, Mode=TwoWay}" Grid.Column="2" HorizontalAlignment="Left" Margin="138,5,-118,0" Grid.Row="4" VerticalAlignment="Top" Width="130"/>
+        <Button x:Name="button2" Content="Перенести все колонки" 
+                Command="{Binding AllToExceptColsCommand, Mode=TwoWay}"
+                Grid.Column="1" HorizontalAlignment="Left" Margin="453,5,0,0" Grid.Row="4" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2"/>
 
     </Grid>
 </UserControl>

@@ -77,6 +77,25 @@ namespace BogdanovCodeAnalyzer.ViewModel
     public class Except
     {
         public string Message { get; set; }
+
+        public string TabName { get; set; }
+        
+        public string ColName { get; set; }
+
+        public string ConnectionString { get; set; }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Serializable]
+    public class Column
+    {
+        public string TabName { get; set; }
+
+        public string ColName { get; set; }
+        
+        public string ConnectionString { get; set; }
     }
 
     /// <summary>
