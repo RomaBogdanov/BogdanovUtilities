@@ -439,12 +439,13 @@ namespace BogdanovCodeAnalyzer.ViewModel
                             {
                                 System.Data.DataTable dt2 = new System.Data.DataTable();
                                 if (strTypes.Contains(item[3].ToString()) && item[3].ToString() != "varbinary"
-                                    && item[3].ToString() != "ntext" && item[3].ToString() != "varchar"
+                                    //&& item[3].ToString() != "ntext" && item[3].ToString() != "varchar"
+                                    && item[3].ToString() != "uniqueidentifier"
                                     && item[3].ToString() != "smalldatetime" && item[3].ToString() != "timestamp")
                                 {
-                                    sqlQuery = $"select {item.ItemArray.ElementAt(2)} " +
-                                        $"from {item.ItemArray.ElementAt(1)} " +
-                                        $"where {item.ItemArray.ElementAt(2)} = '{ValueToSearchInDbTabs}'";
+                                    sqlQuery = $"select [{item.ItemArray.ElementAt(2)}] " +
+                                        $"from [{item.ItemArray.ElementAt(1)}] " +
+                                        $"where [{item.ItemArray.ElementAt(2)}] = '{ValueToSearchInDbTabs}'";
 
 
                                     da.SelectCommand = new System.Data.SqlClient.SqlCommand(sqlQuery, cn);
@@ -484,17 +485,19 @@ namespace BogdanovCodeAnalyzer.ViewModel
 
         void RegisterConnects()
         {
-            string dbs = "ReportServer,ReportServerTempDB,law,arm,Analytics_copy," +
+            //string dbs = "gtd2011,gtd2012_NoBlob,Notification,X5Orders";
+            /*string dbs = "ReportServer,ReportServerTempDB,law,arm,Analytics_copy," +
                 "ElectroluxReportsScan,otchet_gtd,DCL,altasvh,altasvh_old,svh," +
                 "gtd2012_ED,DCL_new,gtd2011,distribution,altasvh_old_PRO," +
-                "gtd2019,ito,gtd2012_NoBlob,ED4gtd,bosco,docs,decl,ALMlog,test," +
+                "ito,gtd2012_NoBlob,ED4gtd,bosco,docs,decl,ALMlog,test," +
                 "gtd518,ED3gtd,ED2gtd,Notification,Scheduler,ClientServer,Attorney," +
                 "InvoiceConverter,gtdKV,Duties,DispatcherScan,SiemensCMR," +
                 "VBSiteClientsSettings,NotificationClients,OrdersMonitoring," +
                 "ExpressCargo,ReceptionScan,law_archive,As2Messages,Analytics_old," +
                 "ElectroluxOrders,KyoceraOrders,BoschOrders,Examination," +
                 "ScannedDeclarations,KonicaOrders,PriceInfo,X5Orders_copy," +
-                "VBSiteClientsSettings_test,X5Orders,RobertBosch";
+                "VBSiteClientsSettings_test,X5Orders,RobertBosch";*/
+            string dbs = "VBSiteClientsSettings";
             var d = dbs.Split(',');
             foreach (var item in d)
             {
