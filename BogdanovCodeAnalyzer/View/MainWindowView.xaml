@@ -12,6 +12,20 @@
     </Window.DataContext>
     <Grid>
         <TabControl  Margin="5">
+            <TabItem Header="Работа с БД T-SQL">
+                <View:AnalyzeSqlDbView>
+                    <View:AnalyzeSqlDbView.DataContext>
+                        <vm:AnalyzeSqlDbViewModel/>
+                    </View:AnalyzeSqlDbView.DataContext>
+                </View:AnalyzeSqlDbView>
+            </TabItem>
+            <TabItem Header="Поиск текста в файлах">
+                <View:SearchTextInFilesView>
+                    <View:SearchTextInFilesView.DataContext>
+                        <vm:SearchTextInFilesViewModel/>
+                    </View:SearchTextInFilesView.DataContext>
+                </View:SearchTextInFilesView>
+            </TabItem>
             <TabItem Header="Сервер">
                 <Grid>
                     <View:RemotingProgramsLogsView>
@@ -39,13 +53,7 @@
                     </TabItem>
                 </TabControl>
             </TabItem>
-            <TabItem Header="Работа с БД T-SQL">
-                <View:AnalyzeSqlDbView>
-                    <View:AnalyzeSqlDbView.DataContext>
-                        <vm:AnalyzeSqlDbViewModel/>
-                    </View:AnalyzeSqlDbView.DataContext>
-                </View:AnalyzeSqlDbView>
-            </TabItem>
+ 
             <TabItem Header="Анализ кода">
                 <View:AnalyzeCodeView>
                     <View:AnalyzeCodeView.DataContext>
