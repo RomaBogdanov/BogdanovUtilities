@@ -76,6 +76,16 @@ namespace BogdanovCodeAnalyzer.ViewModel
             }
         }
 
+        public bool SearchIsEnabled
+        {
+            get => searchIsEnabled;
+            set
+            {
+                searchIsEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
         /// <summary>
         /// Запускает поиск файлов, в которых содержится данная строка.
         /// </summary>
@@ -84,6 +94,7 @@ namespace BogdanovCodeAnalyzer.ViewModel
         public ICommand AllExtentionsCommand { get; set; }
 
         List<string> exts;
+        private bool searchIsEnabled = true;
 
         public SearchTextInFilesViewModel()
         {
@@ -112,27 +123,42 @@ namespace BogdanovCodeAnalyzer.ViewModel
         /// </summary>
         private void SearchFilesWithText()
         {
-            
-            string[] allFiles = System.IO.Directory.GetFiles(SearchingPath,
-                "*.*", System.IO.SearchOption.AllDirectories).Where(
-                p => exts.Contains(p.Split('.').Last())).ToArray();
-            SearchedPaths = new ObservableCollection<string>();
-
-            foreach (var item in allFiles)
+            SearchIsEnabled = false;
+            Task.Run(() =>
             {
-                try
+                string[] allFiles = System.IO.Directory.GetFiles(SearchingPath,
+                    "*.*", System.IO.SearchOption.AllDirectories);
+                //.Where(
+                //    p => exts.Contains(p.Split('.').Last())).ToArray();
+                SearchedPaths = new ObservableCollection<string>();
+
+                foreach (var item in allFiles)
                 {
-                    string str = System.IO.File.ReadAllText(item);
-                    if (System.Text.RegularExpressions.Regex.IsMatch(str, SearchingText))
+                    try
                     {
-                        SearchedPaths.Add(item);
+                        string str = System.IO.File.ReadAllText(item);
+                        if (System.Text.RegularExpressions.Regex.IsMatch(str, SearchingText))
+                        {
+                            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                SearchedPaths.Add(item);
+                            });
+                        }
+                    }
+                    catch (Exception err)
+                    {
+                        System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            SearchedPaths.Add(err.Message);
+                        });
                     }
                 }
-                catch (Exception err)
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
                 {
-                    SearchedPaths.Add(err.Message);
-                }
-            }
+                    SearchIsEnabled = true;
+                });
+
+            });
         }
 
         /// <summary>

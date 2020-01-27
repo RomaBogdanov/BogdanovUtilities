@@ -37,12 +37,13 @@
 
 
         </Grid>
-        <ListBox Grid.Row="1" ItemsSource="{Binding Logs}">
+        <ListBox Grid.Row="1" ItemsSource="{Binding Logs}" Grid.ColumnSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Text="{Binding MsgLog}"/>
                         <TextBox Text="{Binding Count}"/>
+                        <TextBox Text="{Binding Comment}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

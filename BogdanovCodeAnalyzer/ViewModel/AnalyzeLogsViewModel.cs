@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.ServiceModel;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using System.Globalization;
 using BogdanovUtilitisLib.MVVMUtilsWrapper;
 
 namespace BogdanovCodeAnalyzer.ViewModel
@@ -30,7 +31,8 @@ namespace BogdanovCodeAnalyzer.ViewModel
         private string textInTextBlock;
         private string textAddedNamespase = "SintezLibrary";
         //private string logFilesPath = @"C:\BogdanovR\Experiments\Sintez\SintezOSPClient\bin\Debug\Logs\Log.log";
-        private string logFilesPath = @"C:\BogdanovR\MyReps\BogdanovUtilities\BogdanovCodeAnalyzer\bin\Debug\Logs\Log.log";
+        //private string logFilesPath = @"C:\BogdanovR\MyReps\BogdanovUtilities\BogdanovCodeAnalyzer\bin\Debug\Logs\Log.log";
+        private string logFilesPath = @"\\programserver\Share\Logs\Log.log.1";
         private bool isFrequenceRepeatStrings;
         private bool isFrequenceRepeatFiles;
         private ObservableCollection<Log> logs;
@@ -139,27 +141,84 @@ namespace BogdanovCodeAnalyzer.ViewModel
             SearchFrequencyLogsCommand = new RelayCommand(obj => SearchFrequencyLogs());
         }
 
+        class Supp
+        {
+            public TimeSpan DiffTime { get; set; }
+            public string Comment { get; set; }
+        }
+
         /// <summary>
         /// Анализ лога.
         /// </summary>
         private void SearchFrequencyLogs()
         {
+
+            if (Logs != null)
+            {
+                Logs.Clear();
+            }
+            else
+            {
+                Logs = new ObservableCollection<Log>();
+            }
+            var logs = System.IO.File.ReadLines(LogFilesPath, Encoding.Default);
+            string str = "";
+            // =================
+            Dictionary<string, Supp> dsd = new Dictionary<string, Supp>();
+            string[] cultureNames = { "en-US", "ru-RU", "ja-JP" };
+            CultureInfo culture = new CultureInfo("ru-RU");
+
+            //DateTime dt = new DateTime()
+            //var a = culture.GetFormat()
+            //ICustomFormatter
+            DateTime old = new DateTime();
+            string oldComment = "";
+            bool start = true;
+            TimeSpan ddd = new TimeSpan(0, 0, 30);
+            foreach (var item in logs)
+            {
+                if (item.Length < 25) continue;
+                str = item.Substring(0, 25);
+                if (dsd.Keys.Contains(str)) continue;
+                try
+                {
+                    int year = Convert.ToInt32(str.Substring(0, 4));
+                    int month = Convert.ToInt32(str.Substring(5, 2));
+                    int day = Convert.ToInt32(str.Substring(8, 2));
+                    int hour = Convert.ToInt32(str.Substring(11, 2));
+                    int min = Convert.ToInt32(str.Substring(14, 2));
+                    int sec = Convert.ToInt32(str.Substring(17, 2));
+                    int milisec = Convert.ToInt32(str.Substring(20, 3));
+                    DateTime dt = new DateTime(year, month, day, hour, min, sec, milisec);
+                    if (start)
+                    {
+                        old = dt;
+                        oldComment = "";
+                        start = false;
+                    }
+                    //TimeSpan timeSpan = dt - old;
+                    dsd.Add(str, new Supp { DiffTime = dt - old, Comment = oldComment });
+                    old = dt;
+                    oldComment = item.Substring(25);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            var b = from t in dsd.Where(d => d.Value.DiffTime > ddd)//.OrderByDescending(p => p.Value.DiffTime)
+                    select new Log { MsgLog = t.Key, Count = t.Value.DiffTime, Comment = t.Value.Comment };
+            //var f = b.ToList();
+            Logs = new ObservableCollection<Log>(b);
+            return;
+            // =================
+            Dictionary<string, long> dict = new Dictionary<string, long>();
+
             if (IsFrequenceRepeatStrings)
             {
-                if (Logs != null)
-                {
-                    Logs.Clear();
-                }
-                else
-                {
-                    Logs = new ObservableCollection<Log>();
-                }
-                var logs = System.IO.File.ReadLines(LogFilesPath, Encoding.Default);
-                //var aa = System.IO.File.ReadAllText(LogFilesPath, Encoding.Default);
-                string str = "";
-                Dictionary<string, long> dict = new Dictionary<string, long>();
                 foreach (var item in logs)
                 {
+                    if (item.Length < 25) continue;
                     str = item.Substring(25);
                     if (dict.Keys.Contains(str))
                     {
@@ -176,17 +235,6 @@ namespace BogdanovCodeAnalyzer.ViewModel
             }
             if (IsFrequenceRepeatFiles)
             {
-                if (Logs != null)
-                {
-                    Logs.Clear();
-                }
-                else
-                {
-                    Logs = new ObservableCollection<Log>();
-                }
-                var logs = System.IO.File.ReadLines(LogFilesPath, Encoding.Default);
-                string str = "";
-                Dictionary<string, long> dict = new Dictionary<string, long>();
                 foreach (var item in logs)
                 {
                     str = Regex.Match(item, @"C:\\.*").Value;
@@ -203,6 +251,7 @@ namespace BogdanovCodeAnalyzer.ViewModel
                         select new Log { MsgLog = l.Key, Count = l.Value };
                 Logs = new ObservableCollection<Log>(a);
             }
+
         }
     }
 }

@@ -55,7 +55,9 @@ namespace BogdanovCodeAnalyzer.ViewModel
     class Log
     {
         public string MsgLog { get; set; }
-        public long Count { get; set; }
+        public object Count { get; set; }
+
+        public object Comment { get; set; }
     }
 
     /// <summary>

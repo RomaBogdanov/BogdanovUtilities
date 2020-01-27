@@ -29,7 +29,7 @@
         <TextBox x:Name="textBox1" Grid.Column="1" Height="23" Margin="3,4,3,3" Grid.Row="1" TextWrapping="Wrap" 
                  Text="{Binding SearchingPath, Mode=TwoWay}" />
         <Label x:Name="label2" Content="Список файлов, содержащих текст:" HorizontalAlignment="Left" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
-        <Button x:Name="button" Content="Начать поиск" Grid.Column="2" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="140"
+        <Button x:Name="button" Content="Начать поиск" IsEnabled="{Binding SearchIsEnabled}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="140"
                 Command="{Binding SearchFilesWithTextCommand}"/>
         <ListBox x:Name="listBox" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Margin="5"
                  ItemsSource="{Binding SearchedPaths, Mode=TwoWay}"/>
