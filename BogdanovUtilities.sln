@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{74534D09-E2BC-40DF-81BB-A2310505A6C9}"
 	ProjectSection(SolutionItems) = preProject
 		Doxyfile = Doxyfile
+		Анализ БД.txt = Анализ БД.txt
 		Планы.txt = Планы.txt
 	EndProjectSection
 EndProject
