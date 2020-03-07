@@ -485,7 +485,7 @@ namespace BogdanovCodeAnalyzer.ViewModel
 
         void RegisterConnects()
         {
-            //string dbs = "gtd2011,gtd2012_NoBlob,Notification,X5Orders";
+            string dbs = "VBSiteClientsSettings";
             /*string dbs = "ReportServer,ReportServerTempDB,law,arm,Analytics_copy," +
                 "ElectroluxReportsScan,otchet_gtd,DCL,altasvh,altasvh_old,svh," +
                 "gtd2012_ED,DCL_new,gtd2011,distribution,altasvh_old_PRO," +
@@ -497,7 +497,7 @@ namespace BogdanovCodeAnalyzer.ViewModel
                 "ElectroluxOrders,KyoceraOrders,BoschOrders,Examination," +
                 "ScannedDeclarations,KonicaOrders,PriceInfo,X5Orders_copy," +
                 "VBSiteClientsSettings_test,X5Orders,RobertBosch";*/
-            string dbs = "VBSiteClientsSettings";
+            //string dbs = "Notification,ScannedDeclarations,Duties,VBSiteClientsSettings,NotificationClients";
             var d = dbs.Split(',');
             foreach (var item in d)
             {
