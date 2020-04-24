@@ -1,5 +1,5 @@
 ﻿-- Код большей частью взят с хабра https://habr.com/ru/post/241079/
-
+-- страница с недокументированными функциями https://www.sql.ru/articles/mssql/02030101undocumentedsql.shtml
 
 -- Имена сервера и экземпляра
 select @@SERVERNAME as [server\instance]
@@ -189,6 +189,8 @@ ORDER BY o.name;
 
 -- Очень две интересные функции, которые позволяют делать запрос по отошению к каждой таблице или к каждой базе данных
 -- Разобраться с этими функциями.
+-- =============================================================
+
 --exec sp_MSforeachtable 'select count(*) from ?'
 --exec sp_MSforeachdb 'SELECT  @@Servername AS Server ,
 --        DB_NAME() AS DB_Name ,
@@ -203,6 +205,10 @@ ORDER BY o.name;
 --FROM    sys.database_files
 --ORDER BY File_id;'
 
+-- Пример с выводом файловой информации по каждой базе
+exec sp_MSForeachdb 'use *; exec sp_helpfile', @replacechar = '*'
+
+-- =============================================================
 
 -- Разобрать
 -- =============================================================
