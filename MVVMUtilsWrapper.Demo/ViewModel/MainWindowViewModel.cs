@@ -19,6 +19,8 @@ namespace MVVMUtilsWrapper.Demo.ViewModel
 
         public ICommand RelateWithUCCommand { get; set; }
 
+        public ICommand CustomControlsCommand { get; set; }
+
         public MainWindowViewModel()
         {
             OpenDragAndDropCommand = new RelayCommand(obj =>
@@ -41,6 +43,11 @@ namespace MVVMUtilsWrapper.Demo.ViewModel
             {
                 RelateWithUserControlsView relateWithUserControlsView = new RelateWithUserControlsView();
                 relateWithUserControlsView.Show();
+            });
+            CustomControlsCommand = new RelayCommand(obj =>
+            {
+                CustomContorlsView customContorlsView = new CustomContorlsView();
+                customContorlsView.Show();
             });
         }
     }

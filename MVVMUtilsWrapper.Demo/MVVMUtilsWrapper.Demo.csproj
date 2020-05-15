@@ -57,13 +57,34 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ChangeElementsBackgroundControl.xaml.cs">
+      <DependentUpon>ChangeElementsBackgroundControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CircleButton.xaml.cs">
+      <DependentUpon>CircleButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\RelateWithUserControlsViewModel.cs" />
+    <Compile Include="View\CustomContorlsView.xaml.cs">
+      <DependentUpon>CustomContorlsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PeopleCardView.xaml.cs">
       <DependentUpon>PeopleCardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RelateWithUserControlsView.xaml.cs">
       <DependentUpon>RelateWithUserControlsView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\ChangeElementsBackgroundControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CircleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CustomContorlsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DevExpressIconsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -148,5 +169,6 @@
       <Name>BogdanovUtilitisLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
