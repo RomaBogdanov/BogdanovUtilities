@@ -21,6 +21,8 @@ namespace MVVMUtilsWrapper.Demo.ViewModel
 
         public ICommand CustomControlsCommand { get; set; }
 
+        public ICommand TreeViewExampleCommand { get; set; }
+
         public MainWindowViewModel()
         {
             OpenDragAndDropCommand = new RelayCommand(obj =>
@@ -49,6 +51,11 @@ namespace MVVMUtilsWrapper.Demo.ViewModel
                 CustomContorlsView customContorlsView = new CustomContorlsView();
                 customContorlsView.Show();
             });
+            TreeViewExampleCommand = new RelayCommand(obj =>
+              {
+                  TreeViewExamplesView treeViewExamplesView = new TreeViewExamplesView();
+                  treeViewExamplesView.Show();
+              });
         }
     }
 }

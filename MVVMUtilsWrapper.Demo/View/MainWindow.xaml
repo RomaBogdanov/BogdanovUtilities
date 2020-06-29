@@ -49,5 +49,9 @@
             Content="Демонстрация пользовательских настроек контролов" 
             HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Width="370"
             Command="{Binding CustomControlsCommand}"/>
+        <Button 
+            Content="Демонстрация работы TreeView" 
+            HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="370"
+            Command="{Binding TreeViewExampleCommand}"/>
     </Grid>
 </Window>

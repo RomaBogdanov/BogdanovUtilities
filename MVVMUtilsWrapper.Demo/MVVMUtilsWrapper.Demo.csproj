@@ -64,6 +64,7 @@
       <DependentUpon>CircleButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\RelateWithUserControlsViewModel.cs" />
+    <Compile Include="ViewModel\TreeViewExamplesviewModel.cs" />
     <Compile Include="View\CustomContorlsView.xaml.cs">
       <DependentUpon>CustomContorlsView.xaml</DependentUpon>
     </Compile>
@@ -72,6 +73,9 @@
     </Compile>
     <Compile Include="View\RelateWithUserControlsView.xaml.cs">
       <DependentUpon>RelateWithUserControlsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TreeViewExamplesView.xaml.cs">
+      <DependentUpon>TreeViewExamplesView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\ChangeElementsBackgroundControl.xaml">
       <SubType>Designer</SubType>
@@ -128,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RelateWithUserControlsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TreeViewExamplesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
