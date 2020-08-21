@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using MVVMUtilsWrapper.Demo.View;
 using BogdanovUtilitisLib.MVVMUtilsWrapper;
+using System.Windows;
 
 namespace MVVMUtilsWrapper.Demo.ViewModel
 {

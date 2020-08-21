@@ -486,12 +486,12 @@ namespace BogdanovCodeAnalyzer.ViewModel
         void RegisterConnects()
         {
             //string dbs = "VBSiteClientsSettings";
-            string dbs = "ReportServer,ReportServerTempDB,law,arm,Analytics_copy," +
-                "ElectroluxReportsScan,otchet_gtd,DCL,altasvh,altasvh_old,svh," +
-                "gtd2012_ED,DCL_new,gtd2011,distribution,altasvh_old_PRO," +
+            string dbs = "law,Analytics_copy," +
+                "ElectroluxReportsScan,DCL,altasvh,altasvh_old,svh," +
+                "gtd2012_ED,DCL_new,gtd2011,altasvh_old_PRO," +
                 "ito,gtd2012_NoBlob,ED4gtd,bosco,docs,decl,ALMlog,test," +
                 "gtd518,ED3gtd,ED2gtd,Notification,Scheduler,ClientServer,Attorney," +
-                "InvoiceConverter,gtdKV,Duties,DispatcherScan,SiemensCMR," +
+                "InvoiceConverter,gtdKV,Duties,DispatcherScan," +
                 "VBSiteClientsSettings,NotificationClients,OrdersMonitoring," +
                 "ExpressCargo,ReceptionScan,law_archive,As2Messages,Analytics_old," +
                 "ElectroluxOrders,KyoceraOrders,BoschOrders,Examination," +
