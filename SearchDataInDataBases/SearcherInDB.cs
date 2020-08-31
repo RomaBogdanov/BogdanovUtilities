@@ -11,9 +11,14 @@ using System.IO;
 namespace SearchDataInDataBases
 {
     /// <summary>
-    /// Поисковик по конкретной базе данных.
+    /// Поисковик по конкретному серверу конкретных данных.
     /// </summary>
-    public class SearcherInDB
+    /// <remarks>
+    /// Делает поиск записи в базе данных, на сервере.
+    /// Не хватает функционала:
+    /// 
+    /// </remarks>
+    public class SearcherInDBServer
     {
         private string connectionString;
         private SqlConnection connection;
