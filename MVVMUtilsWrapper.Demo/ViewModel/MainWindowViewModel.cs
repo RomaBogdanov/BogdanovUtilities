@@ -24,6 +24,8 @@ namespace MVVMUtilsWrapper.Demo.ViewModel
 
         public ICommand TreeViewExampleCommand { get; set; }
 
+        public ICommand ListViewSimpleGroupCommand { get; set; }
+
         public MainWindowViewModel()
         {
             OpenDragAndDropCommand = new RelayCommand(obj =>
@@ -57,6 +59,11 @@ namespace MVVMUtilsWrapper.Demo.ViewModel
                   TreeViewExamplesView treeViewExamplesView = new TreeViewExamplesView();
                   treeViewExamplesView.Show();
               });
+            TreeViewExampleCommand = new RelayCommand(obj =>
+            {
+                ListBoxSimpleGroupingView listBoxSimpleGroupingView = new ListBoxSimpleGroupingView();
+                listBoxSimpleGroupingView.Show();
+            });
         }
     }
 }

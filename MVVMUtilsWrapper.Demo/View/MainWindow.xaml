@@ -53,5 +53,9 @@
             Content="Демонстрация работы TreeView" 
             HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="370"
             Command="{Binding TreeViewExampleCommand}"/>
+        <Button 
+            Content="Демонстрация группировки в ListBox (просто)" 
+            HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top" Width="370"
+            Command="{Binding TreeViewExampleCommand}"/>
     </Grid>
 </Window>
