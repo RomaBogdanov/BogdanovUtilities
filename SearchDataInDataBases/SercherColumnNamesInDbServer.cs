@@ -69,7 +69,7 @@ namespace SearchDataInDataBases
             using (SearchDbContext db = new SearchDbContext(ConnectionString))
             {
                 //TODO: здесь не хватает объединённого списка всех таблиц
-                var dbs = db.Database.SqlQuery<DataBaseInServer>(query);
+                var dbs = db.Database.SqlQuery<DataBaseInServer>(query).ToList();
                 foreach (var item in dbs)
                 {
                     Console.WriteLine($"Исследуем базу данных {item.Name}");

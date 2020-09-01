@@ -4,12 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SqlAnalyzer"
+    xmlns:vm ="clr-namespace:SqlAnalyzer.ViewModels"
         xmlns:local1="clr-namespace:SqlAnalyzer.Views" x:Class="SqlAnalyzer.Views.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
 
         <local1:ConnectionStringsView HorizontalAlignment="Left" Height="277" Margin="125,57,0,0" VerticalAlignment="Top" Width="525"/>
+        <Button Content="Изучить колонки сервера" HorizontalAlignment="Left" 
+                Margin="10,10,0,0" VerticalAlignment="Top" Width="300"
+                Command="{Binding SearchColumnsCommand}"/>
 
     </Grid>
 </Window>

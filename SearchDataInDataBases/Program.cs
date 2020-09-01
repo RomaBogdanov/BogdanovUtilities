@@ -29,20 +29,19 @@ namespace SearchDataInDataBases
                     Console.WriteLine("Функционал не реализован");
                     break;
                 case "3":
-                    Console.WriteLine("Функционал не реализован");
+                    SercherColumnNamesInDbServer searcher2 =
+                        new SercherColumnNamesInDbServer();
+                    searcher2.ConnectionString = "Data Source=KVTDECLSQL2;" +
+                        "User=dbadmin;Password=nhbnjgjkz;";
+
+                    searcher2.SearchCountOfColsInDbServer();
                     break;
                 default:
                     Console.WriteLine("Выбрано неизвестное значение");
                     break;
             }
 
-            //SercherColumnNamesInDbServer searcher = 
-            //    new SercherColumnNamesInDbServer();
-            //searcher.ConnectionString = "Data Source=KVTDECLSQL2;" +
-            //    "User=dbadmin;Password=nhbnjgjkz;";
-            //var a = searcher.SearchCountOfColsInDB("DCL_new");
-            
-            //searcher.SearchCountOfColsInDbServer();
+
 
 
             //SearcherInDBServer searcher = new SearcherInDBServer();
