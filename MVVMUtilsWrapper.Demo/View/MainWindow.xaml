@@ -56,6 +56,10 @@
         <Button 
             Content="Демонстрация группировки в ListBox (просто)" 
             HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top" Width="370"
-            Command="{Binding TreeViewExampleCommand}"/>
+            Command="{Binding ListViewSimpleGroupCommand}"/>
+        <Button 
+            Content="Демонстрация группировки в ListBox (посложнее)" 
+            HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" Width="370"
+            Command="{Binding ListViewGrouping2ViewCommand}"/>
     </Grid>
 </Window>

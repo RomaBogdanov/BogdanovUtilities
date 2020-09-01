@@ -64,6 +64,7 @@
       <DependentUpon>CircleButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ListBoxSimpleGroupingViewModel.cs" />
+    <Compile Include="ViewModel\ListViewGrouping2ViewModel.cs" />
     <Compile Include="ViewModel\RelateWithUserControlsViewModel.cs" />
     <Compile Include="ViewModel\TreeViewExamplesviewModel.cs" />
     <Compile Include="View\CustomContorlsView.xaml.cs">
@@ -71,6 +72,9 @@
     </Compile>
     <Compile Include="View\ListBoxSimpleGroupingView.xaml.cs">
       <DependentUpon>ListBoxSimpleGroupingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ListViewGrouping2View.xaml.cs">
+      <DependentUpon>ListViewGrouping2View.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PeopleCardView.xaml.cs">
       <DependentUpon>PeopleCardView.xaml</DependentUpon>
@@ -106,6 +110,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ListBoxView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ListViewGrouping2View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
