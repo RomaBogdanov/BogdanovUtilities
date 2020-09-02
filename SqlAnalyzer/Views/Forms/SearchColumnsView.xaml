@@ -8,7 +8,7 @@
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=System"
         xmlns:dat="clr-namespace:System.Windows.Data;assembly=PresentationFramework"
         mc:Ignorable="d"
-        Title="Поиск по колонкам" Height="896.25" Width="1310">
+        Title="Поиск по колонкам" Height="896.25" Width="1756.25">
     <Window.DataContext>
         <vm:SearchColumnsViewModel/>
     </Window.DataContext>
@@ -71,9 +71,17 @@
                 Margin="965,16,0,0" VerticalAlignment="Top" Width="220"
                 Command="{Binding ColumnsCountCommand}"/>
         <DataGrid HorizontalAlignment="Left" Height="275" Margin="580,334,0,0" VerticalAlignment="Top" Width="570"
-                  ItemsSource="{Binding ColumnFilter2}"/>
-        <Button Content="Пример записи колонки в таблице" HorizontalAlignment="Left" Margin="10,614,0,0" VerticalAlignment="Top" Width="220"/>
-        <Button Content="Пример строки с колонкой в таблице" HorizontalAlignment="Left" Margin="235,614,0,0" VerticalAlignment="Top" Width="220"/>
+                  ItemsSource="{Binding ColumnFilter2}"
+                  SelectedItem="{Binding SelectedItemColumnFilter2}"/>
+        <Button Content="Пример записи колонки в таблице" HorizontalAlignment="Left" 
+                Margin="10,614,0,0" VerticalAlignment="Top" Width="220"
+                Command="{Binding ColumnSampleInTableCommand}"/>
+        <Button Content="Пример строки с колонкой в таблице" HorizontalAlignment="Left" Margin="515,614,0,0" VerticalAlignment="Top" Width="220"/>
+        <DataGrid HorizontalAlignment="Left" Height="535" Margin="1155,74,0,0" 
+                  VerticalAlignment="Top" Width="396"
+                  ItemsSource="{Binding Samples}"/>
+        <Button Content="Пример всех записей одинаковой колонки" HorizontalAlignment="Left" Margin="235,614,0,0" VerticalAlignment="Top" Width="275"
+                Command="{Binding AllColumnSamplesInTablesCommand}"/>
 
     </Grid>
 </Window>
