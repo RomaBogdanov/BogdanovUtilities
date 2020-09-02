@@ -12,7 +12,7 @@ namespace SqlAnalyzer.Models
     public abstract class SearchColumnsAbstractModel : NotifyPropertyChanged
     {
         private string connectionString;
-        private ObservableCollection<Column> columns;
+        private ObservableCollection<Column> columns = new ObservableCollection<Column>();
         private bool? isSearchingNow;
 
         public string ConnectionString

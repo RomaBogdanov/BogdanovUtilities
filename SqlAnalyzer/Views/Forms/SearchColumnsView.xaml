@@ -5,11 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SqlAnalyzer.Views.Forms"
         xmlns:vm="clr-namespace:SqlAnalyzer.ViewModels"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=System"
+        xmlns:dat="clr-namespace:System.Windows.Data;assembly=PresentationFramework"
         mc:Ignorable="d"
-        Title="Поиск по колонкам" Height="562.5" Width="1310">
+        Title="Поиск по колонкам" Height="896.25" Width="1310">
     <Window.DataContext>
         <vm:SearchColumnsViewModel/>
     </Window.DataContext>
+
     <Grid>
         <Label Content="Строка подключения:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="145,13,0,0" TextWrapping="Wrap" 
@@ -25,17 +28,52 @@
                 <DataGridTextColumn Header="Колонка" Binding="{Binding COLUMN_NAME}"/>
                 <DataGridTextColumn Header="Тип" Binding="{Binding DATA_TYPE}"/>
             </DataGrid.Columns>
-            <!--<ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding TABLE_CATALOG}"/>
-                        <TextBox Text="{Binding TABLE_NAME}"/>
-                        <TextBox Text="{Binding COLUMN_NAME}"/>
-                        <TextBox Text="{Binding DATA_TYPE}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>-->
         </DataGrid>
+        <DataGrid HorizontalAlignment="Left" Height="255" Margin="580,74,0,0" VerticalAlignment="Top" Width="570"
+                  ItemsSource="{Binding ColumnsView}">
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding COLUMN_NAME}"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander>
+                                            <Expander.Header>
+
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding COLUMN_NAME}"/>
+                                                    <TextBlock Text="{Binding ItemCount}"/>
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <Expander.Content>
+                                                <ItemsPresenter/>
+                                            </Expander.Content>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+        </DataGrid>
+        <Button Content="Обновить список" Command="{Binding UpdataCommand}" HorizontalAlignment="Left" Margin="760,16,0,0" VerticalAlignment="Top" Width="200"/>
+        <DataGrid HorizontalAlignment="Left" Height="275" Margin="10,334,0,0" VerticalAlignment="Top" Width="565"
+                  ItemsSource="{Binding ColumnFilter1}"
+                  SelectedItem="{Binding SelectedItemColumnFilter1}"/>
+        <Button Content="Посчитать количество колонок" HorizontalAlignment="Left" 
+                Margin="965,16,0,0" VerticalAlignment="Top" Width="220"
+                Command="{Binding ColumnsCountCommand}"/>
+        <DataGrid HorizontalAlignment="Left" Height="275" Margin="580,334,0,0" VerticalAlignment="Top" Width="570"
+                  ItemsSource="{Binding ColumnFilter2}"/>
+        <Button Content="Пример записи колонки в таблице" HorizontalAlignment="Left" Margin="10,614,0,0" VerticalAlignment="Top" Width="220"/>
+        <Button Content="Пример строки с колонкой в таблице" HorizontalAlignment="Left" Margin="235,614,0,0" VerticalAlignment="Top" Width="220"/>
 
     </Grid>
 </Window>

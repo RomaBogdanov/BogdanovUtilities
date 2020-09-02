@@ -22,6 +22,10 @@ namespace SqlAnalyzer.Views.Forms
         public SearchColumnsView()
         {
             InitializeComponent();
+
+            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lstViewGroup.ItemsSource);
+            //PropertyGroupDescription groupDescription = new PropertyGroupDescription("COLUMN_NAME");
+            //view.GroupDescriptions.Add(groupDescription);
         }
     }
 }
