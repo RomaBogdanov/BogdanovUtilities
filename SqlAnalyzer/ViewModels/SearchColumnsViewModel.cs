@@ -17,12 +17,11 @@ namespace SqlAnalyzer.ViewModels
     public class SearchColumnsViewModel : NotifyPropertyChanged
     {
         private SearchColumnsAbstractModel model;
-        private ICollectionView columnsView;
-        private ICollectionView columnFilter1;
-        private object selectedItemColumnFilter1;
-        private ICollectionView columnFilter2;
+        private ICollectionView columnsCountCollection;
+        private object selectedColumn;
+        private ICollectionView columnDetails;
         private ObservableCollection<Log> samples;
-        private object selectedItemColumnFilter2;
+        private object selectedItemColumnDetails;
 
         public SearchColumnsAbstractModel Model
         {
@@ -50,78 +49,75 @@ namespace SqlAnalyzer.ViewModels
             set
             {
                 Model.Columns = value;
-                ColumnsView.GroupDescriptions.Clear();
-                ColumnsView = CollectionViewSource.GetDefaultView(Model.Columns);
-                ColumnsView.GroupDescriptions.Add(new PropertyGroupDescription("COLUMN_NAME"));
-
 
                 var a = from col in Model.Columns
                         group col by col.COLUMN_NAME into g
                         select new { Name = g.Key, Count = g.Count() };
-                ColumnFilter1 = CollectionViewSource.GetDefaultView(a);
+                ColumnsCountCollection = CollectionViewSource.GetDefaultView(a);
 
-                OnPropertyChanged();
-            }
-        }
-
-        public ICollectionView ColumnsView
-        {
-            get => columnsView;
-            set
-            {
-                columnsView = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ICollectionView ColumnFilter1
-        {
-            get => columnFilter1;
-            set
-            {
-                columnFilter1 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public object SelectedItemColumnFilter1
-        {
-            get => selectedItemColumnFilter1;
-            set
-            {
-                selectedItemColumnFilter1 = value;
-                dynamic t = value;
-                var a = from col in Model.Columns
-                        where col.COLUMN_NAME == t.Name
-                        select new { DB = col.TABLE_CATALOG, Table = col.TABLE_NAME, Tp = col.DATA_TYPE, Col = col.COLUMN_NAME };
-                ColumnFilter2 = CollectionViewSource.GetDefaultView(a);
-
-                OnPropertyChanged();
-            }
-        }
-
-        public ICollectionView ColumnFilter2
-        {
-            get => columnFilter2;
-            set
-            {
-                columnFilter2 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public object SelectedItemColumnFilter2
-        {
-            get => selectedItemColumnFilter2;
-            set
-            {
-                selectedItemColumnFilter2 = value;
                 OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// 
+        /// Отображаемая на GUI коллекция колонок сервера БД с количеством
+        /// раз повторений этого названия на сервере БД.
+        /// </summary>
+        public ICollectionView ColumnsCountCollection
+        {
+            get => columnsCountCollection;
+            set
+            {
+                columnsCountCollection = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Выбранная для получения более детальной информации колонка.
+        /// </summary>
+        public object SelectedColumn
+        {
+            get => selectedColumn;
+            set
+            {
+                selectedColumn = value;
+                dynamic t = value;
+                var a = from col in Model.Columns
+                        where col.COLUMN_NAME == t.Name
+                        select new { DB = col.TABLE_CATALOG, Table = col.TABLE_NAME, Tp = col.DATA_TYPE, Col = col.COLUMN_NAME };
+                ColumnDetails = CollectionViewSource.GetDefaultView(a);
+
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Детализированый список по колонке.
+        /// </summary>
+        public ICollectionView ColumnDetails
+        {
+            get => columnDetails;
+            set
+            {
+                columnDetails = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public object SelectedItemColumnDetails
+        {
+            get => selectedItemColumnDetails;
+            set
+            {
+                selectedItemColumnDetails = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Свойство указывает на то, что сейчас идёт поиск в базах данных
+        /// данных по колонкам.
         /// </summary>
         public bool? IsSearchingNow
         {
@@ -145,10 +141,6 @@ namespace SqlAnalyzer.ViewModels
 
         public ICommand SearchingColumnsCommand { get; set; }
 
-        public ICommand UpdataCommand { get; set; }
-
-        public ICommand ColumnsCountCommand { get; set; }
-
         public ICommand ColumnSampleInTableCommand { get; set; }
         public ICommand AllColumnSamplesInTablesCommand { get; set; }
 
@@ -161,14 +153,8 @@ namespace SqlAnalyzer.ViewModels
             SearchingColumnsCommand = new RelayCommand(
                 p => SearchingColumns());
 
-            UpdataCommand = new RelayCommand(p => Updata());
-            ColumnsCountCommand = new RelayCommand(p => ColumnsCount());
             ColumnSampleInTableCommand = new RelayCommand(p => ColumnSampleInTable());
             AllColumnSamplesInTablesCommand = new RelayCommand(p => AllColumnSamplesInTables());
-
-            ColumnsView = CollectionViewSource.GetDefaultView(Columns);
-            ColumnsView.GroupDescriptions.Add(new PropertyGroupDescription("COLUMN_NAME"));
-
         }
 
         private void SearchingColumns()
@@ -179,60 +165,86 @@ namespace SqlAnalyzer.ViewModels
 
         private void AllColumnSamplesInTables()
         {
-            foreach (dynamic d in ColumnFilter2)
+            foreach (dynamic d in ColumnDetails)
             {
-                string command = $"Select top 1 {d.Col} FROM [{d.DB}].[dbo].[{d.Table}]";
+                DetailedInfoAboutColumn(d);
+            }
+        }
 
-                using (var sc = new SqlConnection(ConnectionString))
+        /// <summary>
+        /// Сбор детализированой информации о конкретной колонке.
+        /// TODO: убрать динамик, заменить на чёткую типизацию.
+        /// </summary>
+        /// <param name="d"></param>
+        private void DetailedInfoAboutColumn(dynamic d)
+        {
+            Log log = new Log
+            {
+                DB = d.DB,
+                Table = d.Table,
+                Col = d.Col
+            };
+
+            string command1 = $"Select top 1 [{d.Col}] FROM [{d.DB}].[dbo].[{d.Table}]";
+            string command2 = $"SELECT COUNT([{d.Col}]) FROM[{d.DB}].[dbo].[{d.Table}]";
+            string command3 = $"select COUNT([{d.Col}]) from " +
+                $"(SELECT distinct [{d.Col}] FROM[{d.DB}].[dbo].[{d.Table}]) as T";
+
+            using (var sc = new SqlConnection(ConnectionString))
+            {
+                sc.Open();
+                try
                 {
-                    sc.Open();
-                    using (var query = new SqlCommand(command, sc))
+
+                    using (var query = new SqlCommand(command1, sc))
                     {
                         using (var res = query.ExecuteReader())
                         {
                             while (res.Read())
                             {
                                 var a = res[0];
-                                Samples.Add(new Log
-                                {
-                                    Value = a.ToString(),
-                                    DB = d.DB,
-                                    Table = d.Table,
-                                    Col = d.Col
-                                });
+                                log.Value = a.ToString();
+
+                            }
+                        }
+                    }
+                    using (var query = new SqlCommand(command2, sc))
+                    {
+                        using (var res = query.ExecuteReader())
+                        {
+                            while (res.Read())
+                            {
+                                var a = res[0];
+                                log.CountRecsInColumn = Convert.ToInt64(a);
+                            }
+                        }
+                    }
+                    using (var query = new SqlCommand(command3, sc))
+                    {
+                        using (var res = query.ExecuteReader())
+                        {
+                            while (res.Read())
+                            {
+                                var a = res[0];
+                                log.CountUniqueRecsInColumn = Convert.ToInt64(a);
                             }
                         }
                     }
                 }
+                catch (Exception err)
+                {
+                    log.IsError = true;
+                    log.ErrorMsg = err.Message;
+                }
             }
+
+            Samples.Add(log);
         }
 
         private void ColumnSampleInTable()
         {
-            dynamic d = SelectedItemColumnFilter2;
-            string command = $"Select top 1 {d.Col} FROM [{d.DB}].[dbo].[{d.Table}]";
-
-            using (var sc = new SqlConnection(ConnectionString))
-            {
-                sc.Open();
-                using (var query = new SqlCommand(command, sc))
-                {
-                    using (var res = query.ExecuteReader())
-                    {
-                        while (res.Read())
-                        {
-                            var a = res[0];
-                            Samples.Add(new Log
-                            {
-                                Value = a.ToString(),
-                                DB = d.DB,
-                                Table = d.Table,
-                                Col = d.Col
-                            });
-                        }
-                    }
-                }
-            }
+            dynamic d = SelectedItemColumnDetails;
+            DetailedInfoAboutColumn(d);
         }
 
         private void ColumnsCount()
@@ -241,23 +253,7 @@ namespace SqlAnalyzer.ViewModels
                     group col by col.COLUMN_NAME into g
                     orderby g.Count() descending
                     select new { Name = g.Key, Count = g.Count() };
-            ColumnFilter1 = CollectionViewSource.GetDefaultView(a);
-
+            ColumnsCountCollection = CollectionViewSource.GetDefaultView(a);
         }
-
-        private void Updata()
-        {
-            ColumnsView = CollectionViewSource.GetDefaultView(Columns);
-            ColumnsView.GroupDescriptions.Add(new PropertyGroupDescription("COLUMN_NAME"));
-            //ColumnsView.SortDescriptions.Add(new SortDescription("ItemCount", ListSortDirection.Descending));
-        }
-    }
-
-    public class Log
-    {
-        public string Value { get; set; }
-        public string DB { get; set; }
-        public string Table { get; set; }
-        public string Col { get; set; }
     }
 }

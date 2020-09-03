@@ -19,37 +19,20 @@ namespace SqlAnalyzer.Models
 
         public override void SeachColumns()
         {
-            //SearchColumnsInDb("DCL");
-            /*string query = "select TABLE_CATALOG, TABLE_NAME, COLUMN_NAME, " +
-                "DATA_TYPE from INFORMATION_SCHEMA.COLUMNS";
-            using (SearchDbContext db = new SearchDbContext(ConnectionString))
-            {
-                Columns = new ObservableCollection<Column>(
-                    db.Database.SqlQuery<Column>(query).AsEnumerable<Column>());
-            }*/
-
             SearchColumnsInServer();
-            //Test();
-            //SearchColumnsInDb("DCL");
-
         }
 
-        private void Test()
-        {
-            string query = "select name from sys.databases " +
-                "where name not in ('master', 'tempdb', 'model', 'msdb')";
-            using (SearchServerContext db = new SearchServerContext(ConnectionString))
-            {
-                var dbs = db.Database.SqlQuery<DataBaseInServer>(query).ToList();
-            }
-        }
-
+        /// <summary>
+        /// Процедура поиска основных данных по всем колонкам сервера БД.
+        /// </summary>
         private void SearchColumnsInServer()
         {
             Columns = new ObservableCollection<Column>();
-            Task.Run(() =>
-            {
-                App.Current.Dispatcher.Invoke(() => IsSearchingNow = true);
+
+            IsSearchingNow = true;
+            //Task.Run(() =>
+            //{
+                //App.Current.Dispatcher.Invoke(() => IsSearchingNow = true);
                 string query = "select name from sys.databases " +
         "where name not in ('master', 'tempdb', 'model', 'msdb')";
                 using (SearchServerContext db = new SearchServerContext(ConnectionString))
@@ -61,19 +44,21 @@ namespace SqlAnalyzer.Models
                         SearchColumnsInDb(item.Name);
                     }
                 }
-                App.Current.Dispatcher.Invoke(() => IsSearchingNow = false);
-            });
+                //App.Current.Dispatcher.Invoke(() => IsSearchingNow = false);
+                IsSearchingNow = false;
+            //});
         }
 
+        /// <summary>
+        /// Процедура поиска основных данных по всем колонкам конкретной БД на сервере.
+        /// </summary>
+        /// <param name="database"></param>
         private void SearchColumnsInDb(string database)
         {
             string query = "select TABLE_CATALOG, TABLE_NAME, COLUMN_NAME, " +
                 $"DATA_TYPE from {database}.INFORMATION_SCHEMA.COLUMNS";
             using (SearchServerContext db = new SearchServerContext(ConnectionString))
             {
-                //Columns = new ObservableCollection<Column>(
-                //    db.Database.SqlQuery<Column>(query).AsEnumerable<Column>());
-
                 foreach (var item in db.Database.SqlQuery<Column>(query)
                     .AsEnumerable<Column>())
                 {
