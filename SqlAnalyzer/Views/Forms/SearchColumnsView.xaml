@@ -55,13 +55,12 @@
         </TabControl>
         <Label Content="Детализация по колонке: " HorizontalAlignment="Left" Margin="515,74,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding SelectedColumn.Name}" HorizontalAlignment="Left" Margin="673,74,0,0" VerticalAlignment="Top"/>
-        <Label Content="Информация по значениям в колонке:" HorizontalAlignment="Left" Margin="1090,72,0,0" VerticalAlignment="Top"/>
         <DataGrid HorizontalAlignment="Left" Height="211" Margin="10,586,0,0" 
                   VerticalAlignment="Top" Width="494"
                   ItemsSource="{Binding UniqueValuesInColumn}"/>
         <Label Content="Список уникальных значений" HorizontalAlignment="Left" Margin="10,555,0,0" VerticalAlignment="Top"/>
         <Button Content="Извлечь уникальные значения выделенной строки" 
-                HorizontalAlignment="Left" Margin="1090,571,0,0" VerticalAlignment="Top" 
+                HorizontalAlignment="Left" Margin="515,631,0,0" VerticalAlignment="Top" 
                 Width="396"
                 Command="{Binding SearchUniqueValuesInColumnCommand}"/>
 

@@ -76,13 +76,7 @@ namespace SqlAnalyzer.Models
         /// <param name="column"></param>
         public override void DetailedInfoAboutColumn(Column column)
         {
-            //Log log = new Log
-            //{
-            //    DB = column.TABLE_CATALOG,
-            //    Table = column.TABLE_NAME,
-            //    Col = column.COLUMN_NAME
-            //};
-
+            
             string command1 = $"Select top 1 [{column.COLUMN_NAME}] " +
                 $"FROM [{column.TABLE_CATALOG}].[dbo].[{column.TABLE_NAME}]";
             string command2 = $"SELECT COUNT([{column.COLUMN_NAME}]) " +
@@ -138,16 +132,14 @@ namespace SqlAnalyzer.Models
                     column.ErrorMsg = err.Message;
                 }
             }
-
-            //Samples.Add(log);
         }
 
         public override void SearchUniqueValuesInColumn()
         {
-            Log log = SelectedLogColumn;
+            Column col = SelectedItemColumnDetails;
             UniqueValuesInColumn.Clear();
-            string command1 = $"Select distinct [{SelectedLogColumn.Col}] " +
-                $"FROM [{SelectedLogColumn.DB}].[dbo].[{SelectedLogColumn.Table}]";
+            string command1 = $"Select distinct [{col.COLUMN_NAME}] " +
+                $"FROM [{col.TABLE_CATALOG}].[dbo].[{col.TABLE_NAME}]";
             using (var sc = new SqlConnection(ConnectionString))
             {
                 sc.Open();

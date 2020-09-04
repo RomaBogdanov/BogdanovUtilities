@@ -72,7 +72,6 @@
     <Compile Include="Models\SearchColumnsAbstractModel.cs" />
     <Compile Include="Models\SearchColumnsServerModel.cs" />
     <Compile Include="Models\SearchColumnsTest1Model.cs" />
-    <Compile Include="Data\Log.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SearchColumnsViewModel.cs" />
     <Compile Include="Views\Forms\SearchColumnsView.xaml.cs">

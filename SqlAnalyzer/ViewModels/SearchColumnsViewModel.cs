@@ -18,8 +18,6 @@ namespace SqlAnalyzer.ViewModels
     public class SearchColumnsViewModel : NotifyPropertyChanged
     {
         private SearchColumnsAbstractModel model;
-        private ObservableCollection<Log> samples;
-        private object selectedItemColumnDetails;
 
         public SearchColumnsAbstractModel Model
         {
@@ -111,26 +109,6 @@ namespace SqlAnalyzer.ViewModels
             set
             {
                 Model.IsSearchingNow = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ObservableCollection<Log> Samples
-        {
-            get => Model?.Samples;
-            set
-            {
-                Model.Samples = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Log SelectedLogColumn
-        {
-            get => Model?.SelectedLogColumn;
-            set
-            {
-                Model.SelectedLogColumn = value;
                 OnPropertyChanged();
             }
         }

@@ -20,9 +20,6 @@ namespace SqlAnalyzer.Models
         private RepeatingColumn selectedColumn;
         private ICollectionView columnDetails;
         private Column selectedItemColumnDetails;
-        private ObservableCollection<Log> samples =
-            new ObservableCollection<Log>();
-        private Log selectedLogColumn;
         private ObservableCollection<object> uniqueValuesInColumn =
             new ObservableCollection<object>();
 
@@ -79,7 +76,6 @@ namespace SqlAnalyzer.Models
             set
             {
                 selectedColumn = value;
-                //dynamic t = value;
                 DetailingSelectedColumn(value);
 
                 OnPropertyChanged();
@@ -119,30 +115,14 @@ namespace SqlAnalyzer.Models
             }
         }
 
-        public ObservableCollection<Log> Samples
-        {
-            get => samples;
-            set
-            {
-                samples = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Log SelectedLogColumn
-        {
-            get => selectedLogColumn;
-            set
-            {
-                selectedLogColumn = value;
-                OnPropertyChanged();
-            }
-        }
-
         public ObservableCollection<object> UniqueValuesInColumn 
         { 
-            get => uniqueValuesInColumn; 
-            set => uniqueValuesInColumn = value; 
+            get => uniqueValuesInColumn;
+            set
+            {
+                uniqueValuesInColumn = value;
+                OnPropertyChanged();
+            }
         }
 
         public abstract void SearchColumns();
