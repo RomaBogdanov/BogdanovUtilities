@@ -20,16 +20,12 @@
         <Button Content="Поиск колонок" HorizontalAlignment="Left" Margin="580,13,0,0" VerticalAlignment="Top" Width="175" Height="23"
                 Command="{Binding SearchingColumnsCommand}"
                 IsEnabled="{Binding !IsSearchingNow}"/>
-        <DataGrid HorizontalAlignment="Left" Height="445" Margin="515,105,0,0" VerticalAlignment="Top" Width="570"
-                  ItemsSource="{Binding ColumnDetails, Mode=TwoWay, NotifyOnSourceUpdated=True}"
+        <DataGrid x:Name="grd" HorizontalAlignment="Left" Height="445" Margin="515,105,0,0" VerticalAlignment="Top" Width="570"
+                  ItemsSource="{Binding ColumnDetails, Mode=TwoWay, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}"
                   SelectedItem="{Binding SelectedItemColumnDetails, Mode=TwoWay}"/>
         <Button Content="Пример записи колонки в таблице" HorizontalAlignment="Left" 
                 Margin="760,16,0,0" VerticalAlignment="Top" Width="220"
                 Command="{Binding ColumnSampleInTableCommand}"/>
-        <DataGrid HorizontalAlignment="Left" Height="445" Margin="1090,105,0,0" 
-                  VerticalAlignment="Top" Width="396"
-                  ItemsSource="{Binding Samples}"
-                  SelectedItem="{Binding SelectedLogColumn}"/>
         <Button Content="Пример всех записей одинаковой колонки" HorizontalAlignment="Left" Margin="985,16,0,0" VerticalAlignment="Top" Width="275"
                 Command="{Binding AllColumnSamplesInTablesCommand}"/>
         <TabControl HorizontalAlignment="Left" Height="476" Margin="10,74,0,0" VerticalAlignment="Top" Width="494">

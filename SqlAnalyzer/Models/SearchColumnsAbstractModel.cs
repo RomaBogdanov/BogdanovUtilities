@@ -80,15 +80,20 @@ namespace SqlAnalyzer.Models
             {
                 selectedColumn = value;
                 //dynamic t = value;
-                var a = from col in Columns
-                        where col.COLUMN_NAME == value.Name
-                        select col;
-                
-                ColumnDetails = CollectionViewSource.GetDefaultView(
-                    new ObservableCollection<Column>(a));
+                DetailingSelectedColumn(value);
 
                 OnPropertyChanged();
             }
+        }
+
+        public void DetailingSelectedColumn(RepeatingColumn value)
+        {
+            var a = from col in Columns
+                    where col.COLUMN_NAME == value.Name
+                    select col;
+
+            ColumnDetails = CollectionViewSource.GetDefaultView(
+                a);
         }
 
         /// <summary>

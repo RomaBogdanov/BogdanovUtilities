@@ -178,14 +178,22 @@ namespace SqlAnalyzer.ViewModels
         private void ColumnSampleInTable()
         {
             Model.DetailedInfoAboutColumn(SelectedItemColumnDetails);
+
+            //TODO: код помойный, надо думать, как напрямую изменять свойства в коллекции.
+            // или вызывать при полной обработке.
+            Model.DetailingSelectedColumn(SelectedColumn);
         }
 
         private void AllColumnSamplesInTables()
         {
-            foreach (Column d in ColumnDetails)
+            foreach (var d in ColumnDetails)
             {
-                Model.DetailedInfoAboutColumn(d);
+                Model.DetailedInfoAboutColumn(d as Column);
             }
+
+            //TODO: код помойный, надо думать, как напрямую изменять свойства в коллекции.
+            // или вызывать при полной обработке.
+            Model.DetailingSelectedColumn(SelectedColumn);
         }
     }
 }
