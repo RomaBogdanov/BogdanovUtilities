@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Windows.Media.Animation;
+using System.Windows.Data;
+using System.Data.SqlClient;
 
 namespace SqlAnalyzer.Models
 {
@@ -17,9 +19,10 @@ namespace SqlAnalyzer.Models
                         "User=dbadmin;Password=nhbnjgjkz;";
         }
 
-        public override void SeachColumns()
+        public override void SearchColumns()
         {
             SearchColumnsInServer();
+            ColumnsCount();
         }
 
         /// <summary>
@@ -63,6 +66,102 @@ namespace SqlAnalyzer.Models
                     .AsEnumerable<Column>())
                 {
                     App.Current.Dispatcher.Invoke(() => Columns.Add(item));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Сбор детализированой информации о конкретной колонке.
+        /// </summary>
+        /// <param name="column"></param>
+        public override void DetailedInfoAboutColumn(Column column)
+        {
+            //Log log = new Log
+            //{
+            //    DB = column.TABLE_CATALOG,
+            //    Table = column.TABLE_NAME,
+            //    Col = column.COLUMN_NAME
+            //};
+
+            string command1 = $"Select top 1 [{column.COLUMN_NAME}] " +
+                $"FROM [{column.TABLE_CATALOG}].[dbo].[{column.TABLE_NAME}]";
+            string command2 = $"SELECT COUNT([{column.COLUMN_NAME}]) " +
+                $"FROM[{column.TABLE_CATALOG}].[dbo].[{column.TABLE_NAME}]";
+            string command3 = $"select COUNT([{column.COLUMN_NAME}]) from " +
+                $"(SELECT distinct [{column.COLUMN_NAME}] " +
+                $"FROM[{column.TABLE_CATALOG}].[dbo].[{column.TABLE_NAME}]) as T";
+
+            using (var sc = new SqlConnection(ConnectionString))
+            {
+                sc.Open();
+                try
+                {
+
+                    using (var query = new SqlCommand(command1, sc))
+                    {
+                        using (var res = query.ExecuteReader())
+                        {
+                            while (res.Read())
+                            {
+                                var a = res[0];
+                                column.SampleValue = a.ToString();
+
+                            }
+                        }
+                    }
+                    using (var query = new SqlCommand(command2, sc))
+                    {
+                        using (var res = query.ExecuteReader())
+                        {
+                            while (res.Read())
+                            {
+                                var a = res[0];
+                                column.CountRecsInColumn = Convert.ToInt64(a);
+                            }
+                        }
+                    }
+                    using (var query = new SqlCommand(command3, sc))
+                    {
+                        using (var res = query.ExecuteReader())
+                        {
+                            while (res.Read())
+                            {
+                                var a = res[0];
+                                column.CountUniqueRecsInColumn = Convert.ToInt64(a);
+                            }
+                        }
+                    }
+                }
+                catch (Exception err)
+                {
+                    column.IsError = true;
+                    column.ErrorMsg = err.Message;
+                }
+            }
+
+            //Samples.Add(log);
+        }
+
+        public override void SearchUniqueValuesInColumn()
+        {
+            Log log = SelectedLogColumn;
+            UniqueValuesInColumn.Clear();
+            string command1 = $"Select distinct [{SelectedLogColumn.Col}] " +
+                $"FROM [{SelectedLogColumn.DB}].[dbo].[{SelectedLogColumn.Table}]";
+            using (var sc = new SqlConnection(ConnectionString))
+            {
+                sc.Open();
+                using (var query = new SqlCommand(command1, sc))
+                {
+                    using (var res = query.ExecuteReader())
+                    {
+                        while (res.Read())
+                        {
+                            var a = res[0];
+                            //log.Value = a.ToString();
+                            UniqueValuesInColumn.Add(new { A = a.ToString() });
+                        }
+                    }
                 }
             }
         }

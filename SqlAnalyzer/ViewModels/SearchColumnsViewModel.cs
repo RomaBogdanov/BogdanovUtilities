@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using BogdanovUtilitisLib.MVVMUtilsWrapper;
@@ -17,9 +18,6 @@ namespace SqlAnalyzer.ViewModels
     public class SearchColumnsViewModel : NotifyPropertyChanged
     {
         private SearchColumnsAbstractModel model;
-        private ICollectionView columnsCountCollection;
-        private object selectedColumn;
-        private ICollectionView columnDetails;
         private ObservableCollection<Log> samples;
         private object selectedItemColumnDetails;
 
@@ -49,12 +47,6 @@ namespace SqlAnalyzer.ViewModels
             set
             {
                 Model.Columns = value;
-
-                var a = from col in Model.Columns
-                        group col by col.COLUMN_NAME into g
-                        select new { Name = g.Key, Count = g.Count() };
-                ColumnsCountCollection = CollectionViewSource.GetDefaultView(a);
-
                 OnPropertyChanged();
             }
         }
@@ -65,10 +57,10 @@ namespace SqlAnalyzer.ViewModels
         /// </summary>
         public ICollectionView ColumnsCountCollection
         {
-            get => columnsCountCollection;
+            get => Model?.ColumnsCountCollection;
             set
             {
-                columnsCountCollection = value;
+                Model.ColumnsCountCollection = value;
                 OnPropertyChanged();
             }
         }
@@ -76,18 +68,12 @@ namespace SqlAnalyzer.ViewModels
         /// <summary>
         /// Выбранная для получения более детальной информации колонка.
         /// </summary>
-        public object SelectedColumn
+        public RepeatingColumn SelectedColumn
         {
-            get => selectedColumn;
+            get => Model?.SelectedColumn;
             set
             {
-                selectedColumn = value;
-                dynamic t = value;
-                var a = from col in Model.Columns
-                        where col.COLUMN_NAME == t.Name
-                        select new { DB = col.TABLE_CATALOG, Table = col.TABLE_NAME, Tp = col.DATA_TYPE, Col = col.COLUMN_NAME };
-                ColumnDetails = CollectionViewSource.GetDefaultView(a);
-
+                Model.SelectedColumn = value;
                 OnPropertyChanged();
             }
         }
@@ -97,20 +83,20 @@ namespace SqlAnalyzer.ViewModels
         /// </summary>
         public ICollectionView ColumnDetails
         {
-            get => columnDetails;
+            get => Model?.ColumnDetails;
             set
             {
-                columnDetails = value;
+                Model.ColumnDetails = value;
                 OnPropertyChanged();
             }
         }
 
-        public object SelectedItemColumnDetails
+        public Column SelectedItemColumnDetails
         {
-            get => selectedItemColumnDetails;
+            get => Model?.SelectedItemColumnDetails;
             set
             {
-                selectedItemColumnDetails = value;
+                Model.SelectedItemColumnDetails = value;
                 OnPropertyChanged();
             }
         }
@@ -131,23 +117,41 @@ namespace SqlAnalyzer.ViewModels
 
         public ObservableCollection<Log> Samples
         {
-            get => samples;
+            get => Model?.Samples;
             set
             {
-                samples = value;
+                Model.Samples = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Log SelectedLogColumn
+        {
+            get => Model?.SelectedLogColumn;
+            set
+            {
+                Model.SelectedLogColumn = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<object> UniqueValuesInColumn
+        {
+            get => Model?.UniqueValuesInColumn;
+            set
+            {
+                Model.UniqueValuesInColumn = value;
                 OnPropertyChanged();
             }
         }
 
         public ICommand SearchingColumnsCommand { get; set; }
-
         public ICommand ColumnSampleInTableCommand { get; set; }
         public ICommand AllColumnSamplesInTablesCommand { get; set; }
+        public ICommand SearchUniqueValuesInColumnCommand { get; set; }
 
         public SearchColumnsViewModel()
         {
-            Samples = new ObservableCollection<Log>();
-
             //Model = new SearchColumnsTest1Model();
             Model = new SearchColumnsServerModel();
             SearchingColumnsCommand = new RelayCommand(
@@ -155,105 +159,33 @@ namespace SqlAnalyzer.ViewModels
 
             ColumnSampleInTableCommand = new RelayCommand(p => ColumnSampleInTable());
             AllColumnSamplesInTablesCommand = new RelayCommand(p => AllColumnSamplesInTables());
+            SearchUniqueValuesInColumnCommand = new RelayCommand(p => SearchUniqueValuesInColumn());
         }
 
-        private void SearchingColumns()
+        private void SearchUniqueValuesInColumn()
         {
-            Model.SeachColumns();
-            ColumnsCount();
-        }
-
-        private void AllColumnSamplesInTables()
-        {
-            foreach (dynamic d in ColumnDetails)
-            {
-                DetailedInfoAboutColumn(d);
-            }
+            Model?.SearchUniqueValuesInColumn();
         }
 
         /// <summary>
-        /// Сбор детализированой информации о конкретной колонке.
-        /// TODO: убрать динамик, заменить на чёткую типизацию.
+        /// Нахождение всех колонок.
         /// </summary>
-        /// <param name="d"></param>
-        private void DetailedInfoAboutColumn(dynamic d)
+        private void SearchingColumns()
         {
-            Log log = new Log
-            {
-                DB = d.DB,
-                Table = d.Table,
-                Col = d.Col
-            };
-
-            string command1 = $"Select top 1 [{d.Col}] FROM [{d.DB}].[dbo].[{d.Table}]";
-            string command2 = $"SELECT COUNT([{d.Col}]) FROM[{d.DB}].[dbo].[{d.Table}]";
-            string command3 = $"select COUNT([{d.Col}]) from " +
-                $"(SELECT distinct [{d.Col}] FROM[{d.DB}].[dbo].[{d.Table}]) as T";
-
-            using (var sc = new SqlConnection(ConnectionString))
-            {
-                sc.Open();
-                try
-                {
-
-                    using (var query = new SqlCommand(command1, sc))
-                    {
-                        using (var res = query.ExecuteReader())
-                        {
-                            while (res.Read())
-                            {
-                                var a = res[0];
-                                log.Value = a.ToString();
-
-                            }
-                        }
-                    }
-                    using (var query = new SqlCommand(command2, sc))
-                    {
-                        using (var res = query.ExecuteReader())
-                        {
-                            while (res.Read())
-                            {
-                                var a = res[0];
-                                log.CountRecsInColumn = Convert.ToInt64(a);
-                            }
-                        }
-                    }
-                    using (var query = new SqlCommand(command3, sc))
-                    {
-                        using (var res = query.ExecuteReader())
-                        {
-                            while (res.Read())
-                            {
-                                var a = res[0];
-                                log.CountUniqueRecsInColumn = Convert.ToInt64(a);
-                            }
-                        }
-                    }
-                }
-                catch (Exception err)
-                {
-                    log.IsError = true;
-                    log.ErrorMsg = err.Message;
-                }
-            }
-
-            Samples.Add(log);
+            Model.SearchColumns();
         }
 
         private void ColumnSampleInTable()
         {
-            dynamic d = SelectedItemColumnDetails;
-            DetailedInfoAboutColumn(d);
+            Model.DetailedInfoAboutColumn(SelectedItemColumnDetails);
         }
 
-        private void ColumnsCount()
+        private void AllColumnSamplesInTables()
         {
-            var a = from col in Model.Columns
-                    group col by col.COLUMN_NAME into g
-                    orderby g.Count() descending
-                    select new { Name = g.Key, Count = g.Count() };
-            ColumnsCountCollection = CollectionViewSource.GetDefaultView(a);
+            foreach (Column d in ColumnDetails)
+            {
+                Model.DetailedInfoAboutColumn(d);
+            }
         }
     }
 }

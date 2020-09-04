@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlAnalyzer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,10 +23,10 @@ namespace SqlAnalyzer.Views.Forms
         public SearchColumnsView()
         {
             InitializeComponent();
-
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lstViewGroup.ItemsSource);
             //PropertyGroupDescription groupDescription = new PropertyGroupDescription("COLUMN_NAME");
             //view.GroupDescriptions.Add(groupDescription);
         }
+
     }
 }

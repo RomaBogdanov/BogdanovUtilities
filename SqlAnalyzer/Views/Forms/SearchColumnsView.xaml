@@ -21,16 +21,16 @@
                 Command="{Binding SearchingColumnsCommand}"
                 IsEnabled="{Binding !IsSearchingNow}"/>
         <DataGrid HorizontalAlignment="Left" Height="445" Margin="515,105,0,0" VerticalAlignment="Top" Width="570"
-                  ItemsSource="{Binding ColumnDetails}"
-                  SelectedItem="{Binding SelectedItemColumnDetails}"/>
+                  ItemsSource="{Binding ColumnDetails, Mode=TwoWay, NotifyOnSourceUpdated=True}"
+                  SelectedItem="{Binding SelectedItemColumnDetails, Mode=TwoWay}"/>
         <Button Content="Пример записи колонки в таблице" HorizontalAlignment="Left" 
-                Margin="10,614,0,0" VerticalAlignment="Top" Width="220"
+                Margin="760,16,0,0" VerticalAlignment="Top" Width="220"
                 Command="{Binding ColumnSampleInTableCommand}"/>
-        <Button Content="Пример строки с колонкой в таблице" HorizontalAlignment="Left" Margin="515,614,0,0" VerticalAlignment="Top" Width="220"/>
-        <DataGrid HorizontalAlignment="Left" Height="535" Margin="1155,74,0,0" 
+        <DataGrid HorizontalAlignment="Left" Height="445" Margin="1090,105,0,0" 
                   VerticalAlignment="Top" Width="396"
-                  ItemsSource="{Binding Samples}"/>
-        <Button Content="Пример всех записей одинаковой колонки" HorizontalAlignment="Left" Margin="235,614,0,0" VerticalAlignment="Top" Width="275"
+                  ItemsSource="{Binding Samples}"
+                  SelectedItem="{Binding SelectedLogColumn}"/>
+        <Button Content="Пример всех записей одинаковой колонки" HorizontalAlignment="Left" Margin="985,16,0,0" VerticalAlignment="Top" Width="275"
                 Command="{Binding AllColumnSamplesInTablesCommand}"/>
         <TabControl HorizontalAlignment="Left" Height="476" Margin="10,74,0,0" VerticalAlignment="Top" Width="494">
             <TabItem Header="Колонки по частоте" 
@@ -59,6 +59,15 @@
         </TabControl>
         <Label Content="Детализация по колонке: " HorizontalAlignment="Left" Margin="515,74,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding SelectedColumn.Name}" HorizontalAlignment="Left" Margin="673,74,0,0" VerticalAlignment="Top"/>
+        <Label Content="Информация по значениям в колонке:" HorizontalAlignment="Left" Margin="1090,72,0,0" VerticalAlignment="Top"/>
+        <DataGrid HorizontalAlignment="Left" Height="211" Margin="10,586,0,0" 
+                  VerticalAlignment="Top" Width="494"
+                  ItemsSource="{Binding UniqueValuesInColumn}"/>
+        <Label Content="Список уникальных значений" HorizontalAlignment="Left" Margin="10,555,0,0" VerticalAlignment="Top"/>
+        <Button Content="Извлечь уникальные значения выделенной строки" 
+                HorizontalAlignment="Left" Margin="1090,571,0,0" VerticalAlignment="Top" 
+                Width="396"
+                Command="{Binding SearchUniqueValuesInColumnCommand}"/>
 
     </Grid>
 </Window>
