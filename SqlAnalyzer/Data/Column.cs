@@ -2,38 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SqlAnalyzer.Data
 {
-    public class SearchServerContext : DbContext
-    {
-        public DbSet<DataBaseInServer> DataBasesInServer { get; set; }
-        public DbSet<Column> Columns { get; set; }
-
-        public SearchServerContext(string connectionString) : base(connectionString)
-        {
-
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Column>().HasKey(p =>
-                new { p.TABLE_NAME, p.COLUMN_NAME });
-            modelBuilder.Entity<DataBaseInServer>().HasKey(p =>
-                new { p.Name });
-        }
-    }
-
+    /// <summary>
+    /// Содержит описание колонки из таблицы базы данных.
+    /// </summary>
     public class Column
     {
-        //[Key]
         public string TABLE_NAME { get; set; }
 
-        //[Key]
         public string COLUMN_NAME { get; set; }
 
         public string TABLE_CATALOG { get; set; }
@@ -69,11 +50,5 @@ namespace SqlAnalyzer.Data
         /// </summary>
         [NotMapped]
         public string ErrorMsg { get; set; }
-    }
-
-    public class DataBaseInServer
-    {
-        //[Key]
-        public string Name { get; set; }
     }
 }
