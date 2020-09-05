@@ -12,8 +12,9 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.IO;
 using Microsoft.Win32;
-using SintezLibrary;
+//using SintezLibrary;
 using SintezWpfUiLib.Model;
+using LogsWrapper;
 
 namespace SintezWpfUiLib.ViewModel
 {
@@ -538,8 +539,7 @@ namespace SintezWpfUiLib.ViewModel
                 if (a == null) return;
                 ToAccount = a;
                 if (rec.doc_id == 0) return;
-                AttachedDesign = new DocumentRec(rec.doc_id,
-                    DBConnector.DBConnectionsDictionary[rec.doc_connection_id]);
+                AttachedDesign = new DocumentRec(rec.doc_id);
             };
         }
 

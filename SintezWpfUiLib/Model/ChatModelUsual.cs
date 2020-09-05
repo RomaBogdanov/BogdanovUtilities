@@ -1,13 +1,16 @@
-﻿using System;
+﻿#define Local
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
-using SintezLibrary;
 
 namespace SintezWpfUiLib.Model
 {
+
+#if !Local
     public class ChatModelUsual : ChatModel
     {
 
@@ -73,4 +76,5 @@ namespace SintezWpfUiLib.Model
             }
         }
     }
+#endif
 }

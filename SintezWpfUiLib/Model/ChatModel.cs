@@ -1,12 +1,17 @@
-﻿//using SintezLibrary;
+﻿//#define Local
+
+//using SintezLibrary;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using LogsWrapper;
 
 namespace SintezWpfUiLib.Model
 {
+
+#if !Local
     /// <summary>
     /// Базовый класс для обеспечения взаимодействия контрола ChatView с
     /// внешним миром.
@@ -69,16 +74,21 @@ namespace SintezWpfUiLib.Model
             Issues = new ObservableCollection<GoalRec>();
             Designes = new ObservableCollection<DocumentRec>();
 
-            Manager = DBConnector.CurrentSintezUser;
-            List<SintezUserRec> users = dbrec.loadRange<SintezUserRec>(
-                "select * from sintezuser", DBConnector.Sintez_Connection);
-            Accounts = new ObservableCollection<SintezUserRec>(users);
-            Accounts.Remove(Manager);
+            Manager = new SintezUserRec
+            {
+                idx = 1,
+                CountNotReadedMessages = 0,
+                login = "Вася"
+            };
+            //List<SintezUserRec> users = dbrec.loadRange<SintezUserRec>(
+            //    "select * from sintezuser", DBConnector.Sintez_Connection);
+            //Accounts = new ObservableCollection<SintezUserRec>(users);
+            //Accounts.Remove(Manager);
             /*List<GoalRec> goals = dbrec.loadRange<GoalRec>(
                 "select * from goals where closetype=0", DBConnector.Seller_Connection);
             Issues = new ObservableCollection<GoalRec>(goals);*/
 
-            ChatFerm.onUnreadMessagesCount += ChatFerm_onUnreadMessagesCount;
+            //ChatFerm.onUnreadMessagesCount += ChatFerm_onUnreadMessagesCount;
             Logger.Debug("Создали ChatModel");
         }
 
@@ -105,8 +115,8 @@ namespace SintezWpfUiLib.Model
             // Формируем и сохраняем сообщение
             ChatMsgRec sendedMessage = new ChatMsgRec()
             {
-                from_id = DBConnector.CurrentSintezUser.idx,
-                message = message
+                //from_id = DBConnector.CurrentSintezUser.idx,
+                //message = message
             };
             if (pointedAccount != "")
             {
@@ -169,9 +179,9 @@ namespace SintezWpfUiLib.Model
             lastQuery = $"select * from chatmsg where " +
                 $"(from_id = {userRec.idx} and to_id = {DBConnector.CurrentSintezUser.idx}) or " +
                 $"(to_id = {userRec.idx} and from_id = {DBConnector.CurrentSintezUser.idx})";
-            List<ChatMsgRec> chats = dbrec.loadRange<ChatMsgRec>(
-                lastQuery, DBConnector.Sintez_Connection);
-            Messages = new ObservableCollection<ChatMsgRec>(chats);
+            //List<ChatMsgRec> chats = dbrec.loadRange<ChatMsgRec>(
+            //    lastQuery, DBConnector.Sintez_Connection);
+            Messages = new ObservableCollection<ChatMsgRec>();//(chats);
             foreach (var item in Messages)
             {
                 if (item.readed == false && item.to_id == Manager.idx)
@@ -188,11 +198,11 @@ namespace SintezWpfUiLib.Model
         /// <param name="goalRec"></param>
         public virtual void MessagesRelatedWithIssue(GoalRec goalRec)
         {
-            lastQuery = $"select * from chatmsg where " +
-                        $"goal_id = {goalRec.idx}";
-            List<ChatMsgRec> chats = dbrec.loadRange<ChatMsgRec>(
-                lastQuery, DBConnector.Sintez_Connection);
-            Messages = new ObservableCollection<ChatMsgRec>(chats);
+            //lastQuery = $"select * from chatmsg where " +
+            //            $"goal_id = {goalRec.idx}";
+            //List<ChatMsgRec> chats = dbrec.loadRange<ChatMsgRec>(
+            //    lastQuery, DBConnector.Sintez_Connection);
+            Messages = new ObservableCollection<ChatMsgRec>();//(chats);
         }
 
         /// <summary>
@@ -208,9 +218,9 @@ namespace SintezWpfUiLib.Model
         {
             lastQuery = $"select * from chatmsg where " +
                     $"doc_id = {idDocRec} and doc_connection_id = {idConnect}";
-            List<ChatMsgRec> chats = dbrec.loadRange<ChatMsgRec>(
-                lastQuery, DBConnector.Sintez_Connection);
-            Messages = new ObservableCollection<ChatMsgRec>(chats);
+            //List<ChatMsgRec> chats = dbrec.loadRange<ChatMsgRec>(
+            //    lastQuery, DBConnector.Sintez_Connection);
+            Messages = new ObservableCollection<ChatMsgRec>();// (chats);
         }
 
         /// <summary>
@@ -259,4 +269,5 @@ namespace SintezWpfUiLib.Model
         }
 
     }
+#endif
 }

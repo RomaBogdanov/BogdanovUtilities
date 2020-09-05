@@ -1,0 +1,15 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chat"
+        xmlns:View="clr-namespace:SintezWpfUiLib.View;assembly=SintezWpfUiLib" x:Class="Chat.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="616.875" Width="846.875">
+    <Grid>
+
+        <View:ChatView HorizontalAlignment="Left" Height="566" Margin="10,10,0,0" VerticalAlignment="Top" Width="819"/>
+
+    </Grid>
+</Window>

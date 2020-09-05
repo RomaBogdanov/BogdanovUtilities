@@ -1,23 +1,25 @@
-﻿using System;
+﻿#define Local
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
-using SintezLibrary;
+//using SintezLibrary;
 
 namespace SintezWpfUiLib.Model
 {
-
+#if !Local
     public class TestChatModel : ChatModel
     {
         public TestChatModel()
         {
             Messages = new ObservableCollection<ChatMsgRec>();
-            string server = "localhost";
-            string dbname = "sintez";
-            string dblogin = "profcert";//@"EUROTEST\Богданов";
-            string dbpassword = "123123";
+            string server = "***************";
+            string dbname = "***************";
+            string dblogin = "***************";
+            string dbpassword = "***************";
             var connok = DBConnector.Initialize(server, dbname, dblogin, dbpassword);
 
             DBConnector.setCurrentManager(new ManagerUserRec(1));
@@ -51,4 +53,6 @@ namespace SintezWpfUiLib.Model
             Designes = new ObservableCollection<DocumentRec>(rcs);
         }
     }
+
+#endif
 }

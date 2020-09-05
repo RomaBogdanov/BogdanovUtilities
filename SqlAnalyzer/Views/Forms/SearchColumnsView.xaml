@@ -31,11 +31,7 @@
         <TabControl HorizontalAlignment="Left" Height="476" Margin="10,74,0,0" VerticalAlignment="Top" Width="494">
             <TabItem Header="Колонки по частоте" 
                      ToolTip="В данной вкладке дан список всех колонок на сервере БД с количеством упоминаний">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid HorizontalAlignment="Left" Height="428" Margin="10,10,0,0" VerticalAlignment="Top" Width="468"
-                  ItemsSource="{Binding ColumnsCountCollection}"
-                  SelectedItem="{Binding SelectedColumn}"/>
-                </Grid>
+                <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Header="Общая по колонкам"
                      ToolTip="В данной вкладке дана общая информация по списку колонок на сервере БД">
@@ -63,6 +59,9 @@
                 HorizontalAlignment="Left" Margin="515,631,0,0" VerticalAlignment="Top" 
                 Width="396"
                 Command="{Binding SearchUniqueValuesInColumnCommand}"/>
+        <DataGrid HorizontalAlignment="Left" Height="428" Margin="1124,100,0,0" VerticalAlignment="Top" Width="468"
+                  ItemsSource="{Binding ColumnsCountCollection}"
+                  SelectedItem="{Binding SelectedColumn}"/>
 
     </Grid>
 </Window>

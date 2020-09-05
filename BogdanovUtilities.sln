@@ -76,6 +76,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfSnippets", "WcfSnippets\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchDataInDataBases", "SearchDataInDataBases\SearchDataInDataBases.csproj", "{A3A7748C-F59E-4D58-A279-5501A99F71B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat", "Chat\Chat.csproj", "{54965DCF-3F56-4816-BB98-B292AAC2F44C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -174,6 +176,10 @@ Global
 		{A3A7748C-F59E-4D58-A279-5501A99F71B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3A7748C-F59E-4D58-A279-5501A99F71B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3A7748C-F59E-4D58-A279-5501A99F71B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54965DCF-3F56-4816-BB98-B292AAC2F44C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54965DCF-3F56-4816-BB98-B292AAC2F44C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54965DCF-3F56-4816-BB98-B292AAC2F44C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54965DCF-3F56-4816-BB98-B292AAC2F44C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,6 +200,7 @@ Global
 		{A973EA3B-1991-440B-8655-640E0AF38795} = {69A3A73B-9020-4A97-B3FC-15897A13333D}
 		{83FA85C3-1274-4AC9-B551-54E6622EF98A} = {61F4FF41-0FA6-4B8E-81FC-128719510F08}
 		{A3A7748C-F59E-4D58-A279-5501A99F71B7} = {69A3A73B-9020-4A97-B3FC-15897A13333D}
+		{54965DCF-3F56-4816-BB98-B292AAC2F44C} = {2590FE95-3A24-4EBA-BC40-E74F759B00E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF91119C-30EE-4ADD-96B1-943C96BB1742}

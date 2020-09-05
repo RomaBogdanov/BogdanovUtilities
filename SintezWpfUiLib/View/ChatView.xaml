@@ -113,7 +113,7 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-            <DataTemplate>
+            <DataTemplate x:Key="k1">
                 <StackPanel Orientation="Horizontal">
                     <MD:PackIcon VerticalAlignment="Center" Kind="Account" />
                     <TextBlock VerticalAlignment="Center">
@@ -126,13 +126,13 @@
                     </TextBlock>
                 </StackPanel>
             </DataTemplate>
-            <DataTemplate>
+            <DataTemplate x:Key="k2">
                 <StackPanel Orientation="Horizontal">
                     <MD:PackIcon Kind="FileDocumentBoxMultipleOutline" />
                     <TextBlock Text="{Binding goal}" />
                 </StackPanel>
             </DataTemplate>
-            <DataTemplate>
+            <DataTemplate x:Key="k3">
                 <StackPanel Orientation="Horizontal">
                     <MD:PackIcon Kind="FileDocumentOutline" />
                     <TextBlock Text="{Binding Number}" />
@@ -143,9 +143,9 @@
 
     <!-- Привязка к модели представления -->
 
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <vm:ChatViewModel />
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
 
     <Grid FocusManager.FocusedElement="{Binding ElementName=tbxEnterMessage}" Name="bsGrid">
         <!--<Grid.ColumnDefinitions>

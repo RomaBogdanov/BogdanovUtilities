@@ -1,12 +1,14 @@
-﻿using System;
+﻿#define Local
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SintezLibrary;
 
 namespace SintezWpfUiLib.Model
 {
+#if !Local
     /// <summary>
     /// Модель для открытия из макета
     /// </summary>
@@ -63,4 +65,5 @@ namespace SintezWpfUiLib.Model
                 "не прочитанных сообщениях");
         }
     }
+#endif
 }
