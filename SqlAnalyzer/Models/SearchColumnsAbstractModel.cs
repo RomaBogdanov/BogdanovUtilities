@@ -88,8 +88,7 @@ namespace SqlAnalyzer.Models
                     where col.COLUMN_NAME == value.Name
                     select col;
 
-            ColumnDetails = CollectionViewSource.GetDefaultView(
-                a);
+            ColumnDetails = CollectionViewSource.GetDefaultView(a);
         }
 
         /// <summary>

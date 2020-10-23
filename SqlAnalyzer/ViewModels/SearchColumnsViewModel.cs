@@ -18,6 +18,7 @@ namespace SqlAnalyzer.ViewModels
     public class SearchColumnsViewModel : NotifyPropertyChanged
     {
         private SearchColumnsAbstractModel model;
+        private string searchedColumn;
 
         public SearchColumnsAbstractModel Model
         {
@@ -120,6 +121,22 @@ namespace SqlAnalyzer.ViewModels
             {
                 Model.UniqueValuesInColumn = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public string SearchedColumn
+        {
+            get => searchedColumn;
+            set
+            {
+                if (searchedColumn != value)
+                {
+                    searchedColumn = value;
+                    ColumnsCountCollection.Filter = (x) => ((RepeatingColumn)x)
+                        .Name.ToLower().Contains(searchedColumn.ToLower());
+                    OnPropertyChanged();
+
+                }
             }
         }
 

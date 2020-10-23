@@ -7,8 +7,10 @@
         xmlns:vm="clr-namespace:SqlAnalyzer.ViewModels"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=System"
         xmlns:dat="clr-namespace:System.Windows.Data;assembly=PresentationFramework"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Поиск по колонкам" Height="896.25" Width="1756.25">
+        WindowStartupLocation="CenterScreen"
+        Title="Поиск по колонкам" Height="951.75" Width="1756.25">
     <Window.DataContext>
         <vm:SearchColumnsViewModel/>
     </Window.DataContext>
@@ -46,6 +48,11 @@
                   ItemsSource="{Binding ColumnsCountCollection}"
                   SelectedItem="{Binding SelectedColumn}" Grid.Row="1"/>
         <Label Content="Список колонок" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="18,815,0,0" Grid.Row="1" TextWrapping="Wrap" 
+                 Text="{Binding SearchedColumn, NotifyOnTargetUpdated=True}" VerticalAlignment="Top" Width="250"
+                 materialDesign:HintAssist.Hint="Поиск"
+                 materialDesign:HintAssist.HelperText="Поиск колонки"/>
+        <Button Content="Поиск" HorizontalAlignment="Left" Margin="273,817,0,0" Grid.Row="1" VerticalAlignment="Top" Width="76"/>
 
     </Grid>
 </Window>

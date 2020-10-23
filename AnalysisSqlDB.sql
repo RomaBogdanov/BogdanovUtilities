@@ -62,6 +62,14 @@ FROM    sys.databases d
         JOIN sys.master_files m ON d.database_id = m.database_id
 WHERE   m.[type] = 0 -- data files only
 ORDER BY d.name; 
+
+-- Получение списка БД отсортированного по размерам БД
+select d.name, sum(m.size) full_size from sys.databases d
+join sys.master_files m on d.database_id=m.database_id
+where type_desc='rows'
+group by d.name
+order by full_size desc
+
 -- =============================================================
 
 -- Изучаем бэкапы
@@ -177,6 +185,23 @@ SELECT  @@Servername AS ServerName ,
         t.create_date
 FROM    sys.tables t
 ORDER BY t.Name;
+
+-- Получение отсортированного количества записей в каждой таблице БД
+select OBJECT_NAME(id) tab, rows from sysindexes
+order by rows desc
+
+-- Как в случае выше, но для всех баз данных сервера
+exec sp_MSforeachdb 'use ?
+select OBJECT_NAME(id) ?, rows from sysindexes order by rows desc'
+
+-- =============================================================
+
+-- Работа с колонками таблицы
+-- =============================================================
+-- Получение списка колонок с основной информацией
+select COLUMN_NAME, DATA_TYPE, IS_NULLABLE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='EDMsgs'
+
+
 -- =============================================================
 
 -- Генерация скрипта для подсчёта количества записей в таблицах БД. Подумать, куда ещё можно приложить генерацию запросов.
