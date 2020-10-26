@@ -63,6 +63,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BogdanovUtilitisLib.Logger.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Analyze", "SQL Analyze", "{69A3A73B-9020-4A97-B3FC-15897A13333D}"
 	ProjectSection(SolutionItems) = preProject
+		AnalysisSqlAlgorithm.sql = AnalysisSqlAlgorithm.sql
 		AnalysisSqlDB.sql = AnalysisSqlDB.sql
 		Задачи.txt = Задачи.txt
 		Описание работы с логами БД.txt = Описание работы с логами БД.txt
