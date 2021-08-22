@@ -81,9 +81,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat", "Chat\Chat.csproj", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Анализ логов ВашБрокер", "Анализ логов ВашБрокер", "{06DCD18A-811F-4D44-8D16-F656F2E3BFE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogFilesNotifierAnalyze", "LogFilesNotifierAnalyze\LogFilesNotifierAnalyze.csproj", "{4BBCD4CC-0060-4BCB-A000-1D7F81A84CF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogFilesNotifierAnalyze", "LogFilesNotifierAnalyze\LogFilesNotifierAnalyze.csproj", "{4BBCD4CC-0060-4BCB-A000-1D7F81A84CF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogFilesNotifierAnalyzeOnFramework", "LogFilesNotifierAnalyzeOnFramework\LogFilesNotifierAnalyzeOnFramework.csproj", "{C8AEEBE5-2E0B-4A81-B6D6-DF326BCCB264}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Локализация", "Локализация", "{B27C2159-DCBB-4D4F-90B9-FC2791EE1EB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLocalization", "TestLocalization\TestLocalization.csproj", "{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -195,6 +199,10 @@ Global
 		{C8AEEBE5-2E0B-4A81-B6D6-DF326BCCB264}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8AEEBE5-2E0B-4A81-B6D6-DF326BCCB264}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8AEEBE5-2E0B-4A81-B6D6-DF326BCCB264}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -219,6 +227,7 @@ Global
 		{06DCD18A-811F-4D44-8D16-F656F2E3BFE9} = {2154B48F-7CA7-4DB2-8980-0FEFBAD6AC99}
 		{4BBCD4CC-0060-4BCB-A000-1D7F81A84CF2} = {06DCD18A-811F-4D44-8D16-F656F2E3BFE9}
 		{C8AEEBE5-2E0B-4A81-B6D6-DF326BCCB264} = {06DCD18A-811F-4D44-8D16-F656F2E3BFE9}
+		{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84} = {B27C2159-DCBB-4D4F-90B9-FC2791EE1EB1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF91119C-30EE-4ADD-96B1-943C96BB1742}
