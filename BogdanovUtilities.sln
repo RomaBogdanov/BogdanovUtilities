@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29102.190
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogsWrapper", "LogsWrapper\LogsWrapper.csproj", "{32BEDC9D-69F1-4A60-9B40-34A49B1E4902}"
 EndProject
@@ -87,7 +87,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogFilesNotifierAnalyzeOnFr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Локализация", "Локализация", "{B27C2159-DCBB-4D4F-90B9-FC2791EE1EB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLocalization", "TestLocalization\TestLocalization.csproj", "{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestLocalization", "TestLocalization\TestLocalization.csproj", "{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NET6", "NET6", "{D85B7F3D-3614-4EB7-8B13-91DB7829A96F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bogdanov.SqlAnalyzerLib", "Bogdanov.SqlAnalyzerLib\Bogdanov.SqlAnalyzerLib.csproj", "{AD46EB84-1C61-4481-ADF4-6D3A23C435E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bogdanov.SqlAnalyzerConsole", "Bogdanov.SqlAnalyzerConsole\Bogdanov.SqlAnalyzerConsole.csproj", "{7E967CC1-01E7-4D24-9C05-858A8E38D1F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bogdanov.ConsoleWorkLib", "Bogdanov.ConsoleWorkLib\Bogdanov.ConsoleWorkLib.csproj", "{3DE1A1DD-743B-4BB4-9F0B-DBDE4190FBF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -203,6 +211,18 @@ Global
 		{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD46EB84-1C61-4481-ADF4-6D3A23C435E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD46EB84-1C61-4481-ADF4-6D3A23C435E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD46EB84-1C61-4481-ADF4-6D3A23C435E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD46EB84-1C61-4481-ADF4-6D3A23C435E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E967CC1-01E7-4D24-9C05-858A8E38D1F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E967CC1-01E7-4D24-9C05-858A8E38D1F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E967CC1-01E7-4D24-9C05-858A8E38D1F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E967CC1-01E7-4D24-9C05-858A8E38D1F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DE1A1DD-743B-4BB4-9F0B-DBDE4190FBF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DE1A1DD-743B-4BB4-9F0B-DBDE4190FBF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DE1A1DD-743B-4BB4-9F0B-DBDE4190FBF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DE1A1DD-743B-4BB4-9F0B-DBDE4190FBF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -228,6 +248,9 @@ Global
 		{4BBCD4CC-0060-4BCB-A000-1D7F81A84CF2} = {06DCD18A-811F-4D44-8D16-F656F2E3BFE9}
 		{C8AEEBE5-2E0B-4A81-B6D6-DF326BCCB264} = {06DCD18A-811F-4D44-8D16-F656F2E3BFE9}
 		{0FF72374-7DB3-4AD5-AD1B-363EA9DADA84} = {B27C2159-DCBB-4D4F-90B9-FC2791EE1EB1}
+		{AD46EB84-1C61-4481-ADF4-6D3A23C435E1} = {D85B7F3D-3614-4EB7-8B13-91DB7829A96F}
+		{7E967CC1-01E7-4D24-9C05-858A8E38D1F3} = {D85B7F3D-3614-4EB7-8B13-91DB7829A96F}
+		{3DE1A1DD-743B-4BB4-9F0B-DBDE4190FBF8} = {D85B7F3D-3614-4EB7-8B13-91DB7829A96F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF91119C-30EE-4ADD-96B1-943C96BB1742}
