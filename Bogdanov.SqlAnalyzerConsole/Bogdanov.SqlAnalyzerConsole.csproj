@@ -12,4 +12,10 @@
     <ProjectReference Include="..\Bogdanov.SqlAnalyzerLib\Bogdanov.SqlAnalyzerLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Description.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

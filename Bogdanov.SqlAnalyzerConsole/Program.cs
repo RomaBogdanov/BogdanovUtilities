@@ -6,6 +6,14 @@ using Bogdanov.SqlAnalyzerConsole;
 IAnalyzeDbOrServer? searcherValue = null;
 
 C.InfoH("Добро пожаловать в проект по анализу БД и Серверов SQL");
+
+var descript = C.Interract("Вывести описание программы? (введите y - если, да):");
+if (descript.ToLower() == "y")
+{
+    C.InfoL(File.ReadAllText("Description.txt"));
+    C.InterractH("Нажмите Enter, чтобы продолжить");
+}
+
 C.InfoH("Проект поддерживает работу со следующими СУБД:");
 C.InfoH("1 - MS SQL");
 C.InfoH("2 - Oracle");
