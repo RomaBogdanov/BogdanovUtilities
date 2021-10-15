@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bogdanov.SqlAnalyzerLib.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,15 +23,33 @@ namespace Bogdanov.SqlAnalyzerLib
         /// </summary>
         string Description { get; }
         /// <summary>
+        /// Поиск колонок в базе данных
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Column>> SearchColumnsInDbAsync(string db);
+        /// <summary>
+        /// Поиск колонок по всему SQL серверу
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Column>> SearchColumnsInSqlServerAsync();
+        /// <summary>
         /// Поиск переменной в колонках таблиц базы данных.
         /// </summary>
         /// <param name="value">Значение, которое надо искать в таблицах</param>
         /// <param name="db">Наименование базы данных, в которой надо искать значение</param>
+        /// <param name="isPartStr">Значение может являться частью строки, на int, 
+        /// datetime, double данный функционал не должен распространяться. По-умолчанию,
+        /// false.</param>
         /// <returns></returns>
-        SearchValueResult SearchValueInColumnsDB(string value, string db);
+        Task<SearchValueResult> SearchValueInColumnsDBAsync(
+            string value, string db, bool isPartStr = false);
     }
 
     public class SearchValueResult
     {
+        /// <summary>
+        /// Список колонок, в которых хранится значение.
+        /// </summary>
+        public List<Column> ColumnsWithValue { get; set; }
     }
 }

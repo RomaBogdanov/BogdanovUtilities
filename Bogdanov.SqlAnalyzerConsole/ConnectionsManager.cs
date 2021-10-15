@@ -31,6 +31,7 @@ namespace Bogdanov.SqlAnalyzerConsole
             string con = C.Interract($"Введите строку подключения к " +
                 $"{SearcherValueInDb.Description}: ");
             Connections.CurrentConnection = (name, con);
+            SearcherValueInDb.ConnectionString = con;
             switch (SearcherValueInDb)
             {
                 case MsSqlAnalyzeDbOrServer ms:
