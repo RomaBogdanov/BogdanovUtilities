@@ -120,11 +120,27 @@ namespace Bogdanov.ConsoleWorkLib
         /// <summary>
         /// Интерактивное взаимодействие. Предлагает ввести какие-либо данные.
         /// </summary>
-        /// <param name="msg"></param>
+        /// <param name="msg">Сообщение, предлагающие на него ответить</param>
+        /// <param name="defaultVal">Значение по-умолчанию, если просто нажать enter</param>
         /// <returns></returns>
-        public static string Interract(string msg)
+        public static string Interract(string msg, string defaultVal = "")
         {
             Console.Write(msg);
+            if (!string.IsNullOrEmpty(defaultVal))
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"Если хотите ввести значение по-умолчанию <{defaultVal}> нажмите Enter: ");
+                Console.ResetColor();
+                string? result = Console.ReadLine();
+                if (string.IsNullOrEmpty(result))
+                {
+                    return defaultVal;
+                }
+                else
+                {
+                    return result;
+                }
+            }
             return Console.ReadLine() ?? "";
         }
 
@@ -134,10 +150,25 @@ namespace Bogdanov.ConsoleWorkLib
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public static string InterractH(string msg)
+        public static string InterractH(string msg, string defaultVal = "")
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(msg);
+            if (!string.IsNullOrEmpty(defaultVal))
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"Если хотите ввести значение по-умолчанию <{defaultVal}> нажмите Enter: ");
+                Console.ResetColor();
+                string? result = Console.ReadLine();
+                if (string.IsNullOrEmpty(result))
+                {
+                    return defaultVal;
+                }
+                else
+                {
+                    return result;
+                }
+            }
             Console.ResetColor();
             return Console.ReadLine() ?? "";
         }
